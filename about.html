@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Zelva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --black: #0a0a0a; --light: #e8e4dc; --muted: rgba(232,228,220,0.45); --accent: #c9a96e; --white: #f5f2ec; --border: rgba(232,228,220,0.08); }
+  html, body { background: var(--black); color: var(--light); font-family: 'Montserrat', sans-serif; cursor: none; min-height: 100vh; }
+  .cursor { position: fixed; width: 6px; height: 6px; background: var(--white); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s ease, background 0.3s ease; }
+  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease; }
+  .cursor.hovering { background: var(--accent); transform: translate(-50%,-50%) scale(0); }
+  .cursor-ring.hovering { width: 56px; height: 56px; border-color: rgba(201,169,110,0.6); }
+  .grain { position: fixed; inset: -50%; width: 200%; height: 200%; z-index: 3; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E"); animation: grainAnim 0.5s steps(1) infinite; }
+  @keyframes grainAnim { 0%{transform:translate(0,0)} 25%{transform:translate(-2%,-3%)} 50%{transform:translate(3%,1%)} 75%{transform:translate(-1%,3%)} 100%{transform:translate(2%,-2%)} }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 36px 52px; }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 22px; letter-spacing: 8px; text-transform: uppercase; color: var(--white); text-decoration: none; }
+  .nav-logo em { color: var(--accent); font-style: italic; font-size: 15px; }
+  .nav-links { display: flex; gap: 44px; list-style: none; }
+  .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,228,220,0.5); text-decoration: none; transition: color 0.3s ease; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s ease; }
+  .nav-links a:hover, .nav-links a.active { color: var(--white); }
+  .nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
+
+  .page { padding: 140px 52px 80px; max-width: 1200px; margin: 0 auto; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .about-left { opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+
+  .page-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 48px; letter-spacing: 6px; text-transform: uppercase; color: var(--white); margin-bottom: 8px; }
+  .page-subtitle { font-size: 11px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 52px; }
+
+  .about-statement {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 1.5;
+    color: var(--white);
+    margin-bottom: 40px;
+    letter-spacing: 0.5px;
+  }
+
+  .about-body {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(232,228,220,0.6);
+    margin-bottom: 24px;
+  }
+
+  .about-divider {
+    width: 40px; height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
+    margin: 40px 0;
+  }
+
+  .about-right { opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards; }
+
+  .services-title {
+    font-size: 10px; font-weight: 400;
+    letter-spacing: 5px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 28px;
+  }
+
+  .service-item {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .service-item:first-of-type { border-top: 1px solid var(--border); }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400; font-size: 20px;
+    letter-spacing: 2px; color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .service-desc {
+    font-size: 11px; font-weight: 300;
+    letter-spacing: 1px; line-height: 1.7;
+    color: rgba(232,228,220,0.45);
+  }
+
+  .clients-section { margin-top: 60px; }
+  .clients-title { font-size: 10px; font-weight: 400; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+  .clients-list { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 18px; line-height: 2; color: rgba(232,228,220,0.5); letter-spacing: 1px; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  @media (max-width: 900px) { .page{padding:120px 28px 60px} nav{padding:24px 28px} .about-grid{grid-template-columns:1fr; gap:52px} }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="grain"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Zelva<em>™</em></a>
+  <ul class="nav-links">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<div class="page">
+  <div class="about-grid">
+    <div class="about-left">
+      <h1 class="page-title">About</h1>
+      <p class="page-subtitle">The Studio</p>
+      <p class="about-statement">We are a creative studio building the next generation of visual storytelling.</p>
+      <p class="about-body">Zelva is a creative studio for the AI era — producing commercials, short films, animation and branded content using the latest tools in artificial intelligence and industry-standard production.</p>
+      <p class="about-body">We believe great storytelling doesn't require a massive budget. It requires vision, craft, and the right tools. AI has changed what's possible — and we're here to push those limits.</p>
+      <div class="about-divider"></div>
+      <p class="about-body">Founded by a creative director with experience across animation, film and brand work, Zelva brings a human touch to AI-driven production. Every project is crafted with intention — from concept to final frame.</p>
+    </div>
+    <div class="about-right">
+      <p class="services-title">What We Do</p>
+      <div class="service-item">
+        <div class="service-name">AI Film & Short Films</div>
+        <div class="service-desc">Original storytelling using the latest AI video tools combined with strong creative direction and narrative craft.</div>
+      </div>
+      <div class="service-item">
+        <div class="service-name">Animation</div>
+        <div class="service-desc">2D and motion design work for brands, commercials and digital campaigns.</div>
+      </div>
+      <div class="service-item">
+        <div class="service-name">Commercials & Brand Video</div>
+        <div class="service-desc">High-end visual content for brands who want something different. Affordable without sacrificing quality.</div>
+      </div>
+      <div class="service-item">
+        <div class="service-name">Creative Direction</div>
+        <div class="service-desc">Concept development, visual strategy and art direction for video and content campaigns.</div>
+      </div>
+      <div class="clients-section">
+        <p class="clients-title">Selected Clients</p>
+        <p class="clients-list">Oreo · Rita · Care<br>More coming soon</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+  (function animRing(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter',()=>{ cursor.classList.add('hovering'); ring.classList.add('hovering'); });
+    el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hovering'); ring.classList.remove('hovering'); });
+  });
+</script>
+</body>
+</html>
