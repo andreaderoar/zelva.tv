@@ -257,8 +257,12 @@
   <span class="copyright">© Zelva 2026</span>
 </div>
 <script>
-  function hideLoader() { var l=document.getElementById("loader"); if(l) l.classList.add("hidden"); }
+  function hideLoader() {
+    var l=document.getElementById("loader");
+    if(l) { l.classList.add("hidden"); setTimeout(function(){ l.style.display="none"; }, 700); }
+  }
   setTimeout(hideLoader, 1000);
+  window.addEventListener("load", function(){ setTimeout(hideLoader, 500); });
 
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
