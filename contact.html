@@ -37,25 +37,35 @@
   .nav-links a:hover, .nav-links a.active { color: var(--white); }
   .nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
 
-  .page { padding: 140px 52px 80px; max-width: 1200px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+  .page {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 140px 52px 80px;
+    max-width: 1200px; margin: 0 auto;
+  }
 
-  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
-  .contact-left { opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+  .contact-wrap {
+    display: flex; flex-direction: column;
+    gap: 52px;
+    opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
+  }
 
   .page-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 48px; letter-spacing: 6px; text-transform: uppercase; color: var(--white); margin-bottom: 8px; }
-  .page-subtitle { font-size: 11px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 52px; }
+  .page-subtitle { font-size: 11px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); }
 
-  .contact-statement { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 26px; line-height: 1.6; color: var(--white); margin-bottom: 36px; letter-spacing: 0.5px; }
-  .contact-body { font-size: 13px; font-weight: 300; line-height: 1.9; color: rgba(232,228,220,0.55); }
-  .contact-divider { width: 40px; height: 1px; background: var(--accent); opacity: 0.4; margin: 40px 0; }
+  .contact-statement {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: 26px;
+    line-height: 1.6; color: var(--white);
+    letter-spacing: 0.5px;
+    max-width: 600px;
+  }
 
-  .contact-right { opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards; }
-  .contact-block { margin-bottom: 48px; }
+  .contact-email-block { }
   .contact-label { font-size: 10px; font-weight: 400; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
-
   .contact-email {
     font-family: 'Cormorant Garamond', serif;
-    font-weight: 400; font-size: 26px;
+    font-weight: 400; font-size: 28px;
     letter-spacing: 2px; color: var(--white);
     text-decoration: none;
     border-bottom: 1px solid rgba(201,169,110,0.3);
@@ -65,13 +75,8 @@
   }
   .contact-email:hover { color: var(--accent); border-color: var(--accent); }
 
-  .social-links { display: flex; flex-direction: column; gap: 14px; }
-  .social-link { font-size: 12px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,228,220,0.45); text-decoration: none; transition: color 0.3s ease; display: flex; align-items: center; gap: 14px; }
-  .social-link::before { content: '→'; color: var(--accent); font-size: 12px; }
-  .social-link:hover { color: var(--white); }
-
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-  @media (max-width: 900px) { .page{padding:120px 28px 60px} nav{padding:24px 28px} .contact-grid{grid-template-columns:1fr; gap:52px} }
+  @media (max-width: 768px) { nav{padding:24px 28px} .page{padding:120px 28px 60px} }
 </style>
 </head>
 <body>
@@ -96,40 +101,22 @@
 </nav>
 
 <div class="page">
-  <div class="contact-grid">
-    <div class="contact-left">
+  <div class="contact-wrap">
+    <div>
       <h1 class="page-title">Contact</h1>
       <p class="page-subtitle">Get In Touch</p>
-      <p class="contact-statement">Let's make something worth watching.</p>
-      <p class="contact-body">Whether you have a project in mind, want to collaborate, or just want to talk about what's possible with AI filmmaking — we'd love to hear from you.</p>
-      <div class="contact-divider"></div>
-      <p class="contact-body">We work with brands, agencies and independent creators worldwide. No project is too small or too ambitious.</p>
     </div>
-    <div class="contact-right">
-      <div class="contact-block">
-        <p class="contact-label">Reach Us At</p>
-        <a href="mailto:hello@zelva.tv" class="contact-email">hello@zelva.tv</a>
-      </div>
-      <div class="contact-block">
-        <p class="contact-label">Follow</p>
-        <div class="social-links">
-          <a href="#" class="social-link">Instagram</a>
-          <a href="#" class="social-link">Vimeo</a>
-          <a href="#" class="social-link">YouTube</a>
-          <a href="#" class="social-link">TikTok</a>
-        </div>
-      </div>
+    <p class="contact-statement">Let's make something worth watching.</p>
+    <div class="contact-email-block">
+      <p class="contact-label">Reach Us At</p>
+      <a href="mailto:hello@zelva.tv" class="contact-email">hello@zelva.tv</a>
     </div>
   </div>
 </div>
 
 <script>
-  function hideLoader() {
-    var l = document.getElementById('loader');
-    if (l) l.classList.add('hidden');
-  }
-  window.addEventListener('load', () => { setTimeout(hideLoader, 900); });
-  setTimeout(hideLoader, 1500);
+  function hideLoader() { var l=document.getElementById('loader'); if(l) l.classList.add('hidden'); }
+  setTimeout(hideLoader, 1000);
 
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');

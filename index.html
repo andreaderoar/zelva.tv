@@ -108,12 +108,12 @@
     opacity: 0; animation: fadeUp 1s ease 1.4s forwards;
   }
   .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: clamp(64px, 9vw, 120px);
-    letter-spacing: 18px; text-transform: uppercase;
-    color: var(--white); line-height: 1;
     opacity: 0; animation: fadeUp 1.2s ease 1.6s forwards;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-title img {
+    height: clamp(60px, 10vw, 120px);
+    width: auto; display: block;
   }
   .hero-tagline {
     font-size: 12px; font-weight: 400;
@@ -258,7 +258,7 @@
 </nav>
 <div class="hero">
   <div class="hero-eyebrow">Creative Studio</div>
-  <h1 class="hero-title">Zelva</h1>
+  <div class="hero-title"><img src="Zelva_SVG_White_01.svg" alt="Zelva"></div>
   <div class="hero-tagline">For the AI Era</div>
 </div>
 <div class="bottom-bar">
