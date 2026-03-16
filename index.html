@@ -67,9 +67,9 @@
 
   /* Bottom */
   .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 52px 36px; opacity: 0; animation: fadeUp 1s ease 1.2s forwards; }
-  .scroll-hint { display: flex; align-items: center; gap: 14px; font-size: 10px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: rgba(232,228,220,0.45); text-decoration: none; cursor: none; transition: color 0.3s ease; }
+  .scroll-hint { display: flex; align-items: center; gap: 14px; font-size: 14px; font-weight: 400; letter-spacing: 5px; text-transform: uppercase; color: rgba(232,228,220,0.6); text-decoration: none; cursor: none; transition: color 0.3s ease; position: absolute; left: 50%; transform: translateX(-50%); bottom: 36px; }
   .scroll-hint:hover { color: var(--white); }
-  .scroll-line { width: 44px; height: 1px; background: rgba(201,169,110,0.3); position: relative; overflow: hidden; }
+  .scroll-line { width: 52px; height: 1px; background: rgba(201,169,110,0.4); position: relative; overflow: hidden; }
   .scroll-line::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--accent); animation: scrollLine 2.2s ease infinite; }
   @keyframes scrollLine { to{left:100%} }
   .copyright { font-size: 10px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,228,220,0.35); }
