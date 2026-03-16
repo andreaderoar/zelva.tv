@@ -78,7 +78,15 @@
   @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fadeDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
 
-  @media (max-width: 768px) { nav{padding:24px 28px} .bottom-bar{padding:0 28px 28px} .nav-links{gap:24px} }
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 11px; letter-spacing: 2px; }
+    .nav-logo img { height: 24px; }
+    .bottom-bar { padding: 0 24px 28px; }
+    .scroll-hint { font-size: 11px; letter-spacing: 3px; white-space: nowrap; bottom: 28px; }
+    .copyright { font-size: 9px; }
+  }
 </style>
 </head>
 <body>
