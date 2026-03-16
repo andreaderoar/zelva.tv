@@ -18,38 +18,19 @@
   html, body { background: var(--black); color: var(--light); font-family: 'Montserrat', sans-serif; cursor: none; min-height: 100vh; }
 
   /* Loader */
-  .loader {
-    position: fixed; inset: 0; background: var(--black);
-    z-index: 2000; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 24px;
-    transition: opacity 0.6s ease;
-  }
+  .loader { position: fixed; inset: 0; background: var(--black); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transition: opacity 0.6s ease; }
   .loader.hidden { opacity: 0; pointer-events: none; }
-  .loader-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400; font-size: 20px;
-    letter-spacing: 10px; text-transform: uppercase;
-    color: var(--white);
-  }
+  .loader-logo { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 20px; letter-spacing: 10px; text-transform: uppercase; color: var(--white); }
   .loader-logo em { color: var(--accent); font-style: italic; }
-  .loader-bar-track {
-    width: 120px; height: 1px;
-    background: rgba(255,255,255,0.08);
-    position: relative; overflow: hidden;
-  }
-  .loader-bar-fill {
-    position: absolute; top: 0; left: 0;
-    height: 100%; width: 0;
-    background: var(--accent);
-    animation: loadFill 0.9s ease forwards;
-  }
+  .loader-bar-track { width: 120px; height: 1px; background: rgba(255,255,255,0.08); position: relative; overflow: hidden; }
+  .loader-bar-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0; background: var(--accent); animation: loadFill 0.9s ease forwards; }
   @keyframes loadFill { from{width:0} to{width:100%} }
 
-  /* Cursor */
-  .cursor { position: fixed; width: 6px; height: 6px; background: var(--white); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s ease, background 0.3s ease; }
-  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease; }
+  /* Cursor — faster follower */
+  .cursor { position: fixed; width: 6px; height: 6px; background: var(--white); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.08s ease, background 0.2s ease; }
+  .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.25); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease; }
   .cursor.hovering { background: var(--accent); transform: translate(-50%,-50%) scale(0); }
-  .cursor-ring.hovering { width: 56px; height: 56px; border-color: rgba(201,169,110,0.6); }
+  .cursor-ring.hovering { width: 48px; height: 48px; border-color: rgba(201,169,110,0.7); }
 
   .grain { position: fixed; inset: -50%; width: 200%; height: 200%; z-index: 3; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E"); animation: grainAnim 0.5s steps(1) infinite; }
   @keyframes grainAnim { 0%{transform:translate(0,0)} 25%{transform:translate(-2%,-3%)} 50%{transform:translate(3%,1%)} 75%{transform:translate(-1%,3%)} 100%{transform:translate(2%,-2%)} }
@@ -64,85 +45,52 @@
   .nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
 
   .page { padding: 130px 52px 80px; max-width: 1400px; margin: 0 auto; }
-
   .page-header { margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
   .page-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 48px; letter-spacing: 6px; text-transform: uppercase; color: var(--white); }
 
-  /* Bigger bolder tabs */
+  /* Tabs — no overflow scroll */
   .tabs {
-    display: flex; gap: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0;
     border-bottom: 1px solid var(--border);
     margin-bottom: 40px;
     opacity: 0;
     animation: fadeUp 0.8s ease 0.35s forwards;
-    overflow-x: auto;
+    overflow: visible;
   }
   .tab {
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: rgba(232,228,220,0.35);
-    padding: 16px 36px 16px 0;
+    font-size: 13px; font-weight: 500; letter-spacing: 4px;
+    text-transform: uppercase; color: rgba(232,228,220,0.35);
+    padding: 16px 40px 16px 0;
     cursor: none; border: none; background: transparent;
     font-family: 'Montserrat', sans-serif;
-    transition: color 0.3s ease;
-    position: relative;
-    white-space: nowrap;
+    transition: color 0.3s ease; position: relative;
+    white-space: nowrap; flex-shrink: 0;
   }
   .tab::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.4s ease; }
   .tab:hover { color: rgba(232,228,220,0.7); }
   .tab.active { color: var(--white); }
-  .tab.active::after { width: calc(100% - 36px); }
+  .tab.active::after { width: calc(100% - 40px); }
 
   .grid-container { display: none; }
   .grid-container.active { display: block; animation: fadeUp 0.6s ease forwards; }
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
 
-  /* Tiles */
-  .project-tile {
-    position: relative; overflow: hidden;
-    aspect-ratio: 16/9; background: var(--dark);
-    cursor: none; opacity: 0;
-    animation: fadeUp 0.6s ease forwards;
-  }
-  .project-tile:nth-child(1){animation-delay:0.05s}
-  .project-tile:nth-child(2){animation-delay:0.1s}
-  .project-tile:nth-child(3){animation-delay:0.15s}
-  .project-tile:nth-child(4){animation-delay:0.2s}
-  .project-tile:nth-child(5){animation-delay:0.25s}
-  .project-tile:nth-child(6){animation-delay:0.3s}
-  .project-tile:nth-child(7){animation-delay:0.35s}
-  .project-tile:nth-child(8){animation-delay:0.4s}
-  .project-tile:nth-child(9){animation-delay:0.45s}
+  .project-tile { position: relative; overflow: hidden; aspect-ratio: 16/9; background: var(--dark); cursor: none; opacity: 0; animation: fadeUp 0.6s ease forwards; }
+  .project-tile:nth-child(1){animation-delay:0.05s} .project-tile:nth-child(2){animation-delay:0.1s} .project-tile:nth-child(3){animation-delay:0.15s}
+  .project-tile:nth-child(4){animation-delay:0.2s} .project-tile:nth-child(5){animation-delay:0.25s} .project-tile:nth-child(6){animation-delay:0.3s}
+  .project-tile:nth-child(7){animation-delay:0.35s} .project-tile:nth-child(8){animation-delay:0.4s} .project-tile:nth-child(9){animation-delay:0.45s}
 
   .tile-thumb { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); filter: brightness(0.92); }
   .tile-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.2); transition: background 0.4s ease; }
   .project-tile:hover .tile-overlay { background: rgba(0,0,0,0.05); }
   .project-tile:hover .tile-thumb { transform: scale(1.04); filter: brightness(1); }
 
-  /* Outline expand hover effect */
-  .tile-outline {
-    position: absolute; inset: 0;
-    border: 1px solid transparent;
-    transition: border-color 0.35s ease, inset 0.35s ease;
-    z-index: 2; pointer-events: none;
-  }
-  .project-tile:hover .tile-outline {
-    border-color: var(--accent);
-    inset: 6px;
-  }
+  .tile-outline { position: absolute; inset: 0; border: 1px solid transparent; transition: border-color 0.35s ease, inset 0.35s ease; z-index: 2; pointer-events: none; }
+  .project-tile:hover .tile-outline { border-color: var(--accent); inset: 6px; }
 
-  .play-btn {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%,-50%) scale(0.8);
-    width: 52px; height: 52px;
-    border: 1px solid rgba(255,255,255,0.5);
-    border-radius: 50%; display: flex;
-    align-items: center; justify-content: center;
-    opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
-    z-index: 3;
-  }
+  .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.8); width: 52px; height: 52px; border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease; z-index: 3; }
   .play-btn svg { width: 16px; height: 16px; fill: var(--white); margin-left: 3px; }
   .project-tile:hover .play-btn { opacity: 1; transform: translate(-50%,-50%) scale(1); border-color: var(--accent); }
 
@@ -152,7 +100,6 @@
   .project-tile:hover .tile-category { opacity: 1; }
   .tile-title { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 18px; color: var(--white); letter-spacing: 1px; line-height: 1.2; }
 
-  /* Lightbox */
   .lightbox { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.96); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
   .lightbox.open { opacity: 1; pointer-events: all; }
   .lightbox-inner { width: 90%; max-width: 1100px; position: relative; }
@@ -164,13 +111,12 @@
   .lightbox-meta { font-size: 10px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-top: 6px; }
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-  @media (max-width: 900px) { .page{padding:110px 28px 60px} nav{padding:24px 28px} .grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width: 900px) { .page{padding:110px 28px 60px} nav{padding:24px 28px} .grid{grid-template-columns:repeat(2,1fr)} .tab{padding:14px 24px 14px 0; font-size:11px; letter-spacing:3px;} }
   @media (max-width: 600px) { .grid{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
 
-<!-- Loader -->
 <div class="loader" id="loader">
   <div class="loader-logo">Zelva<em>™</em></div>
   <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
@@ -202,7 +148,7 @@
     <button class="tab" onclick="switchTab('corporate',this)">Corporate</button>
   </div>
 
-  <!-- AI — Letters first, Arctic second -->
+  <!-- AI -->
   <div class="grid-container active" id="tab-ai">
     <div class="grid">
       <div class="project-tile" onclick="openLightbox('ecqhRTu3lkk','Letters to Your Future Self','AI Film')">
@@ -220,20 +166,58 @@
     </div>
   </div>
 
-  <!-- Animation -->
+  <!-- Animation — reordered -->
   <div class="grid-container" id="tab-animation">
     <div class="grid">
-      <div class="project-tile" onclick="openLightbox('zcGy-5yWku8','Oreo Wonderfilled','Animation')">
+      <!-- Tic Tac first -->
+      <div class="project-tile" onclick="openLightbox('05ZyIW8M50s','Tic Tac — Little Adventures — Fall','Animation')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/05ZyIW8M50s/maxresdefault.jpg" alt="Tic Tac Little Adventures Fall" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Tic Tac — Little Adventures — Fall</div></div>
+      </div>
+      <div class="project-tile" onclick="openLightbox('GB23PDQ20sM','Tic Tac — Little Adventures — Jump','Animation')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/GB23PDQ20sM/maxresdefault.jpg" alt="Tic Tac Little Adventures Jump" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Tic Tac — Little Adventures — Jump</div></div>
+      </div>
+      <div class="project-tile" onclick="openLightbox('mmnGGgbEZfU','Tic Tac — Little Adventures — Sharks','Animation')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/mmnGGgbEZfU/maxresdefault.jpg" alt="Tic Tac Little Adventures Sharks" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Tic Tac — Little Adventures — Sharks</div></div>
+      </div>
+      <div class="project-tile" onclick="openLightbox('UWcqECBHtcw','Tic Tac — Little Adventures — Space','Animation')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/UWcqECBHtcw/maxresdefault.jpg" alt="Tic Tac Little Adventures Space" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Tic Tac — Little Adventures — Space</div></div>
+      </div>
+      <!-- Oreo -->
+      <div class="project-tile" onclick="openLightbox('NyF1yUPSGa8','Oreo — Wondercarols','Animation')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/NyF1yUPSGa8/maxresdefault.jpg" alt="Oreo Wondercarols" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Oreo — Wondercarols</div></div>
+      </div>
+      <div class="project-tile" onclick="openLightbox('9L4rZlIpX5k','Oreo — S\'more','Animation')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/9L4rZlIpX5k/maxresdefault.jpg" alt="Oreo Smore" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Oreo — S'more</div></div>
+      </div>
+      <div class="project-tile" onclick="openLightbox('zcGy-5yWku8','Oreo — Wonderfilled','Animation')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/zcGy-5yWku8/maxresdefault.jpg" alt="Oreo Wonderfilled" loading="lazy">
         <div class="tile-overlay"></div><div class="tile-outline"></div>
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Oreo Wonderfilled</div></div>
+        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Oreo — Wonderfilled</div></div>
       </div>
-      <div class="project-tile" onclick="openLightbox('qcSZLKcOKD4','Oreo Wonderfilled — Holiday Lights','Animation')">
+      <div class="project-tile" onclick="openLightbox('qcSZLKcOKD4','Oreo — Wonderfilled — Holiday Lights','Animation')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/qcSZLKcOKD4/maxresdefault.jpg" alt="Oreo Wonderfilled Holiday Lights" loading="lazy">
         <div class="tile-overlay"></div><div class="tile-outline"></div>
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Oreo Wonderfilled — Holiday Lights</div></div>
+        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Oreo — Wonderfilled — Holiday Lights</div></div>
       </div>
       <div class="project-tile" onclick="openLightbox('SQngSNwjZFE','Oreo — Aladdin','Animation')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/SQngSNwjZFE/maxresdefault.jpg" alt="Oreo Aladdin" loading="lazy">
@@ -241,24 +225,13 @@
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Oreo — Aladdin</div></div>
       </div>
-      <div class="project-tile" onclick="openLightbox('NyF1yUPSGa8','Oreo — Wondercarols','Animation')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/NyF1yUPSGa8/maxresdefault.jpg" alt="Oreo Wondercarols" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Oreo — Wondercarols</div></div>
-      </div>
       <div class="project-tile" onclick="openLightbox('uuPzxDLp2-o','Oreo — Hypnotize','Animation')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/uuPzxDLp2-o/maxresdefault.jpg" alt="Oreo Hypnotize" loading="lazy">
         <div class="tile-overlay"></div><div class="tile-outline"></div>
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Oreo — Hypnotize</div></div>
       </div>
-      <div class="project-tile" onclick="openLightbox('9L4rZlIpX5k','Oreo Smore','Animation')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/9L4rZlIpX5k/maxresdefault.jpg" alt="Oreo Smore" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Oreo S'more</div></div>
-      </div>
+      <!-- Ritz -->
       <div class="project-tile" onclick="openLightbox('XPIYYZoljLw','Ritz — Life\'s Rich — January','Animation')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/XPIYYZoljLw/maxresdefault.jpg" alt="Ritz Life's Rich January" loading="lazy">
         <div class="tile-overlay"></div><div class="tile-outline"></div>
@@ -289,6 +262,7 @@
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Ritz — Life's Rich — Spring</div></div>
       </div>
+      <!-- Rest -->
       <div class="project-tile" onclick="openLightbox('f61-Aw9SWR8','Sabra — Mariachi','Animation')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/f61-Aw9SWR8/maxresdefault.jpg" alt="Sabra Mariachi" loading="lazy">
         <div class="tile-overlay"></div><div class="tile-outline"></div>
@@ -307,36 +281,18 @@
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Care — Power of a Box</div></div>
       </div>
-      <div class="project-tile" onclick="openLightbox('05ZyIW8M50s','Tic Tac — Little Adventures — Fall','Animation')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/05ZyIW8M50s/maxresdefault.jpg" alt="Tic Tac Little Adventures Fall" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Tic Tac — Little Adventures — Fall</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('GB23PDQ20sM','Tic Tac — Little Adventures — Jump','Animation')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/GB23PDQ20sM/maxresdefault.jpg" alt="Tic Tac Little Adventures Jump" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Tic Tac — Little Adventures — Jump</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('mmnGGgbEZfU','Tic Tac — Little Adventures — Sharks','Animation')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/mmnGGgbEZfU/maxresdefault.jpg" alt="Tic Tac Little Adventures Sharks" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Tic Tac — Little Adventures — Sharks</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('UWcqECBHtcw','Tic Tac — Little Adventures — Space','Animation')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/UWcqECBHtcw/maxresdefault.jpg" alt="Tic Tac Little Adventures Space" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Animation</div><div class="tile-title">Tic Tac — Little Adventures — Space</div></div>
-      </div>
     </div>
   </div>
 
-  <!-- Film -->
+  <!-- Film — reordered -->
   <div class="grid-container" id="tab-film">
     <div class="grid">
+      <div class="project-tile" onclick="openLightbox('Pjy3Fd_LmKU','Hue & Cry — New Space Launch','Film')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/Pjy3Fd_LmKU/maxresdefault.jpg" alt="Hue and Cry New Space Launch" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">Film</div><div class="tile-title">Hue & Cry — New Space Launch</div></div>
+      </div>
       <div class="project-tile" onclick="openLightbox('fcxBsummD1s','Legends Inspire Greatness','Film')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/fcxBsummD1s/maxresdefault.jpg" alt="Legends Inspire Greatness" loading="lazy">
         <div class="tile-overlay"></div><div class="tile-outline"></div>
@@ -349,12 +305,6 @@
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="tile-info"><div class="tile-category">Film</div><div class="tile-title">Care — Behind the Scenes</div></div>
       </div>
-      <div class="project-tile" onclick="openLightbox('Pjy3Fd_LmKU','Hue & Cry — New Space Launch','Film')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/Pjy3Fd_LmKU/maxresdefault.jpg" alt="Hue and Cry New Space Launch" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Film</div><div class="tile-title">Hue & Cry — New Space Launch</div></div>
-      </div>
       <div class="project-tile" onclick="openLightbox('mDD_GwlzwmY','Midnight Riders — Richmond','Film')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/mDD_GwlzwmY/maxresdefault.jpg" alt="Midnight Riders Richmond" loading="lazy">
         <div class="tile-overlay"></div><div class="tile-outline"></div>
@@ -364,14 +314,14 @@
     </div>
   </div>
 
-  <!-- Corporate -->
+  <!-- Corporate — reordered -->
   <div class="grid-container" id="tab-corporate">
     <div class="grid">
-      <div class="project-tile" onclick="openLightbox('NjJrjYJLLlE','Yukon Metals','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/NjJrjYJLLlE/maxresdefault.jpg" alt="Yukon Metals" loading="lazy">
+      <div class="project-tile" onclick="openLightbox('vb-ODK71hgA','Skeena — People & Culture','Corporate')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/vb-ODK71hgA/maxresdefault.jpg" alt="Skeena People and Culture" loading="lazy">
         <div class="tile-overlay"></div><div class="tile-outline"></div>
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Yukon Metals</div></div>
+        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Skeena — People & Culture</div></div>
       </div>
       <div class="project-tile" onclick="openLightbox('BrhAn7LOwXU','White Gold','Corporate')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/BrhAn7LOwXU/maxresdefault.jpg" alt="White Gold" loading="lazy">
@@ -379,11 +329,23 @@
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">White Gold</div></div>
       </div>
-      <div class="project-tile" onclick="openLightbox('vb-ODK71hgA','Skeena — People & Culture','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/vb-ODK71hgA/maxresdefault.jpg" alt="Skeena People and Culture" loading="lazy">
+      <div class="project-tile" onclick="openLightbox('oPkoPBl77s8','Invest Yukon — Fireweed','Corporate')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/oPkoPBl77s8/maxresdefault.jpg" alt="Invest Yukon Fireweed" loading="lazy">
         <div class="tile-overlay"></div><div class="tile-outline"></div>
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Skeena — People & Culture</div></div>
+        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Invest Yukon — Fireweed</div></div>
+      </div>
+      <div class="project-tile" onclick="openLightbox('oAcmEcJuchU','Invest Yukon — White Gold','Corporate')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/oAcmEcJuchU/maxresdefault.jpg" alt="Invest Yukon White Gold" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Invest Yukon — White Gold</div></div>
+      </div>
+      <div class="project-tile" onclick="openLightbox('NjJrjYJLLlE','Yukon Metals','Corporate')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/NjJrjYJLLlE/maxresdefault.jpg" alt="Yukon Metals" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Yukon Metals</div></div>
       </div>
       <div class="project-tile" onclick="openLightbox('3KAHQ-ZW8Iw','Pan American Silver — Sustainability','Corporate')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/3KAHQ-ZW8Iw/maxresdefault.jpg" alt="Pan American Silver Sustainability" loading="lazy">
@@ -403,18 +365,6 @@
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Pan American Silver — Leadership</div></div>
       </div>
-      <div class="project-tile" onclick="openLightbox('oPkoPBl77s8','Invest Yukon — Fireweed','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/oPkoPBl77s8/maxresdefault.jpg" alt="Invest Yukon Fireweed" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Invest Yukon — Fireweed</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('oAcmEcJuchU','Invest Yukon — White Gold','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/oAcmEcJuchU/maxresdefault.jpg" alt="Invest Yukon White Gold" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Invest Yukon — White Gold</div></div>
-      </div>
     </div>
   </div>
 
@@ -433,17 +383,20 @@
 <script>
   // Loader
   window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('loader').classList.add('hidden');
-    }, 1000);
+    setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 1000);
   });
 
-  // Cursor
+  // Cursor — faster lerp
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
-  (function animRing(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+  (function animRing(){
+    rx+=(mx-rx)*0.22;
+    ry+=(my-ry)*0.22;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(animRing);
+  })();
   document.querySelectorAll('a, button, .project-tile').forEach(el => {
     el.addEventListener('mouseenter',()=>{ cursor.classList.add('hovering'); ring.classList.add('hovering'); });
     el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hovering'); ring.classList.remove('hovering'); });
