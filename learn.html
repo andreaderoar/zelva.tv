@@ -19,8 +19,8 @@
   @keyframes grainAnim { 0%{transform:translate(0,0)} 25%{transform:translate(-2%,-3%)} 50%{transform:translate(3%,1%)} 75%{transform:translate(-1%,3%)} 100%{transform:translate(2%,-2%)} }
 
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 36px 52px; }
-  .nav-logo { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 22px; letter-spacing: 8px; text-transform: uppercase; color: var(--white); text-decoration: none; }
-  .nav-logo em { color: var(--accent); font-style: italic; font-size: 15px; }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo img { height: 28px; width: auto; display: block; }
   .nav-links { display: flex; gap: 44px; list-style: none; }
   .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,228,220,0.5); text-decoration: none; transition: color 0.3s ease; position: relative; }
   .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s ease; }
@@ -100,7 +100,7 @@
 
 <!-- Loader -->
 <div class="loader" id="loader">
-  <div class="loader-logo">Zelva<em>™</em></div>
+  <div class="loader-logo"><img src="Zelva_White_HD.png" alt="Zelva" style="height:36px;width:auto;" /></div>
   <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
 </div>
 
@@ -109,7 +109,7 @@
 <div class="grain"></div>
 
 <nav>
-  <a href="index.html" class="nav-logo">Zelva<em>™</em></a>
+  <a href="index.html" class="nav-logo"><img src="Zelva_White.png" alt="Zelva" /></a>
   <ul class="nav-links">
     <li><a href="work.html">Work</a></li>
     <li><a href="about.html">About</a></li>
