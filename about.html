@@ -9,26 +9,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --black: #0a0a0a; --light: #e8e4dc; --muted: rgba(232,228,220,0.45); --accent: #c9a96e; --white: #f5f2ec; }
+  :root { --black: #0a0a0a; --light: #e8e4dc; --muted: rgba(232,228,220,0.45); --accent: #c9a96e; --white: #f5f2ec; --border: rgba(232,228,220,0.08); }
   html, body { background: var(--black); color: var(--light); font-family: 'Montserrat', sans-serif; cursor: none; min-height: 100vh; }
 
+  /* Loader */
   .loader { position: fixed; inset: 0; background: var(--black); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transition: opacity 0.6s ease; }
   .loader.hidden { opacity: 0; pointer-events: none; }
-  .loader-logo { display: flex; align-items: center; justify-content: center; }
   .loader-logo img { height: 42px; width: auto; display: block; }
   .loader-bar-track { width: 120px; height: 1px; background: rgba(255,255,255,0.08); position: relative; overflow: hidden; }
   .loader-bar-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0; background: var(--accent); animation: loadFill 0.9s ease forwards; }
   @keyframes loadFill { from{width:0} to{width:100%} }
 
+  /* Cursor */
   .cursor { position: fixed; width: 6px; height: 6px; background: var(--white); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
   .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease; }
   .cursor.hovering { background: var(--accent); transform: translate(-50%,-50%) scale(0); }
   .cursor-ring.hovering { width: 48px; height: 48px; border-color: rgba(201,169,110,0.6); }
 
-  .grain { position: fixed; inset: -50%; width: 200%; height: 200%; z-index: 3; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E"); animation: grainAnim 0.5s steps(1) infinite; }
+  /* Grain */
+  .grain { position: fixed; inset: -50%; width: 200%; height: 200%; z-index: 1; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E"); animation: grainAnim 0.5s steps(1) infinite; }
   @keyframes grainAnim { 0%{transform:translate(0,0)} 25%{transform:translate(-2%,-3%)} 50%{transform:translate(3%,1%)} 75%{transform:translate(-1%,3%)} 100%{transform:translate(2%,-2%)} }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 36px 52px; }
+  /* Nav */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 36px 52px; background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%); }
   .nav-logo { display: inline-flex; align-items: center; text-decoration: none; }
   .nav-logo img { height: 30px; width: auto; display: block; }
   .nav-links { display: flex; gap: 44px; list-style: none; }
@@ -37,15 +40,82 @@
   .nav-links a:hover, .nav-links a.active { color: var(--white); }
   .nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
 
-  .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 52px; }
+  /* Page Layout */
+  .page { position: relative; z-index: 2; padding: 0 52px 100px; max-width: 1300px; margin: 0 auto; }
 
-  .coming-soon-eyebrow { font-size: 10px; font-weight: 400; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards; }
-  .coming-soon-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(48px, 7vw, 90px); letter-spacing: 12px; text-transform: uppercase; color: var(--white); line-height: 1; opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards; }
-  .coming-soon-line { width: 60px; height: 1px; background: var(--accent); opacity: 0; margin: 32px auto 0; animation: fadeUp 0.8s ease 0.7s forwards; }
-  .coming-soon-sub { font-size: 11px; font-weight: 400; letter-spacing: 5px; text-transform: uppercase; color: rgba(232,228,220,0.35); margin-top: 20px; opacity: 0; animation: fadeUp 0.8s ease 0.9s forwards; }
+  /* Hero Section */
+  .about-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; min-height: 100vh; padding-top: 120px; }
 
-  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-  @media (max-width: 768px) { nav{padding:24px 28px} .page{padding:0 28px} }
+  .about-photo-col { position: relative; opacity: 0; animation: fadeUp 1s ease 0.2s forwards; }
+  .about-photo-wrap { position: relative; display: inline-block; width: 100%; }
+  .about-photo-wrap::before { content: ''; position: absolute; inset: -1px; border: 1px solid var(--border); z-index: 1; pointer-events: none; }
+  .about-photo-wrap::after { content: ''; position: absolute; top: 16px; left: 16px; right: -16px; bottom: -16px; border: 1px solid rgba(201,169,110,0.2); z-index: 0; pointer-events: none; }
+  .about-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top center; display: block; filter: brightness(0.9) contrast(1.05); }
+
+  .about-text-col { opacity: 0; animation: fadeUp 1s ease 0.4s forwards; }
+  .about-eyebrow { font-size: 10px; font-weight: 400; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .about-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(42px, 5vw, 68px); letter-spacing: 6px; text-transform: uppercase; color: var(--white); line-height: 1.05; margin-bottom: 8px; }
+  .about-role { font-size: 11px; font-weight: 400; letter-spacing: 5px; text-transform: uppercase; color: rgba(232,228,220,0.4); margin-bottom: 40px; }
+  .about-divider { width: 48px; height: 1px; background: var(--accent); margin-bottom: 36px; }
+
+  .about-bio { font-size: 13.5px; font-weight: 300; line-height: 1.9; color: rgba(232,228,220,0.75); }
+  .about-bio p { margin-bottom: 20px; }
+  .about-bio p:last-child { margin-bottom: 0; }
+  .about-bio em { font-style: italic; color: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 16px; }
+
+  .about-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: clamp(22px, 2.5vw, 30px); color: var(--white); line-height: 1.4; letter-spacing: 1px; border-left: 1px solid var(--accent); padding-left: 28px; margin-top: 40px; }
+
+  /* Skills Section */
+  .skills-section { padding-top: 100px; border-top: 1px solid var(--border); margin-top: 80px; opacity: 0; animation: fadeUp 1s ease 0.6s forwards; }
+  .skills-header { display: flex; align-items: baseline; gap: 24px; margin-bottom: 60px; }
+  .skills-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 42px; letter-spacing: 6px; text-transform: uppercase; color: var(--white); }
+  .skills-title-line { flex: 1; height: 1px; background: var(--border); }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .skill-group { padding: 36px 32px; border: 1px solid var(--border); position: relative; overflow: hidden; transition: border-color 0.4s ease; }
+  .skill-group::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 0; background: var(--accent); transition: height 0.5s ease; }
+  .skill-group:hover { border-color: rgba(232,228,220,0.15); }
+  .skill-group:hover::before { height: 100%; }
+
+  .skill-group-label { font-size: 9px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .skill-items { display: flex; flex-direction: column; gap: 10px; }
+  .skill-item { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: rgba(232,228,220,0.6); transition: color 0.3s ease; }
+  .skill-group:hover .skill-item { color: rgba(232,228,220,0.85); }
+  .skill-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  /* Stats row */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 2px; }
+  .stat-box { padding: 32px; border: 1px solid var(--border); text-align: center; transition: border-color 0.4s ease; }
+  .stat-box:hover { border-color: rgba(201,169,110,0.25); }
+  .stat-number { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 52px; color: var(--white); letter-spacing: 2px; line-height: 1; }
+  .stat-number span { font-size: 28px; color: var(--accent); }
+  .stat-label { font-size: 9px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: rgba(232,228,220,0.35); margin-top: 8px; }
+
+  /* Footer */
+  .about-footer { margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; opacity: 0; animation: fadeUp 1s ease 0.8s forwards; }
+  .footer-cta { font-size: 11px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: rgba(232,228,220,0.5); text-decoration: none; transition: color 0.3s ease; display: flex; align-items: center; gap: 16px; }
+  .footer-cta:hover { color: var(--white); }
+  .cta-line { width: 40px; height: 1px; background: var(--accent); }
+  .copyright { font-size: 10px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,228,220,0.25); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  @media (max-width: 900px) {
+    nav { padding: 24px 28px; }
+    .page { padding: 0 28px 80px; }
+    .about-hero { grid-template-columns: 1fr; gap: 60px; padding-top: 140px; min-height: auto; }
+    .about-photo-wrap::after { display: none; }
+    .about-photo { aspect-ratio: 4/3; object-position: center top; }
+    .photo-label { bottom: -24px; }
+    .about-text-col { padding-top: 40px; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .about-footer { flex-direction: column; gap: 20px; text-align: center; }
+  }
 </style>
 </head>
 <body>
@@ -70,10 +140,116 @@
 </nav>
 
 <div class="page">
-  <div class="coming-soon-eyebrow">Zelva — About</div>
-  <div class="coming-soon-title">Coming Soon</div>
-  <div class="coming-soon-line"></div>
-  <div class="coming-soon-sub">Our Story — In Development</div>
+
+  <!-- Hero: Photo + Bio -->
+  <div class="about-hero">
+
+    <div class="about-photo-col">
+      <div class="about-photo-wrap">
+        <img class="about-photo" src="andrea.jpg" alt="Andrea — Zelva">
+      </div>
+
+    </div>
+
+    <div class="about-text-col">
+      <div class="about-eyebrow">Director · Editor · Storyteller</div>
+      <div class="about-name">Andrea</div>
+      <div class="about-role">Founder, Zelva Creative Studio</div>
+      <div class="about-divider"></div>
+
+      <div class="about-bio">
+        <p>
+          I studied Digital Design at Vancouver Film School, specializing in motion graphics — and never really stopped moving. Over the past 10+ years I've worked as a freelance editor, cinematographer, and animator, with full-time stints at <em>The Martin Agency</em> and <em>Hue & Cry</em> animation studio, building a craft shaped by one constant obsession.
+        </p>
+        <p>
+          The story. Always the story.
+        </p>
+        <p>
+          Today, I create with AI. I combine Adobe Premiere and After Effects with the latest AI video tools — building workflows that are faster, more expressive, and closer to the feeling you're chasing. I run Zelva, an AI video production studio, and I teach people how to harness these tools with intention, taste, and a real point of view.
+        </p>
+        <p>
+          I stay at the edge of what's possible. New tools, new workflows, new ways to surprise an audience. But the real why never changes.
+        </p>
+      </div>
+
+      <div class="about-quote">
+        "Funny stories. Real stories. Inspired ones.<br>That's what I'm here for."
+      </div>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <div class="skills-section">
+    <div class="skills-header">
+      <div class="skills-title">Craft</div>
+      <div class="skills-title-line"></div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-label">Adobe Suite</div>
+        <div class="skill-items">
+          <div class="skill-item"><span class="skill-dot"></span>Premiere Pro</div>
+          <div class="skill-item"><span class="skill-dot"></span>After Effects</div>
+          <div class="skill-item"><span class="skill-dot"></span>Photoshop</div>
+          <div class="skill-item"><span class="skill-dot"></span>Illustrator</div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">AI Video</div>
+        <div class="skill-items">
+          <div class="skill-item"><span class="skill-dot"></span>Seedance 2</div>
+          <div class="skill-item"><span class="skill-dot"></span>Kling</div>
+          <div class="skill-item"><span class="skill-dot"></span>Higgsfield</div>
+          <div class="skill-item"><span class="skill-dot"></span>Dreamina</div>
+          <div class="skill-item"><span class="skill-dot"></span>Grok</div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">AI & Creative</div>
+        <div class="skill-items">
+          <div class="skill-item"><span class="skill-dot"></span>Claude</div>
+          <div class="skill-item"><span class="skill-dot"></span>Nano Banana Pro</div>
+          <div class="skill-item"><span class="skill-dot"></span>ElevenLabs</div>
+          <div class="skill-item"><span class="skill-dot"></span>Midjourney</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-number">10<span>+</span></div>
+        <div class="stat-label">Years in the Industry</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Disciplines Mastered</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Stories Left to Tell</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">1</div>
+        <div class="stat-label">Real Why</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="about-footer">
+    <a href="work.html" class="footer-cta">
+      <span class="cta-line"></span>
+      View Work
+    </a>
+    <a href="contact.html" class="footer-cta">
+      Get in Touch
+      <span class="cta-line"></span>
+    </a>
+    <span class="copyright">© Zelva 2026</span>
+  </div>
+
 </div>
 
 <script>
@@ -85,7 +261,7 @@
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
   (function animRing(){ rx+=(mx-rx)*0.22; ry+=(my-ry)*0.22; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
-  document.querySelectorAll('a').forEach(el => {
+  document.querySelectorAll('a, .skill-group').forEach(el => {
     el.addEventListener('mouseenter',()=>{ cursor.classList.add('hovering'); ring.classList.add('hovering'); });
     el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hovering'); ring.classList.remove('hovering'); });
   });
