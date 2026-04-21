@@ -302,6 +302,7 @@ figcaption {
 }
 
 .prompt-body {
+  position: relative;
   padding: 1.25rem 1.5rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.85rem;
@@ -309,6 +310,60 @@ figcaption {
   color: var(--text);
   white-space: pre-wrap;
   word-break: break-word;
+  max-height: 4.1rem; /* ~2 lines at line-height 1.7 */
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.prompt-body::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3rem;
+  background: linear-gradient(to bottom, transparent 0%, var(--bg) 95%);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.prompt-body.expanded {
+  max-height: 9999px;
+  cursor: default;
+}
+.prompt-body.expanded::after {
+  opacity: 0;
+}
+
+.prompt-expand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border-soft);
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.25s ease, background 0.25s ease, letter-spacing 0.3s ease;
+}
+.prompt-expand:hover {
+  color: var(--amber);
+  background: var(--amber-bg);
+  letter-spacing: 0.2em;
+}
+.prompt-expand .chev {
+  font-size: 0.85rem;
+  line-height: 1;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.prompt-expand.open .chev {
+  transform: rotate(180deg);
 }
 
 /* ========== GRAMMAR NOTE ========== */
@@ -485,6 +540,7 @@ footer p {
         <button class="copy-btn" data-copy="Cinematic live-action photograph, full-length shot of a wiry figure in a cracked dust-red riding jacket over desert-tan cargo trousers, wearing a sleek matte-black robotic mask with glowing amber visor slits and exposed mechanical jaw plating, aviator helmet strapped over the top, straddling a prototype motorcycle with enormous knobby oversized wheels, an exposed tubular chassis, and a crown of iridescent blue solar panels fanned above the engine bay, cracked salt-flat desert under hard midday sun, deep cobalt sky, distant mesas shimmering in heat haze, swirling dust particles catching the light, hazy atmospheric backlight, volumetric god rays, shot on ARRI Alexa 65 with Panavision Ultra Vista anamorphic 50mm lens, shallow depth of field, subtle lens flare, fine 35mm film grain, saturated earthy color grade --ar 7:3 --profile uh44zyu qu8xvwd --hd --v 8.1">Copy</button>
       </div>
       <div class="prompt-body">Cinematic live-action photograph, full-length shot of a wiry figure in a cracked dust-red riding jacket over desert-tan cargo trousers, wearing a sleek matte-black robotic mask with glowing amber visor slits and exposed mechanical jaw plating, aviator helmet strapped over the top, straddling a prototype motorcycle with enormous knobby oversized wheels, an exposed tubular chassis, and a crown of iridescent blue solar panels fanned above the engine bay, cracked salt-flat desert under hard midday sun, deep cobalt sky, distant mesas shimmering in heat haze, swirling dust particles catching the light, hazy atmospheric backlight, volumetric god rays, shot on ARRI Alexa 65 with Panavision Ultra Vista anamorphic 50mm lens, shallow depth of field, subtle lens flare, fine 35mm film grain, saturated earthy color grade --ar 7:3 --profile uh44zyu qu8xvwd --hd --v 8.1</div>
+    <button class="prompt-expand" type="button" aria-expanded="false"><span class="label">Show full prompt</span> <span class="chev">↓</span></button>
     </div>
 
     <h3>Upscaling inside Higgsfield (Nano Banana Pro 2K)</h3>
@@ -501,6 +557,7 @@ footer p {
         <button class="copy-btn" data-copy="take the image attached and keep everything as is, but make the image higher quality, higher detail, 4k, ultra realistic live action, make the jacket less wrinkled but more broken, his feet on the motorcycle… he is racing">Copy</button>
       </div>
       <div class="prompt-body">take the image attached and keep everything as is, but make the image higher quality, higher detail, 4k, ultra realistic live action, make the jacket less wrinkled but more broken, his feet on the motorcycle… he is racing</div>
+    <button class="prompt-expand" type="button" aria-expanded="false"><span class="label">Show full prompt</span> <span class="chev">↓</span></button>
     </div>
 
 </section>
@@ -524,6 +581,7 @@ footer p {
         <button class="copy-btn" data-copy="take the image attached and focus on the main character in the center, take the same character with the same clothing and do a close up of him on the right and a full shot on the left, with relax expression and pose, for character consistency, white background, hyper realistic textures">Copy</button>
       </div>
       <div class="prompt-body">take the image attached and focus on the main character in the center, take the same character with the same clothing and do a close up of him on the right and a full shot on the left, with relax expression and pose, for character consistency, white background, hyper realistic textures</div>
+    <button class="prompt-expand" type="button" aria-expanded="false"><span class="label">Show full prompt</span> <span class="chev">↓</span></button>
     </div>
 
 <h3>The Mud Monster</h3>
@@ -539,6 +597,7 @@ footer p {
         <button class="copy-btn" data-copy="take the image for live action scene reference location and color, and create a DUST , MUD Monsters, large, hyper realistic live action, cinema shot, close up on the left wide shot on the right, in the same location, just one monster, the monster and nothing else">Copy</button>
       </div>
       <div class="prompt-body">take the image for live action scene reference location and color, and create a DUST , MUD Monsters, large, hyper realistic live action, cinema shot, close up on the left wide shot on the right, in the same location, just one monster, the monster and nothing else</div>
+    <button class="prompt-expand" type="button" aria-expanded="false"><span class="label">Show full prompt</span> <span class="chev">↓</span></button>
     </div>
 
     <h3>The Transformer</h3>
@@ -554,6 +613,7 @@ footer p {
         <button class="copy-btn" data-copy="take the image for live action scene reference location and color, and create a transformer from the motorcycle, humanoid figure, made of metal and the same wheels somewhere in the body, its the guys bike as a transformer, full shot on the left wide shot on the right, hyper realistic details of the character, live action, just the transformer, focus on the bike only">Copy</button>
       </div>
       <div class="prompt-body">take the image for live action scene reference location and color, and create a transformer from the motorcycle, humanoid figure, made of metal and the same wheels somewhere in the body, its the guys bike as a transformer, full shot on the left wide shot on the right, hyper realistic details of the character, live action, just the transformer, focus on the bike only</div>
+    <button class="prompt-expand" type="button" aria-expanded="false"><span class="label">Show full prompt</span> <span class="chev">↓</span></button>
     </div>
 
     <h3>The Bike (solo shot)</h3>
@@ -569,6 +629,7 @@ footer p {
         <button class="copy-btn" data-copy="take the image attached and do a solo shot of just the bike exactly as is in a white background super high quality">Copy</button>
       </div>
       <div class="prompt-body">take the image attached and do a solo shot of just the bike exactly as is in a white background super high quality</div>
+    <button class="prompt-expand" type="button" aria-expanded="false"><span class="label">Show full prompt</span> <span class="chev">↓</span></button>
     </div>
 
 </section>
@@ -683,6 +744,7 @@ Real time through the ride. Ramps to slow motion on the hard brake and as the gr
 
 AUDIO
 No music. SFX only</div>
+    <button class="prompt-expand" type="button" aria-expanded="false"><span class="label">Show full prompt</span> <span class="chev">↓</span></button>
   </div>
 
   <!-- ADDITIONAL PROMPT 01 -->
@@ -775,6 +837,7 @@ Rider stands steady with trained stillness. Dust drifts past his face in the win
 
 AUDIO
 No music. SFX only: wind across the flats, faint filtered breath through the gas mask. The Rider's sarcastic line plays over this ambient audio.</div>
+    <button class="prompt-expand" type="button" aria-expanded="false"><span class="label">Show full prompt</span> <span class="chev">↓</span></button>
   </div>
 
   <!-- SCENE 2 - TRANSFORMATION -->
@@ -871,6 +934,7 @@ Rider stands with real weight. Transformation is smooth and mechanical, one bike
 
 AUDIO
 No music. SFX only: wind across the flats, mechanical cascade of servo whines, panel lock clacks, pneumatic hiss on joint extensions, each fold sequential, low electrical hum as amber lights ignite, heavy transformer footfall as it plants, quiet wind on final frame.</div>
+    <button class="prompt-expand" type="button" aria-expanded="false"><span class="label">Show full prompt</span> <span class="chev">↓</span></button>
   </div>
 
 </div>
@@ -963,6 +1027,7 @@ Real heavy weight. Head and shoulders move with mass, dried mud surface flexing 
 
 AUDIO
 No music. SFX only: deep low rumble from the figure, heavy footfalls compressing salt, dried mud cracking with motion, wind across his face and body, dust shifting.</div>
+    <button class="prompt-expand" type="button" aria-expanded="false"><span class="label">Show full prompt</span> <span class="chev">↓</span></button>
   </div>
 
   <!-- SCENE 3 - THE FIGHT -->
@@ -1057,6 +1122,7 @@ Every strike has weight. The Mech moves fast and light but its footfalls compres
 
 AUDIO
 No music. Sound effects only. Heavy Colossus grunts and earth-deep roars. Mech servo whines and metallic impacts on every strike. Mud cracking and chunks hitting the salt crust. Sub-bass slam on ground impacts. Whoosh of air around every heavy swing. Slow-motion bed drops low and muted on the final frozen beat.</div>
+    <button class="prompt-expand" type="button" aria-expanded="false"><span class="label">Show full prompt</span> <span class="chev">↓</span></button>
   </div>
 
   <p style="color: var(--text-muted); font-style: italic; margin-top: 3rem;">
@@ -1190,6 +1256,26 @@ No music. Sound effects only. Heavy Colossus grunts and earth-deep roars. Mech s
           btn.classList.remove('copied');
         }, 1800);
       }
+    });
+  });
+
+  // Collapsible prompts
+  document.querySelectorAll('.prompt-expand').forEach(btn => {
+    const body = btn.previousElementSibling;
+    if (!body || !body.classList.contains('prompt-body')) return;
+
+    const toggle = () => {
+      const isOpen = body.classList.toggle('expanded');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      btn.querySelector('.label').textContent = isOpen ? 'Collapse' : 'Show full prompt';
+      btn.querySelector('.chev').textContent = isOpen ? '\u2191' : '\u2193';
+    };
+
+    btn.addEventListener('click', toggle);
+    body.addEventListener('click', (e) => {
+      // Only expand on click when collapsed; when expanded, clicks select text normally
+      if (!body.classList.contains('expanded')) toggle();
     });
   });
 </script>
