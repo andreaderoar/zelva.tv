@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I Made Dust Born — Zelva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg-elevated: #111111;
+  --bg-card: #151515;
+  --border: #252525;
+  --border-soft: #1a1a1a;
+  --text: #e8e4dc;
+  --text-muted: #9a958b;
+  --text-dim: #6a665e;
+  --amber: #c9a96e;
+  --amber-dim: #8a7548;
+  --amber-bg: rgba(201, 169, 110, 0.08);
+  --banana: #c9a96e;
+  --banana-dim: #8a7548;
+  --banana-bg: rgba(201, 169, 110, 0.06);
+  --rust: #c9a96e;
+  --rust-bg: rgba(201, 169, 110, 0.08);
+  --max-w: 760px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 8rem;
+}
+
+/* ========== LAYOUT ========== */
+.wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.wide {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ========== MASTHEAD ========== */
+.masthead {
+  padding: 3rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border-soft);
+  margin-bottom: 4rem;
+}
+.masthead-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.brand {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.brand em {
+  color: var(--amber);
+  font-style: italic;
+}
+.meta-top {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* ========== HERO ========== */
+.hero {
+  margin-bottom: 4rem;
+}
+.hero-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--amber);
+}
+.hero-sub {
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 580px;
+  margin-bottom: 2.5rem;
+}
+.hero-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.hero-meta span strong {
+  display: block;
+  color: var(--text);
+  font-weight: 500;
+  margin-top: 0.3rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-size: 0.85rem;
+}
+
+/* ========== HERO IMAGE ========== */
+.hero-img {
+  margin: 4rem auto;
+  max-width: 1100px;
+  padding: 0 1.5rem;
+}
+.hero-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+}
+.hero-img .caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* ========== SECTIONS ========== */
+section {
+  margin-bottom: 4rem;
+}
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1rem;
+}
+h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+  color: var(--text);
+}
+h2 em { font-style: italic; color: var(--amber); }
+h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin: 3rem 0 1.25rem;
+  color: var(--text);
+}
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  margin: 2rem 0 0.75rem;
+  color: var(--text);
+}
+
+p { margin-bottom: 1.25rem; color: var(--text); }
+p + p { margin-top: -0.25rem; }
+
+.lead {
+  font-size: 1.2rem;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 2rem;
+  letter-spacing: -0.01em;
+}
+
+/* ========== IMAGES ========== */
+figure {
+  margin: 2.5rem 0;
+}
+figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+  border: 1px solid var(--border-soft);
+}
+figcaption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 0.85rem;
+  line-height: 1.5;
+}
+
+/* ========== PROMPT BLOCKS ========== */
+.prompt {
+  position: relative;
+  margin: 1.75rem 0;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+
+.prompt-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--bg-card);
+}
+
+.prompt-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.prompt.banana { border-color: var(--banana-dim); }
+.prompt.banana .prompt-head { background: var(--banana-bg); }
+.prompt.banana .prompt-tag { color: var(--banana); }
+
+.prompt.seedance { border-color: var(--amber-dim); }
+.prompt.seedance .prompt-head { background: var(--amber-bg); }
+.prompt.seedance .prompt-tag { color: var(--amber); }
+
+.prompt.midjourney { border-color: var(--rust); }
+.prompt.midjourney .prompt-head { background: var(--rust-bg); }
+.prompt.midjourney .prompt-tag { color: var(--rust); }
+
+.copy-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.75rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.copy-btn:hover {
+  background: var(--border);
+  color: var(--text);
+}
+.copy-btn.copied {
+  background: var(--amber);
+  color: var(--bg);
+  border-color: var(--amber);
+}
+
+.prompt-body {
+  padding: 1.25rem 1.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ========== GRAMMAR NOTE ========== */
+.note {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  border-left: 2px solid var(--banana-dim);
+  background: var(--banana-bg);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.note strong {
+  color: var(--banana);
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.note em {
+  font-style: normal;
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+
+/* ========== LEARNING / ERROR CALLOUT ========== */
+.lesson {
+  margin: 2.5rem 0;
+  padding: 1.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--rust);
+  border-radius: 3px;
+}
+.lesson-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+.lesson h4 {
+  margin: 0 0 0.75rem;
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--text);
+}
+.lesson p { font-size: 0.98rem; color: var(--text-muted); line-height: 1.65; }
+.lesson p:last-child { margin-bottom: 0; }
+.lesson .fix {
+  display: block;
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--bg-elevated);
+  border-radius: 3px;
+  font-size: 0.9rem;
+  color: var(--text);
+  border: 1px solid var(--border-soft);
+}
+.lesson .fix::before {
+  content: "FIX → ";
+  color: var(--amber);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+
+/* ========== SCENE HEADER ========== */
+.scene {
+  margin: 4rem 0 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-soft);
+}
+.scene-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.75rem;
+}
+.scene h3 {
+  margin-top: 0;
+  font-size: 1.7rem;
+}
+.scene-desc {
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem;
+  margin-top: 0.5rem;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  margin-top: 6rem;
+  padding: 3rem 1.5rem;
+  border-top: 1px solid var(--border-soft);
+  text-align: center;
+}
+footer .brand {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+footer p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 640px) {
+  .hero h1 { font-size: 2.2rem; }
+  .hero-meta { gap: 1.25rem; }
+  .prompt-body { font-size: 0.78rem; padding: 1rem 1.1rem; }
+  figure { margin: 2rem -1.5rem; }
+  figure img { border-radius: 0; border-left: 0; border-right: 0; }
+}
+
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand"><a href="learn.html" style="color:inherit; text-decoration:none;">zelva <em>learn</em></a></div>
+    <div class="meta-top">Case Study · 001</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-label">Case Study — Seedance 2 · Nano Banana Pro · Midjourney</div>
+    <h1>How I made <em>Dust&nbsp;Born</em></h1>
+    <p class="hero-sub">A deep dive into testing Seedance 2 to its limits — continuous long shots, speed ramping, orbiting cameras, transformations, and everything I broke along the way.</p>
+    <div class="hero-meta">
+      <span>Difficulty<strong>Hard</strong></span>
+      <span>Runtime<strong>~15 min read</strong></span>
+      <span>Tools<strong>Midjourney · Nano Banana Pro · Seedance 2</strong></span>
+      <span>Last tested<strong>April 2026</strong></span>
+    </div>
+  </section>
+</div>
+
+<div class="hero-img">
+  <img src="images/img-000.jpg" alt="The Rider on his prototype motorcycle in the salt-flat desert — the Midjourney hero shot that started it all">
+  <div class="caption">The image that started everything — Midjourney 8.1</div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <div class="section-num">01 — Inspiration</div>
+    <h2>It started in the <em>Midjourney gallery</em></h2>
+    <p class="lead">I got inspired by an image in the Midjourney gallery, so I created the main image for the look and feel of the scene, then built a short story around it to test Seedance 2 to its limits.</p>
+    <p>I wanted to test continuous long shots with speed ramping and slow motion, the camera orbiting and moving around the space where the main action was happening, and a few cool transformations on top. All of that in one tool, in one story.</p>
+
+    <h3>The Midjourney hero shot</h3>
+    <p>I used Midjourney 8.1. Here is the exact prompt I used for the image at the top of this page.</p>
+
+    <div class="prompt midjourney">
+      <div class="prompt-head">
+        <span class="prompt-tag">Midjourney 8.1 · Hero shot</span>
+        <button class="copy-btn" data-copy="Cinematic live-action photograph, full-length shot of a wiry figure in a cracked dust-red riding jacket over desert-tan cargo trousers, wearing a sleek matte-black robotic mask with glowing amber visor slits and exposed mechanical jaw plating, aviator helmet strapped over the top, straddling a prototype motorcycle with enormous knobby oversized wheels, an exposed tubular chassis, and a crown of iridescent blue solar panels fanned above the engine bay, cracked salt-flat desert under hard midday sun, deep cobalt sky, distant mesas shimmering in heat haze, swirling dust particles catching the light, hazy atmospheric backlight, volumetric god rays, shot on ARRI Alexa 65 with Panavision Ultra Vista anamorphic 50mm lens, shallow depth of field, subtle lens flare, fine 35mm film grain, saturated earthy color grade --ar 7:3 --profile uh44zyu qu8xvwd --hd --v 8.1">Copy</button>
+      </div>
+      <div class="prompt-body">Cinematic live-action photograph, full-length shot of a wiry figure in a cracked dust-red riding jacket over desert-tan cargo trousers, wearing a sleek matte-black robotic mask with glowing amber visor slits and exposed mechanical jaw plating, aviator helmet strapped over the top, straddling a prototype motorcycle with enormous knobby oversized wheels, an exposed tubular chassis, and a crown of iridescent blue solar panels fanned above the engine bay, cracked salt-flat desert under hard midday sun, deep cobalt sky, distant mesas shimmering in heat haze, swirling dust particles catching the light, hazy atmospheric backlight, volumetric god rays, shot on ARRI Alexa 65 with Panavision Ultra Vista anamorphic 50mm lens, shallow depth of field, subtle lens flare, fine 35mm film grain, saturated earthy color grade --ar 7:3 --profile uh44zyu qu8xvwd --hd --v 8.1</div>
+    </div>
+
+    <h3>Upscaling inside Higgsfield (Nano Banana Pro 2K)</h3>
+    <p>I took the same image into Higgsfield and used Nano Banana Pro at 2K to push the quality, break up the jacket, and lock the rider's pose.</p>
+
+    <figure>
+      <img src="images/img-001.jpg" alt="The Nano Banana Pro 2K upscale of the hero shot, with the Higgsfield interface visible on the right">
+      <figcaption>Nano Banana Pro 2K upscale — shown inside the Higgsfield interface</figcaption>
+    </figure>
+
+    <div class="prompt banana">
+      <div class="prompt-head">
+        <span class="prompt-tag">Nano Banana Pro · Upscale</span>
+        <button class="copy-btn" data-copy="take the image attached and keep everything as is, but make the image higher quality, higher detail, 4k, ultra realistic live action, make the jacket less wrinkled but more broken, his feet on the motorcycle… he is racing">Copy</button>
+      </div>
+      <div class="prompt-body">take the image attached and keep everything as is, but make the image higher quality, higher detail, 4k, ultra realistic live action, make the jacket less wrinkled but more broken, his feet on the motorcycle… he is racing</div>
+    </div>
+
+</section>
+
+  <section>
+    <div class="section-num">02 — Pre-production</div>
+    <h2>Building the <em>asset bible</em></h2>
+    <p class="lead">Before generating a single second of video, I went through the script and made a list of every character, every element, every location. Claude helped me organize it cleanly.</p>
+    <p>The rule: every character gets a close-up and a full shot on a white background. That way I can feed consistent references into Seedance later and the character won't drift between scenes.</p>
+
+    <h3>The Rider</h3>
+
+    <figure>
+      <img src="images/img-002.jpg" alt="Character sheet for the Rider — full body shot on the left, close-up of the masked face on the right">
+      <figcaption>Character sheet — full shot + close-up, white background for reference consistency</figcaption>
+    </figure>
+
+    <div class="prompt banana">
+      <div class="prompt-head">
+        <span class="prompt-tag">Nano Banana Pro · Rider character sheet</span>
+        <button class="copy-btn" data-copy="take the image attached and focus on the main character in the center, take the same character with the same clothing and do a close up of him on the right and a full shot on the left, with relax expression and pose, for character consistency, white background, hyper realistic textures">Copy</button>
+      </div>
+      <div class="prompt-body">take the image attached and focus on the main character in the center, take the same character with the same clothing and do a close up of him on the right and a full shot on the left, with relax expression and pose, for character consistency, white background, hyper realistic textures</div>
+    </div>
+
+<h3>The Mud Monster</h3>
+
+    <figure>
+      <img src="images/img-004.jpg" alt="Character sheet for the Mud Monster — close-up on the left, wide shot on the right, inside the Nano Banana interface">
+      <figcaption>The Mud Monster (later renamed the Earth Giant / Dust Colossus)</figcaption>
+    </figure>
+
+    <div class="prompt banana">
+      <div class="prompt-head">
+        <span class="prompt-tag">Nano Banana Pro · Mud Monster</span>
+        <button class="copy-btn" data-copy="take the image for live action scene reference location and color, and create a DUST , MUD Monsters, large, hyper realistic live action, cinema shot, close up on the left wide shot on the right, in the same location, just one monster, the monster and nothing else">Copy</button>
+      </div>
+      <div class="prompt-body">take the image for live action scene reference location and color, and create a DUST , MUD Monsters, large, hyper realistic live action, cinema shot, close up on the left wide shot on the right, in the same location, just one monster, the monster and nothing else</div>
+    </div>
+
+    <h3>The Transformer</h3>
+
+    <figure>
+      <img src="images/img-005.jpg" alt="Character sheet for the Transformer — the bike transformed into a humanoid battle robot">
+      <figcaption>The Transformer — the rider's bike in combat form</figcaption>
+    </figure>
+
+    <div class="prompt banana">
+      <div class="prompt-head">
+        <span class="prompt-tag">Nano Banana Pro · Transformer</span>
+        <button class="copy-btn" data-copy="take the image for live action scene reference location and color, and create a transformer from the motorcycle, humanoid figure, made of metal and the same wheels somewhere in the body, its the guys bike as a transformer, full shot on the left wide shot on the right, hyper realistic details of the character, live action, just the transformer, focus on the bike only">Copy</button>
+      </div>
+      <div class="prompt-body">take the image for live action scene reference location and color, and create a transformer from the motorcycle, humanoid figure, made of metal and the same wheels somewhere in the body, its the guys bike as a transformer, full shot on the left wide shot on the right, hyper realistic details of the character, live action, just the transformer, focus on the bike only</div>
+    </div>
+
+    <h3>The Bike (solo shot)</h3>
+
+    <figure>
+      <img src="images/img-006.jpg" alt="The prototype motorcycle isolated on a white background, high detail">
+      <figcaption>Clean bike plate for reference — white background, high quality</figcaption>
+    </figure>
+
+    <div class="prompt banana">
+      <div class="prompt-head">
+        <span class="prompt-tag">Nano Banana Pro · Bike</span>
+        <button class="copy-btn" data-copy="take the image attached and do a solo shot of just the bike exactly as is in a white background super high quality">Copy</button>
+      </div>
+      <div class="prompt-body">take the image attached and do a solo shot of just the bike exactly as is in a white background super high quality</div>
+    </div>
+
+</section>
+
+  <section>
+    <div class="section-num">03 — The script</div>
+    <h2>Writing for <em>Dreamina's limits</em></h2>
+    <p class="lead">Dreamina has restrictions: no human faces, limits on violence. So I wrote the script around those limits, not against them.</p>
+    <p>That's actually why the Rider wears a full mask the entire film. And why the "fight" is between the Mech and the Mud Figure — not between the Rider and anyone. Working with the rules made the story tighter, not weaker.</p>
+    <p>Once the script was locked, I broke down every character, location, and key element — white background full shot + close-up for each — then fed them into Seedance as image references, one by one.</p>
+  </section>
+
+</div>
+
+<div class="wrap">
+
+  <section>
+    <div class="section-num">04 — Seedance 2 · The scenes</div>
+    <h2>Here's where the <em>testing happened</em></h2>
+    <p class="lead">These are my final working prompts for Seedance 2 inside Dreamina. Every one of them was tested, iterated, and re-run until it hit. Copy any of them — the structure is the real lesson.</p>
+  </section>
+
+  <!-- SCENE 1 -->
+  <div class="scene">
+    <div class="scene-label">Scene 1 · Prompt 1 · 15 seconds</div>
+    <h3>The ride, the earthquake, the emergence</h3>
+    <p class="scene-desc">Man riding the moto until the earth shakes and the Mud Monster comes out.</p>
+  </div>
+
+  <figure>
+    <img src="images/img-007.jpg" alt="Seedance 2 still — the Rider riding across the salt flats, dust trailing behind">
+    <figcaption>Opening shot inside Dreamina — Seedance 2.0 · 15s</figcaption>
+  </figure>
+
+  <div class="prompt seedance">
+    <div class="prompt-head">
+      <span class="prompt-tag">Seedance 2 · Scene 1</span>
+      <button class="copy-btn" data-copy="@image1 cinematic style and color reference only
+@image2 the Rider, 6ft tall, character design
+@image 3: the bike, solar rigged prototype, roughly same height as the Rider
+@image 4 the mud figure, 24ft tall made of dried mud, roughly four times the height of the Rider
+
+CAST
+Only two characters in this scene: the Rider and the mud figure. Plus the bike. No others.
+
+SIZE AND SCALE
+The Rider stands 6ft tall. The mud figure stands 24ft tall, exactly four times the Rider's height. In every frame where both are visible, the mud figure must appear four times as tall as the Rider. Bike is roughly the same height as the Rider.
+
+STYLE
+Cinematic live action, photoreal, anamorphic 18mm wide lens, shallow DOF, 35mm grain, saturated earthy grade, Villeneuve feel. Color: warm. Master cinema quality.
+
+Salt flat desert. Midday sun, cobalt sky, heat haze on distant mesas, swirling dust.
+
+CHARACTERS
+@image2: wardrobe as reference, amber visor slits glowing. Focused, alert, steady.
+@image3: 24ft tall, four times the Rider's height, large, heavy, slow moving. Begins emerging from the earth directly in front of the Rider, in his line of sight as he rides. Fully rises, brings both hands down onto the ground, stands to full 24ft height.
+
+CONTEXT
+The Rider rides across the salt flats. Directly ahead of him the ground begins to shake and break open. The mud figure is rising from the earth in his path. He brakes hard because of what is emerging in front of him. He dismounts, bike stays beside him. The mud figure fully emerges, brings both hands down onto the salt crust, then stands to full 24ft height.
+
+ACTION
+0s to 6s RIDING: The Rider rides at full speed on the bike. Heavy dust plume trailing. Amber visor slits fixed ahead. Camera follows from far to close.
+6s to 9s HARD STOP: He brakes hard. Bike decelerates and comes to a full stop. Dust plume collapses around him. Directly in front of him the ground is already shaking. The mud figure is beginning to break through the salt crust, head and shoulders breaching, in his line of sight.
+9s to 15s EMERGENCE: The Rider dismounts. The bike stays beside him. The mud figure continues rising from the earth in front of him, pulling his full body free. He leans forward and brings both massive hands down onto the salt crust. Dust bursts outward. He then rises to full 24ft height, four times the Rider's height, towering over him. Ends on the master cinema composition: Rider and bike small in foreground, mud figure towering in background directly in front of them.
+
+CAMERA
+Single unbroken continuous shot. No cuts. 18mm anamorphic wide lens throughout. Camera moves smoothly and cinematically the entire 15 seconds, always following the best action, never static.
+
+The camera opens far away and wide, the Rider and bike small moving across the flats at speed. Over the first 6 seconds the camera gradually closes the distance, tracking alongside him and getting progressively closer, ending in a medium framing as he slows. As he brakes hard, the camera decelerates with him and arcs smoothly around to his side, revealing the ground directly in front of him already shaking and the mud figure starting to breach in his path. The bike settles to a stop. The Rider dismounts, bike stays beside him. Without stopping, the camera pushes past the Rider toward the emerging mud figure ahead of him, craning up dynamically to capture the full rise. As he brings his hands down onto the salt crust, the camera catches the impact from a low angle. As he stands to full 24ft height, the camera pulls back into a master cinema wide frame, Rider and bike small in foreground, mud figure towering four times as tall directly in front of them. Hold on the final composition.
+
+SPEED RAMPING
+Real time through the ride. Ramps to slow motion on the hard brake and as the ground begins shaking. Holds slow motion through the dismount and the mud figure's emergence. Real time on the hand impact for weight. Slow motion on the final rise, holding on the master shot.
+
+AUDIO
+No music. SFX only">Copy full prompt</button>
+    </div>
+    <div class="prompt-body">@image1 cinematic style and color reference only
+@image2 the Rider, 6ft tall, character design
+@image 3: the bike, solar rigged prototype, roughly same height as the Rider
+@image 4 the mud figure, 24ft tall made of dried mud, roughly four times the height of the Rider
+
+CAST
+Only two characters in this scene: the Rider and the mud figure. Plus the bike. No others.
+
+SIZE AND SCALE
+The Rider stands 6ft tall. The mud figure stands 24ft tall, exactly four times the Rider's height. In every frame where both are visible, the mud figure must appear four times as tall as the Rider. Bike is roughly the same height as the Rider.
+
+STYLE
+Cinematic live action, photoreal, anamorphic 18mm wide lens, shallow DOF, 35mm grain, saturated earthy grade, Villeneuve feel. Color: warm. Master cinema quality.
+
+Salt flat desert. Midday sun, cobalt sky, heat haze on distant mesas, swirling dust.
+
+CHARACTERS
+@image2: wardrobe as reference, amber visor slits glowing. Focused, alert, steady.
+@image3: 24ft tall, four times the Rider's height, large, heavy, slow moving. Begins emerging from the earth directly in front of the Rider, in his line of sight as he rides. Fully rises, brings both hands down onto the ground, stands to full 24ft height.
+
+CONTEXT
+The Rider rides across the salt flats. Directly ahead of him the ground begins to shake and break open. The mud figure is rising from the earth in his path. He brakes hard because of what is emerging in front of him. He dismounts, bike stays beside him. The mud figure fully emerges, brings both hands down onto the salt crust, then stands to full 24ft height.
+
+ACTION
+0s to 6s RIDING: The Rider rides at full speed on the bike. Heavy dust plume trailing. Amber visor slits fixed ahead. Camera follows from far to close.
+6s to 9s HARD STOP: He brakes hard. Bike decelerates and comes to a full stop. Dust plume collapses around him. Directly in front of him the ground is already shaking. The mud figure is beginning to break through the salt crust, head and shoulders breaching, in his line of sight.
+9s to 15s EMERGENCE: The Rider dismounts. The bike stays beside him. The mud figure continues rising from the earth in front of him, pulling his full body free. He leans forward and brings both massive hands down onto the salt crust. Dust bursts outward. He then rises to full 24ft height, four times the Rider's height, towering over him. Ends on the master cinema composition: Rider and bike small in foreground, mud figure towering in background directly in front of them.
+
+CAMERA
+Single unbroken continuous shot. No cuts. 18mm anamorphic wide lens throughout. Camera moves smoothly and cinematically the entire 15 seconds, always following the best action, never static.
+
+The camera opens far away and wide, the Rider and bike small moving across the flats at speed. Over the first 6 seconds the camera gradually closes the distance, tracking alongside him and getting progressively closer, ending in a medium framing as he slows. As he brakes hard, the camera decelerates with him and arcs smoothly around to his side, revealing the ground directly in front of him already shaking and the mud figure starting to breach in his path. The bike settles to a stop. The Rider dismounts, bike stays beside him. Without stopping, the camera pushes past the Rider toward the emerging mud figure ahead of him, craning up dynamically to capture the full rise. As he brings his hands down onto the salt crust, the camera catches the impact from a low angle. As he stands to full 24ft height, the camera pulls back into a master cinema wide frame, Rider and bike small in foreground, mud figure towering four times as tall directly in front of them. Hold on the final composition.
+
+SPEED RAMPING
+Real time through the ride. Ramps to slow motion on the hard brake and as the ground begins shaking. Holds slow motion through the dismount and the mud figure's emergence. Real time on the hand impact for weight. Slow motion on the final rise, holding on the master shot.
+
+AUDIO
+No music. SFX only</div>
+  </div>
+
+  <!-- ADDITIONAL PROMPT 01 -->
+  <div class="scene">
+    <div class="scene-label">Additional Prompt · Story beat 01 · 4 seconds</div>
+    <h3>"Well. You seem angry."</h3>
+    <p class="scene-desc">A tight frontal close-up on the Rider's masked face. One dry, sarcastic line.</p>
+  </div>
+
+  <figure>
+    <img src="images/img-008.jpg" alt="Seedance 2 still — tight close up on the Rider's masked face, amber visor glowing">
+    <figcaption>Tight close-up · Seedance 2.0 · 4s</figcaption>
+  </figure>
+
+  <div class="prompt seedance">
+    <div class="prompt-head">
+      <span class="prompt-tag">Seedance 2 · Rider close-up</span>
+      <button class="copy-btn" data-copy="REFERENCES
+@IMAGE1: the Rider, 6ft, character design, black combat helmet with amber slit visor, gas mask
+@IMAGE2: environment and cinematic style reference only
+
+CAST
+Only one character in this scene: the Rider. Nothing else in frame.
+
+STYLE
+Cinematic live action, photoreal, anamorphic 18mm wide lens, shallow DOF, 35mm grain, saturated earthy grade, Villeneuve feel. Color: warm. Style and cinema feel as @IMAGE2.
+
+ENVIRONMENT
+Salt flat desert as @IMAGE2. Midday sun, cobalt sky, heat haze, swirling dust.
+
+CHARACTERS
+@IMAGE1: wardrobe as reference, amber visor slits glowing. Calm, dry, sarcastic.
+
+CONTEXT
+A tight frontal close up on the Rider's masked face as he delivers a single sarcastic line. The mask stays on throughout, voice comes through the gas mask filter.
+
+ACTION
+0s to 4s: The Rider stands facing camera directly in a tight close up, head and upper shoulders filling the frame. He delivers the line in a dry sarcastic tone, voice muffled slightly through the gas mask. His head tilts very slightly on the delivery, visor slits glowing steady.
+
+VOICEOVER
+Rider, spoken dry and sarcastic, slightly muffled through the gas mask: &quot;Well. You seem angry.&quot;
+
+CAMERA
+Single unbroken continuous shot. No cuts. 18mm anamorphic wide lens throughout.
+Opens on a frontal close up of the Rider's masked face, head centered. The camera slowly pushes in toward his head over the full 4 seconds, smoothly and steadily, tightening on the mask and the glowing amber visor slits. The 18mm wide lens exaggerates the curvature of the mask and helmet as the camera closes in. Ends very tight on the mask, visor slits filling frame.
+
+SPEED RAMPING
+Real time throughout.
+
+PHYSICS
+Rider stands steady with trained stillness. Dust drifts past his face in the wind. Camera moves smoothly, no bounce.
+
+AUDIO
+No music. SFX only: wind across the flats, faint filtered breath through the gas mask. The Rider's sarcastic line plays over this ambient audio.">Copy full prompt</button>
+    </div>
+    <div class="prompt-body">REFERENCES
+@IMAGE1: the Rider, 6ft, character design, black combat helmet with amber slit visor, gas mask
+@IMAGE2: environment and cinematic style reference only
+
+CAST
+Only one character in this scene: the Rider. Nothing else in frame.
+
+STYLE
+Cinematic live action, photoreal, anamorphic 18mm wide lens, shallow DOF, 35mm grain, saturated earthy grade, Villeneuve feel. Color: warm. Style and cinema feel as @IMAGE2.
+
+ENVIRONMENT
+Salt flat desert as @IMAGE2. Midday sun, cobalt sky, heat haze, swirling dust.
+
+CHARACTERS
+@IMAGE1: wardrobe as reference, amber visor slits glowing. Calm, dry, sarcastic.
+
+CONTEXT
+A tight frontal close up on the Rider's masked face as he delivers a single sarcastic line. The mask stays on throughout, voice comes through the gas mask filter.
+
+ACTION
+0s to 4s: The Rider stands facing camera directly in a tight close up, head and upper shoulders filling the frame. He delivers the line in a dry sarcastic tone, voice muffled slightly through the gas mask. His head tilts very slightly on the delivery, visor slits glowing steady.
+
+VOICEOVER
+Rider, spoken dry and sarcastic, slightly muffled through the gas mask: "Well. You seem angry."
+
+CAMERA
+Single unbroken continuous shot. No cuts. 18mm anamorphic wide lens throughout.
+Opens on a frontal close up of the Rider's masked face, head centered. The camera slowly pushes in toward his head over the full 4 seconds, smoothly and steadily, tightening on the mask and the glowing amber visor slits. The 18mm wide lens exaggerates the curvature of the mask and helmet as the camera closes in. Ends very tight on the mask, visor slits filling frame.
+
+SPEED RAMPING
+Real time throughout.
+
+PHYSICS
+Rider stands steady with trained stillness. Dust drifts past his face in the wind. Camera moves smoothly, no bounce.
+
+AUDIO
+No music. SFX only: wind across the flats, faint filtered breath through the gas mask. The Rider's sarcastic line plays over this ambient audio.</div>
+  </div>
+
+  <!-- SCENE 2 - TRANSFORMATION -->
+  <div class="scene">
+    <div class="scene-label">Scene 2 · Prompt 2 · 8 seconds</div>
+    <h3>The transformation</h3>
+    <p class="scene-desc">The bike transforms — Transformers style — while the Rider watches.</p>
+  </div>
+
+  <figure>
+    <img src="images/img-009.jpg" alt="Seedance 2 still — the Rider standing beside the bike in the salt flats, just before transformation">
+    <figcaption>Opening frame of the transformation scene · Seedance 2.0 · 8s</figcaption>
+  </figure>
+
+  <div class="prompt seedance">
+    <div class="prompt-head">
+      <span class="prompt-tag">Seedance 2 · Transformation</span>
+      <button class="copy-btn" data-copy="REFERENCES
+@image1: style and color reference only
+@image 2: the Rider, 6ft, character design
+@image 3: the bike, non transformed form
+@image 4: the transformer, the same machine as @IMAGE3 in transformed form, 12ft bipedal battle robot
+
+CAST
+Only one character: the Rider. Plus one machine that is @IMAGE3 at the start and becomes @IMAGE4 by the end. @IMAGE3 and @IMAGE4 are the same machine in two forms, not two objects. Never a second bike, never a second transformer, no duplicates.
+
+STYLE
+Cinematic live action, photoreal, anamorphic 18mm wide lens, shallow DOF, 35mm grain, saturated earthy grade, Villeneuve feel. Color: warm.
+
+ENVIRONMENT
+Salt flat desert. Midday sun, cobalt sky, heat haze, swirling dust.
+
+CHARACTERS
+@IMAGE2: wardrobe as reference, amber visor slits glowing. Calm, focused, watching.
+
+CONTEXT
+The Rider stands beside the bike, facing camera. He looks over at the bike, and it begins transforming on its own. The camera moves around the transformation smoothly as it unfolds Transformers style. When it completes, the transformer stands next to the Rider, both facing forward frontal.
+
+ACTION
+0s to 2s: The Rider stands centered in frontal view, bike directly to his right. He turns his head slightly to look at the bike. The bike begins the transformation.
+2s to 7s: The machine transforms Transformers style from @IMAGE3 into @IMAGE4. Panels unfold in sequence. Wheels pivot downward and plant as feet. Chassis telescopes upward. Solar panels fan open across the back. Amber running lights ignite one by one. Every fold is mechanical and punctuated. The Rider stays still, head tracking the transformation, watching the entire process.
+7s to 8s: Transformation completes. The transformer stands fully formed directly next to the Rider. Both face camera frontal. Final frame: Rider on the left, transformer on the right, both looking forward.
+
+CAMERA
+Single unbroken continuous shot. No cuts. 18mm anamorphic wide lens throughout. Camera moves smoothly the entire 8 seconds, never static.
+
+Opens frontal on the Rider with the bike directly to his right in the same wide frame. As the Rider turns his head to look at the bike, the camera begins a smooth slow arc from frontal position around the scene toward the bike side. As the transformation begins, the camera enters a slow orbit around the single machine as it reshapes, moving low and high to capture each stage of the unfolding. The Rider remains in the foreground throughout, head tracking the transformation. The orbit completes around the machine as it finishes transforming. The camera then smoothly returns to a frontal wide position, reframing on the Rider and the transformer standing side by side. Hold on the final frontal two shot, both facing forward. Nothing else in frame.
+
+SPEED RAMPING
+Real time on the opening frontal. Ramps to slow motion as the Rider looks at the bike and the transformation begins. Deep slow motion through the full transformation orbit, each fold punctuated. Ramps toward real time as the transformer plants beside the Rider. Holds steady on the final frontal.
+
+PHYSICS
+Rider stands with real weight. Transformation is smooth and mechanical, one bike becomes one transformer, nothing duplicates. Each panel fold has resistance and mass. Hydraulic joints. Transformer footfalls compress salt crust when it plants. Nothing floaty.
+
+AUDIO
+No music. SFX only: wind across the flats, mechanical cascade of servo whines, panel lock clacks, pneumatic hiss on joint extensions, each fold sequential, low electrical hum as amber lights ignite, heavy transformer footfall as it plants, quiet wind on final frame.">Copy full prompt</button>
+    </div>
+    <div class="prompt-body">REFERENCES
+@image1: style and color reference only
+@image 2: the Rider, 6ft, character design
+@image 3: the bike, non transformed form
+@image 4: the transformer, the same machine as @IMAGE3 in transformed form, 12ft bipedal battle robot
+
+CAST
+Only one character: the Rider. Plus one machine that is @IMAGE3 at the start and becomes @IMAGE4 by the end. @IMAGE3 and @IMAGE4 are the same machine in two forms, not two objects. Never a second bike, never a second transformer, no duplicates.
+
+STYLE
+Cinematic live action, photoreal, anamorphic 18mm wide lens, shallow DOF, 35mm grain, saturated earthy grade, Villeneuve feel. Color: warm.
+
+ENVIRONMENT
+Salt flat desert. Midday sun, cobalt sky, heat haze, swirling dust.
+
+CHARACTERS
+@IMAGE2: wardrobe as reference, amber visor slits glowing. Calm, focused, watching.
+
+CONTEXT
+The Rider stands beside the bike, facing camera. He looks over at the bike, and it begins transforming on its own. The camera moves around the transformation smoothly as it unfolds Transformers style. When it completes, the transformer stands next to the Rider, both facing forward frontal.
+
+ACTION
+0s to 2s: The Rider stands centered in frontal view, bike directly to his right. He turns his head slightly to look at the bike. The bike begins the transformation.
+2s to 7s: The machine transforms Transformers style from @IMAGE3 into @IMAGE4. Panels unfold in sequence. Wheels pivot downward and plant as feet. Chassis telescopes upward. Solar panels fan open across the back. Amber running lights ignite one by one. Every fold is mechanical and punctuated. The Rider stays still, head tracking the transformation, watching the entire process.
+7s to 8s: Transformation completes. The transformer stands fully formed directly next to the Rider. Both face camera frontal. Final frame: Rider on the left, transformer on the right, both looking forward.
+
+CAMERA
+Single unbroken continuous shot. No cuts. 18mm anamorphic wide lens throughout. Camera moves smoothly the entire 8 seconds, never static.
+
+Opens frontal on the Rider with the bike directly to his right in the same wide frame. As the Rider turns his head to look at the bike, the camera begins a smooth slow arc from frontal position around the scene toward the bike side. As the transformation begins, the camera enters a slow orbit around the single machine as it reshapes, moving low and high to capture each stage of the unfolding. The Rider remains in the foreground throughout, head tracking the transformation. The orbit completes around the machine as it finishes transforming. The camera then smoothly returns to a frontal wide position, reframing on the Rider and the transformer standing side by side. Hold on the final frontal two shot, both facing forward. Nothing else in frame.
+
+SPEED RAMPING
+Real time on the opening frontal. Ramps to slow motion as the Rider looks at the bike and the transformation begins. Deep slow motion through the full transformation orbit, each fold punctuated. Ramps toward real time as the transformer plants beside the Rider. Holds steady on the final frontal.
+
+PHYSICS
+Rider stands with real weight. Transformation is smooth and mechanical, one bike becomes one transformer, nothing duplicates. Each panel fold has resistance and mass. Hydraulic joints. Transformer footfalls compress salt crust when it plants. Nothing floaty.
+
+AUDIO
+No music. SFX only: wind across the flats, mechanical cascade of servo whines, panel lock clacks, pneumatic hiss on joint extensions, each fold sequential, low electrical hum as amber lights ignite, heavy transformer footfall as it plants, quiet wind on final frame.</div>
+  </div>
+
+</div>
+
+<div class="wrap">
+
+  <!-- ADDITIONAL PROMPT 02 - MUD FIGURE CLOSE UP -->
+  <div class="scene">
+    <div class="scene-label">Additional Prompt · Story beat 02 · 5 seconds</div>
+    <h3>Mud figure · close-up tracking shot</h3>
+    <p class="scene-desc">Camera locked to the giant as he rumbles and advances. Motion read through the background streaking past.</p>
+  </div>
+
+  <figure>
+    <img src="images/img-010.jpg" alt="Seedance 2 still — tight frontal close-up on the Mud Figure's head and shoulders">
+    <figcaption>Mud figure close-up · locked camera · Seedance 2.0 · 5s</figcaption>
+  </figure>
+
+  <div class="prompt seedance">
+    <div class="prompt-head">
+      <span class="prompt-tag">Seedance 2 · Mud figure close</span>
+      <button class="copy-btn" data-copy="REFERENCES
+@image1: style and scene reference, salt flat desert
+@image2: the mud figure, 18ft tall made of dried mud, character reference
+
+CAST
+Only one character in this scene: the mud figure. Nothing else in frame except the desert behind him.
+
+STYLE
+Cinematic live action, photoreal, anamorphic 16mm wide lens, shallow DOF, 35mm grain, saturated earthy grade, Villeneuve feel. Color: warm.
+
+ENVIRONMENT
+Salt flat desert as @IMAGE1. Midday sun, cobalt sky, heat haze, swirling dust.
+
+CHARACTERS
+@IMAGE2: large, heavy, slow moving. Lets out a deep low rumble, then begins moving forward with steady weight.
+
+CONTEXT
+A tight frontal close up on the mud figure's head and upper chest, 16mm wide lens exaggerating scale and presence. The camera is locked to the figure, staying in the same frame position as he moves forward. Movement reads through his body language and the desert streaking behind him.
+
+ACTION
+0s to 2s: The mud figure stands centered in a tight frontal close up, head and upper chest filling frame. His chest expands and he lets out a deep low rumble. Dust drifts off his shoulders.
+2s to 5s: He begins moving forward with steady heavy weight. Head shifts forward, shoulders rolling with each stride, dried mud surface flexing and cracking with motion. We read his forward motion through his body and through the desert background streaking past behind him, dust trailing in the air.
+
+CAMERA
+Single unbroken continuous shot. No cuts. 16mm anamorphic wide lens throughout.
+The camera is locked in a tight frontal close up on the mud figure's head and upper chest, framed low looking slightly up so he rises into the top of frame. The 16mm wide lens exaggerates scale and the curvature around his head. As he rumbles and begins moving, the camera stays locked to him, maintaining the exact same frame composition the entire 5 seconds. He does not move closer or farther in frame. Forward motion is read through body language, through the desert streaking past behind him, and through dust and mud debris trailing in the air around him. Hold tight on his face throughout.
+
+SPEED RAMPING
+Real time on the rumble. Optional subtle slow motion dip at 1 to 2 seconds on his expression, smoothly returning to real time as he moves forward.
+
+PHYSICS
+Real heavy weight. Head and shoulders move with mass, dried mud surface flexing and cracking with motion. Dust falls off his shoulders continuously. Desert background streaks past to show forward motion. Camera perfectly locked to the figure, zero drift, zero bounce.
+
+AUDIO
+No music. SFX only: deep low rumble from the figure, heavy footfalls compressing salt, dried mud cracking with motion, wind across his face and body, dust shifting.">Copy full prompt</button>
+    </div>
+    <div class="prompt-body">REFERENCES
+@image1: style and scene reference, salt flat desert
+@image2: the mud figure, 18ft tall made of dried mud, character reference
+
+CAST
+Only one character in this scene: the mud figure. Nothing else in frame except the desert behind him.
+
+STYLE
+Cinematic live action, photoreal, anamorphic 16mm wide lens, shallow DOF, 35mm grain, saturated earthy grade, Villeneuve feel. Color: warm.
+
+ENVIRONMENT
+Salt flat desert as @IMAGE1. Midday sun, cobalt sky, heat haze, swirling dust.
+
+CHARACTERS
+@IMAGE2: large, heavy, slow moving. Lets out a deep low rumble, then begins moving forward with steady weight.
+
+CONTEXT
+A tight frontal close up on the mud figure's head and upper chest, 16mm wide lens exaggerating scale and presence. The camera is locked to the figure, staying in the same frame position as he moves forward. Movement reads through his body language and the desert streaking behind him.
+
+ACTION
+0s to 2s: The mud figure stands centered in a tight frontal close up, head and upper chest filling frame. His chest expands and he lets out a deep low rumble. Dust drifts off his shoulders.
+2s to 5s: He begins moving forward with steady heavy weight. Head shifts forward, shoulders rolling with each stride, dried mud surface flexing and cracking with motion. We read his forward motion through his body and through the desert background streaking past behind him, dust trailing in the air.
+
+CAMERA
+Single unbroken continuous shot. No cuts. 16mm anamorphic wide lens throughout.
+The camera is locked in a tight frontal close up on the mud figure's head and upper chest, framed low looking slightly up so he rises into the top of frame. The 16mm wide lens exaggerates scale and the curvature around his head. As he rumbles and begins moving, the camera stays locked to him, maintaining the exact same frame composition the entire 5 seconds. He does not move closer or farther in frame. Forward motion is read through body language, through the desert streaking past behind him, and through dust and mud debris trailing in the air around him. Hold tight on his face throughout.
+
+SPEED RAMPING
+Real time on the rumble. Optional subtle slow motion dip at 1 to 2 seconds on his expression, smoothly returning to real time as he moves forward.
+
+PHYSICS
+Real heavy weight. Head and shoulders move with mass, dried mud surface flexing and cracking with motion. Dust falls off his shoulders continuously. Desert background streaks past to show forward motion. Camera perfectly locked to the figure, zero drift, zero bounce.
+
+AUDIO
+No music. SFX only: deep low rumble from the figure, heavy footfalls compressing salt, dried mud cracking with motion, wind across his face and body, dust shifting.</div>
+  </div>
+
+  <!-- SCENE 3 - THE FIGHT -->
+  <div class="scene">
+    <div class="scene-label">Scene 3 · The Fight · 15 seconds</div>
+    <h3>Mech vs. Dust Colossus</h3>
+    <p class="scene-desc">The centerpiece. Handheld weaving, orbital cameras, speed ramps, shockwaves. Everything tested at once.</p>
+  </div>
+
+  <figure>
+    <img src="images/img-016.jpg" alt="Seedance 2 still — the Mech and Dust Colossus clashing in the salt flat">
+    <figcaption>The fight · Seedance 2.0 · 15s</figcaption>
+  </figure>
+
+  <div class="prompt seedance">
+    <div class="prompt-head">
+      <span class="prompt-tag">Seedance 2 · The Fight</span>
+      <button class="copy-btn" data-copy="@IMAGE1 = Visual style and tone reference for the scene only
+@IMAGE2 = The Rider, black combat helmet with amber slit visor, gas mask, burgundy textured jacket, chest harness, cargo pants, tan boots
+@IMAGE3 = The Dust Colossus, 18-foot dried-mud ancient-warrior earth creature, hollow eye sockets, gorilla-mass silhouette
+@IMAGE4 = The Mech, desert-tan bipedal battle robot, four off-road tires as shoulder armor, solar panel wings, amber running lights along the chassis
+
+ART STYLE
+Cinematic live action. Photorealistic, 35mm wide-format, desert epic scale. Heat haze, natural dust atmosphere, prestige action film quality. Color temperature warm.
+
+ENVIRONMENT
+Open salt flat desert at midday. Combat zone, cracked salt crust, dust clouds drifting from earlier impacts.
+
+CHARACTERS IN SCENE
+Exactly three characters in the entire scene, no more. The Rider from @IMAGE2, standing on his feet with no bike beneath him, no vehicle near him, his hands empty. The Mech from @IMAGE4, the only machine in the scene. The Colossus from @IMAGE3. There is no bike anywhere in this shot. The Rider never sits on anything. No second Mech, no duplicates.
+
+CONTEXT
+The giant and the Mech trade strikes. Neither is winning. The fight escalates into a locked mid-combat beat.
+
+SINGLE CONTINUOUS SHOT, NO CUTS, 15 SECONDS
+The shot opens low and handheld, weaving in real-time between the two combatants as the Colossus from @IMAGE3 lunges forward with a heavy overhead swing. The Mech from @IMAGE4 ducks low under the arm, dust spraying off its shoulders, and counters with a quick edged jab to the Colossus midsection. Chunks of dried mud crack loose and fall.
+
+The camera whips around behind the Mech as the Colossus swings back with a brutal backhand. The Mech weaves low, boots sliding across the salt crust, then rises fast with a sharp elbow strike. Speed ramps hard into super slow motion on the elbow impact. A section of mud shoulder fractures and hangs suspended in the air before speed ramps back to real-time.
+
+The Colossus roars and drives both fists downward. The Mech leaps sideways, the camera tracking in a fast orbit around the action. The fists slam the salt crust where the Mech was standing, shockwave rippling outward, dust exploding upward around the camera.
+
+The Mech lands in a low crouch and immediately launches forward into a running strike. The camera tracks with it in real-time as it drives a shoulder into the Colossus torso. Mud fractures and the Colossus staggers back one heavy step.
+
+They circle each other in a tight orbit, the camera sweeping wide around both of them. The Colossus recovers fast, rearing up to its full height, and winds up a massive two-handed downward blow. The Mech drops into a low stance, blades not yet extended, raising its arms to meet the strike.
+
+Speed ramps hard into deep super slow motion for the final beat. The camera arcs around the locked moment, finding the Rider from @IMAGE2 in the foreground, standing firmly on his own two feet with nothing beneath him and no vehicle anywhere near him, watching the fight. The Colossus fists come down, the Mech rises to counter, both caught mid-action. Hold on the unresolved exchange.
+
+LIGHTING
+Harsh midday desert sun, high and direct, heavy directional shadows carving the combatants against the ground.
+
+PHYSICS
+Every strike has weight. The Mech moves fast and light but its footfalls compress the salt crust. The Colossus moves with tectonic mass, each swing displacing air and dust. Mud chunks fracture and fall with real gravity, never floating. Both fighters stay on their feet throughout, no knockdowns. The Rider is on foot, standing, never seated or mounted on anything.
+
+AUDIO
+No music. Sound effects only. Heavy Colossus grunts and earth-deep roars. Mech servo whines and metallic impacts on every strike. Mud cracking and chunks hitting the salt crust. Sub-bass slam on ground impacts. Whoosh of air around every heavy swing. Slow-motion bed drops low and muted on the final frozen beat.">Copy full prompt</button>
+    </div>
+    <div class="prompt-body">@IMAGE1 = Visual style and tone reference for the scene only
+@IMAGE2 = The Rider, black combat helmet with amber slit visor, gas mask, burgundy textured jacket, chest harness, cargo pants, tan boots
+@IMAGE3 = The Dust Colossus, 18-foot dried-mud ancient-warrior earth creature, hollow eye sockets, gorilla-mass silhouette
+@IMAGE4 = The Mech, desert-tan bipedal battle robot, four off-road tires as shoulder armor, solar panel wings, amber running lights along the chassis
+
+ART STYLE
+Cinematic live action. Photorealistic, 35mm wide-format, desert epic scale. Heat haze, natural dust atmosphere, prestige action film quality. Color temperature warm.
+
+ENVIRONMENT
+Open salt flat desert at midday. Combat zone, cracked salt crust, dust clouds drifting from earlier impacts.
+
+CHARACTERS IN SCENE
+Exactly three characters in the entire scene, no more. The Rider from @IMAGE2, standing on his feet with no bike beneath him, no vehicle near him, his hands empty. The Mech from @IMAGE4, the only machine in the scene. The Colossus from @IMAGE3. There is no bike anywhere in this shot. The Rider never sits on anything. No second Mech, no duplicates.
+
+CONTEXT
+The giant and the Mech trade strikes. Neither is winning. The fight escalates into a locked mid-combat beat.
+
+SINGLE CONTINUOUS SHOT, NO CUTS, 15 SECONDS
+The shot opens low and handheld, weaving in real-time between the two combatants as the Colossus from @IMAGE3 lunges forward with a heavy overhead swing. The Mech from @IMAGE4 ducks low under the arm, dust spraying off its shoulders, and counters with a quick edged jab to the Colossus midsection. Chunks of dried mud crack loose and fall.
+
+The camera whips around behind the Mech as the Colossus swings back with a brutal backhand. The Mech weaves low, boots sliding across the salt crust, then rises fast with a sharp elbow strike. Speed ramps hard into super slow motion on the elbow impact. A section of mud shoulder fractures and hangs suspended in the air before speed ramps back to real-time.
+
+The Colossus roars and drives both fists downward. The Mech leaps sideways, the camera tracking in a fast orbit around the action. The fists slam the salt crust where the Mech was standing, shockwave rippling outward, dust exploding upward around the camera.
+
+The Mech lands in a low crouch and immediately launches forward into a running strike. The camera tracks with it in real-time as it drives a shoulder into the Colossus torso. Mud fractures and the Colossus staggers back one heavy step.
+
+They circle each other in a tight orbit, the camera sweeping wide around both of them. The Colossus recovers fast, rearing up to its full height, and winds up a massive two-handed downward blow. The Mech drops into a low stance, blades not yet extended, raising its arms to meet the strike.
+
+Speed ramps hard into deep super slow motion for the final beat. The camera arcs around the locked moment, finding the Rider from @IMAGE2 in the foreground, standing firmly on his own two feet with nothing beneath him and no vehicle anywhere near him, watching the fight. The Colossus fists come down, the Mech rises to counter, both caught mid-action. Hold on the unresolved exchange.
+
+LIGHTING
+Harsh midday desert sun, high and direct, heavy directional shadows carving the combatants against the ground.
+
+PHYSICS
+Every strike has weight. The Mech moves fast and light but its footfalls compress the salt crust. The Colossus moves with tectonic mass, each swing displacing air and dust. Mud chunks fracture and fall with real gravity, never floating. Both fighters stay on their feet throughout, no knockdowns. The Rider is on foot, standing, never seated or mounted on anything.
+
+AUDIO
+No music. Sound effects only. Heavy Colossus grunts and earth-deep roars. Mech servo whines and metallic impacts on every strike. Mud cracking and chunks hitting the salt crust. Sub-bass slam on ground impacts. Whoosh of air around every heavy swing. Slow-motion bed drops low and muted on the final frozen beat.</div>
+  </div>
+
+  <p style="color: var(--text-muted); font-style: italic; margin-top: 3rem;">
+    There are several more Seedance scenes in the full project — the Earth Giant charge, the transformation mid-charge, the Mech getting thrown, and the freeze-blast ending — each with its own prompt structure following the same cast / size / style / context / action / camera / speed ramping / physics / audio blocks. I'll add those to the final version.
+  </p>
+
+  <!-- LESSONS -->
+  <section style="margin-top: 5rem;">
+    <div class="section-num">05 — What I struggled with</div>
+    <h2>Things I <em>learned</em> the hard way</h2>
+    <p class="lead">These are the mistakes I made, the patterns I kept running into, and the specific fixes that saved me time on the next scene.</p>
+
+    <div class="lesson">
+      <div class="lesson-label">Lesson 01 · Cast</div>
+      <h4>Seedance sometimes duplicates characters</h4>
+      <p>Even with reference images locked in, Seedance will sometimes render the same character twice in the same scene — two Mechs, two bikes, duplicates you never asked for.</p>
+      <div class="fix">Add a short <strong>CAST</strong> block at the top of every prompt. State exactly how many characters are in the scene and who they are. "Only two characters: the Rider and the mud figure. No others."</div>
+    </div>
+
+    <figure>
+      <img src="images/img-019.jpg" alt="Error example — two Mechs appearing in the same frame instead of one">
+      <figcaption>Duplicate characters error — fixed by adding an explicit CAST block</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/img-020.jpg" alt="Another duplication error — two Mechs with the Rider in the middle">
+      <figcaption>Another duplication — same fix</figcaption>
+    </figure>
+
+    <div class="lesson">
+      <div class="lesson-label">Lesson 02 · Direction</div>
+      <h4>Characters don't always face each other</h4>
+      <p>In a lot of test takes, characters ended up facing completely wrong directions — the Rider with his back to the monster, the Mech facing away from the fight, etc. Seedance won't figure out direction from context alone.</p>
+      <div class="fix">Be explicit: "X is facing Y", "Rider's back is to the camera", "Mech turns to face the Colossus head-on." State the direction of every character in every beat.</div>
+    </div>
+
+    <figure>
+      <img src="images/img-021.jpg" alt="Error example — the Rider facing camera with bike and monster behind him in wrong directions">
+      <figcaption>Characters not facing each other · fix: explicit direction in the prompt</figcaption>
+    </figure>
+
+    <div class="lesson">
+      <div class="lesson-label">Lesson 03 · Scale</div>
+      <h4>Proportions are still hard</h4>
+      <p>Size and proportion between characters is the one I still haven't fully solved. The mud figure is supposed to be 4× the Rider's height but sometimes renders as only slightly taller.</p>
+      <div class="fix">Start adding short size statements in the prompt: "Mud monster and Transformer are about the same size. Transformer is three times larger than the human." An untested but promising next step: generate a single Nano Banana Pro image showing all characters lined up side-by-side at correct scale, then feed that as a dedicated size-reference image into Seedance with a note in the prompt that this image is for scale reference only.</div>
+    </div>
+
+    <figure>
+      <img src="images/img-022.jpg" alt="Scale error — the mud figure appearing too small relative to the Rider">
+      <figcaption>Scale inconsistency · 24ft mud figure rendering closer to 8ft</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/img-023.jpg" alt="Another scale example — Rider, mud figure, and transformer in the same frame">
+      <figcaption>Same trio, better scale balance — still not the 4× ratio prompted</figcaption>
+    </figure>
+
+    <div class="lesson">
+      <div class="lesson-label">Lesson 04 · Hero shot</div>
+      <h4>Lock your look with specific cinematography</h4>
+      <p>Adding a few details on camera, lens, and overall look makes every scene feel like it belongs to the same film. Color consistency especially.</p>
+      <div class="fix">Pick your lens and stick to it. For this project I chose 18mm anamorphic wide for every scene, with occasional close-ups. I love the Revenant's cinematography — anamorphic wide with close-ups — so that became the visual rule for the whole short.</div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-label">Lesson 05 · Working with Claude</div>
+      <h4>How you describe a shot determines what you get</h4>
+      <p>The way you talk through a scene with Claude is one of the most important skills I learned. Close your eyes, imagine the shot, then describe it in order. I now use this structure every time:</p>
+      <ol style="margin: 1rem 0 0 1.25rem; color: var(--text-muted); line-height: 1.9;">
+        <li>Action — write exactly what happens in the scene</li>
+        <li>Timing — 3 seconds for this, 4 seconds for that</li>
+        <li>Composition — how does the frame start, how does it end? Frontal? POV?</li>
+        <li>Camera movement — continuous? "No cuts"? Handheld? Smooth? Orbiting?</li>
+        <li>Lens and DOP — lens choice, depth of field, grain, color grade</li>
+      </ol>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-label">Lesson 06 · Iteration</div>
+      <h4>The best takes came from testing, not planning</h4>
+      <p>A lot of "bad takes" had 2-3 seconds that were perfect. Those went into the edit. The fight scene especially — the best cuts weren't the ones I planned, they were the ones I found in the throwaways. Every pass also taught Claude something, and the Seedance skill kept improving with every scene.</p>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section style="margin-top: 5rem;">
+    <div class="section-num">06 — Final notes</div>
+    <h2>What you're really <em>paying attention to</em></h2>
+    <p class="lead">A few takes needed rewording to fit Dreamina's non-violence policy. Sometimes a bad take had a few perfect seconds that went straight into the edit. The fight was the hardest scene — and the most rewarding when it finally clicked.</p>
+    <p>If you use any of these prompts, they're yours. Tear them apart, remix them, break them. The goal was never to hand you prompts — it was to show you the shape of a prompt that actually works, and why.</p>
+  </section>
+
+</div>
+
+<footer>
+  <div class="brand">zelva <em>learn</em></div>
+  <p>Case Study 001 · Dust Born · April 2026</p>
+  <p style="margin-top:1.5rem; font-size:0.85rem;">
+    <a href="learn.html" style="color:var(--amber); text-decoration:none; margin-right:2rem;">← All Case Studies</a>
+    <a href="work.html" style="color:var(--text-muted); text-decoration:none; margin-right:2rem;">Work</a>
+    <a href="index.html" style="color:var(--text-muted); text-decoration:none;">Zelva</a>
+  </p>
+</footer>
+
+<script>
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const text = btn.getAttribute('data-copy');
+      try {
+        await navigator.clipboard.writeText(text);
+        const original = btn.textContent;
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 1800);
+      } catch (err) {
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 1800);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

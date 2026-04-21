@@ -93,6 +93,22 @@
   .lightbox-close:hover { color: var(--white); }
   .lightbox-title { margin-top: 20px; font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 22px; letter-spacing: 3px; color: var(--white); }
   .lightbox-meta { font-size: 10px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-top: 6px; }
+  .lightbox-case-study {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 22px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    padding: 14px 26px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    transition: background 0.35s ease, color 0.35s ease, letter-spacing 0.35s ease;
+    cursor: none;
+  }
+  .lightbox-case-study:hover { background: var(--accent); color: var(--black); letter-spacing: 5px; }
+  .lightbox-case-study .arrow { font-size: 14px; line-height: 1; transition: transform 0.35s ease; }
+  .lightbox-case-study:hover .arrow { transform: translateX(4px); }
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
   @media (max-width: 900px) { .page{padding:110px 28px 60px} nav{padding:24px 28px} .grid{grid-template-columns:repeat(2,1fr)} .tab{font-size:11px;letter-spacing:3px;padding:14px 24px 14px 0;} }
@@ -129,19 +145,28 @@
     <button class="tab active" onclick="switchTab('ai',this)">AI</button>
     <button class="tab" onclick="switchTab('animation',this)">Animation</button>
     <button class="tab" onclick="switchTab('film',this)">Film</button>
-    <button class="tab" onclick="switchTab('corporate',this)">Corporate</button>
   </div>
 
   <!-- AI -->
   <div class="grid-container active" id="tab-ai">
     <div class="grid">
-      <div class="project-tile" onclick="window.open('https://www.tiktok.com/@tinycactuss','_blank')">
-        <img class="tile-thumb" src="TinyCactus.png" alt="Tiny Cactuss TikTok" loading="lazy" style="object-position: center top;">
+      <div class="project-tile" onclick="openLightbox('7k_atIW3YLQ','Dust Born','AI Film','dustborn.html')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/7k_atIW3YLQ/maxresdefault.jpg" alt="Dust Born" loading="lazy">
         <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn">
-          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:white;margin-left:0"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
-        </div>
-        <div class="tile-info"><div class="tile-category">TikTok · 40K Followers</div><div class="tile-title">@tinycactuss</div></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">AI Film · Case Study</div><div class="tile-title">Dust Born</div></div>
+      </div>
+      <div class="project-tile" onclick="openLightbox('TZBmIGAyZmo','Red Hour','AI Film')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/TZBmIGAyZmo/maxresdefault.jpg" alt="Red Hour" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">AI Film</div><div class="tile-title">Red Hour</div></div>
+      </div>
+      <div class="project-tile" onclick="openLightbox('Zs9eM-sSfUk','Stardust','AI Film')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/Zs9eM-sSfUk/maxresdefault.jpg" alt="Stardust" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">AI Film</div><div class="tile-title">Stardust</div></div>
       </div>
       <div class="project-tile" onclick="openLightbox('YroBxOxFwiI','WHOOPS Insurance','AI Film')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/YroBxOxFwiI/maxresdefault.jpg" alt="WHOOPS Insurance" loading="lazy">
@@ -160,6 +185,14 @@
         <div class="tile-overlay"></div><div class="tile-outline"></div>
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="tile-info"><div class="tile-category">AI Film</div><div class="tile-title">StratuSoft Tee - Meta Ad</div></div>
+      </div>
+      <div class="project-tile" onclick="window.open('https://www.tiktok.com/@tinycactuss','_blank')">
+        <img class="tile-thumb" src="TinyCactus.png" alt="Tiny Cactuss TikTok" loading="lazy" style="object-position: center top;">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:white;margin-left:0"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
+        </div>
+        <div class="tile-info"><div class="tile-category">TikTok · 40K Followers</div><div class="tile-title">@tinycactuss</div></div>
       </div>
       <div class="project-tile" onclick="openLightbox('McxBUOEykA8','Arctic Summit 2026','AI Film')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/McxBUOEykA8/maxresdefault.jpg" alt="Arctic Summit 2026" loading="lazy">
@@ -314,66 +347,6 @@
     </div>
   </div>
 
-  <!-- Corporate -->
-  <div class="grid-container" id="tab-corporate">
-    <div class="grid">
-      <div class="project-tile" onclick="openLightbox('vb-ODK71hgA','Skeena — People & Culture','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/vb-ODK71hgA/maxresdefault.jpg" alt="Skeena People and Culture" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Skeena — People & Culture</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('J-pi5MOsY7g','Skeena — Eskay Creek Construction','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/J-pi5MOsY7g/maxresdefault.jpg" alt="Skeena Eskay Creek Construction" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Skeena — Eskay Creek Construction</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('BrhAn7LOwXU','White Gold','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/BrhAn7LOwXU/maxresdefault.jpg" alt="White Gold" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">White Gold</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('oPkoPBl77s8','Invest Yukon — Fireweed','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/oPkoPBl77s8/maxresdefault.jpg" alt="Invest Yukon Fireweed" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Invest Yukon — Fireweed</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('oAcmEcJuchU','Invest Yukon — White Gold','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/oAcmEcJuchU/maxresdefault.jpg" alt="Invest Yukon White Gold" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Invest Yukon — White Gold</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('NjJrjYJLLlE','Yukon Metals','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/NjJrjYJLLlE/maxresdefault.jpg" alt="Yukon Metals" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Yukon Metals</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('3KAHQ-ZW8Iw','Pan American Silver — Sustainability','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/3KAHQ-ZW8Iw/maxresdefault.jpg" alt="Pan American Silver Sustainability" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Pan American Silver — Sustainability</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('uOXyM_GAYOs','Pan American Silver — Solar Power','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/uOXyM_GAYOs/maxresdefault.jpg" alt="Pan American Silver Solar Power" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Pan American Silver — Solar Power</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('nr81WqWQCXo','Pan American Silver — Leadership','Corporate')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/nr81WqWQCXo/maxresdefault.jpg" alt="Pan American Silver Leadership" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">Corporate</div><div class="tile-title">Pan American Silver — Leadership</div></div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
 <div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
@@ -382,6 +355,7 @@
     <div class="lightbox-video"><iframe id="lightboxFrame" src="" allowfullscreen allow="autoplay"></iframe></div>
     <div class="lightbox-title" id="lightboxTitle"></div>
     <div class="lightbox-meta" id="lightboxMeta"></div>
+    <a class="lightbox-case-study" id="lightboxCaseStudy" href="#" style="display:none;">View Case Study <span class="arrow">→</span></a>
   </div>
 </div>
 
@@ -407,10 +381,18 @@
     btn.classList.add('active');
   }
 
-  function openLightbox(videoId, title, category) {
+  function openLightbox(videoId, title, category, caseStudyUrl) {
     document.getElementById('lightboxFrame').src = 'https://www.youtube.com/embed/'+videoId+'?autoplay=1&rel=0&modestbranding=1';
     document.getElementById('lightboxTitle').textContent = title;
     document.getElementById('lightboxMeta').textContent = category;
+    var cs = document.getElementById('lightboxCaseStudy');
+    if (caseStudyUrl) {
+      cs.href = caseStudyUrl;
+      cs.style.display = 'inline-flex';
+    } else {
+      cs.href = '#';
+      cs.style.display = 'none';
+    }
     document.getElementById('lightbox').classList.add('open');
     document.body.style.overflow = 'hidden';
   }

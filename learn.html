@@ -9,26 +9,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --black: #0a0a0a; --light: #e8e4dc; --muted: rgba(232,228,220,0.45); --accent: #c9a96e; --white: #f5f2ec; }
+  :root { --black: #0a0a0a; --dark: #111111; --light: #e8e4dc; --muted: rgba(232,228,220,0.45); --accent: #c9a96e; --white: #f5f2ec; --border: rgba(232,228,220,0.08); }
   html, body { background: var(--black); color: var(--light); font-family: 'Montserrat', sans-serif; cursor: none; min-height: 100vh; }
 
+  /* Loader */
   .loader { position: fixed; inset: 0; background: var(--black); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transition: opacity 0.6s ease; }
   .loader.hidden { opacity: 0; pointer-events: none; }
-  .loader-logo { display: flex; align-items: center; justify-content: center; }
   .loader-logo img { height: 42px; width: auto; display: block; }
   .loader-bar-track { width: 120px; height: 1px; background: rgba(255,255,255,0.08); position: relative; overflow: hidden; }
   .loader-bar-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0; background: var(--accent); animation: loadFill 0.9s ease forwards; }
   @keyframes loadFill { from{width:0} to{width:100%} }
 
-  .cursor { position: fixed; width: 6px; height: 6px; background: var(--white); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+  /* Cursor */
+  .cursor { position: fixed; width: 6px; height: 6px; background: var(--white); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.08s ease, background 0.2s ease; }
   .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease; }
   .cursor.hovering { background: var(--accent); transform: translate(-50%,-50%) scale(0); }
-  .cursor-ring.hovering { width: 48px; height: 48px; border-color: rgba(201,169,110,0.6); }
+  .cursor-ring.hovering { width: 48px; height: 48px; border-color: rgba(201,169,110,0.7); }
 
   .grain { position: fixed; inset: -50%; width: 200%; height: 200%; z-index: 3; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E"); animation: grainAnim 0.5s steps(1) infinite; }
   @keyframes grainAnim { 0%{transform:translate(0,0)} 25%{transform:translate(-2%,-3%)} 50%{transform:translate(3%,1%)} 75%{transform:translate(-1%,3%)} 100%{transform:translate(2%,-2%)} }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 36px 52px; }
+  /* Nav */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 36px 52px; background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%); }
   .nav-logo { display: inline-flex; align-items: center; text-decoration: none; }
   .nav-logo img { height: 30px; width: auto; display: block; }
   .nav-links { display: flex; gap: 44px; list-style: none; }
@@ -37,15 +39,73 @@
   .nav-links a:hover, .nav-links a.active { color: var(--white); }
   .nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
 
-  .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 52px; }
+  /* Page */
+  .page { padding: 130px 52px 100px; max-width: 1400px; margin: 0 auto; }
 
-  .coming-soon-eyebrow { font-size: 10px; font-weight: 400; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards; }
-  .coming-soon-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(48px, 7vw, 90px); letter-spacing: 12px; text-transform: uppercase; color: var(--white); line-height: 1; opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards; }
-  .coming-soon-line { width: 60px; height: 1px; background: var(--accent); opacity: 0; margin: 32px auto 0; animation: fadeUp 0.8s ease 0.7s forwards; }
-  .coming-soon-sub { font-size: 11px; font-weight: 400; letter-spacing: 5px; text-transform: uppercase; color: rgba(232,228,220,0.35); margin-top: 20px; opacity: 0; animation: fadeUp 0.8s ease 0.9s forwards; }
+  .page-header { margin-bottom: 72px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+  .page-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 48px; letter-spacing: 6px; text-transform: uppercase; color: var(--white); margin-bottom: 18px; }
+  .page-intro { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 20px; line-height: 1.6; color: rgba(232,228,220,0.7); max-width: 680px; letter-spacing: 0.3px; }
 
-  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-  @media (max-width: 768px) { nav{padding:24px 28px} .page{padding:0 28px} }
+  /* Section label */
+  .section-label { display: flex; align-items: center; gap: 18px; margin-bottom: 36px; opacity: 0; animation: fadeUp 0.8s ease 0.35s forwards; }
+  .section-label-text { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); }
+  .section-label-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* Case study grid */
+  .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+
+  .case-card {
+    position: relative;
+    background: var(--dark);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: none;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.4s ease, transform 0.4s ease;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+  .case-card:hover { border-color: rgba(201,169,110,0.5); transform: translateY(-4px); }
+
+  .case-card-media { position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--black); }
+  .case-card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94); filter: brightness(0.9); }
+  .case-card:hover .case-card-img { transform: scale(1.04); filter: brightness(1); }
+  .case-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,10,0.6) 0%, transparent 40%); }
+  .case-card-badge { position: absolute; top: 18px; left: 18px; background: rgba(10,10,10,0.8); border: 1px solid var(--accent); color: var(--accent); font-size: 9px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; padding: 7px 14px; backdrop-filter: blur(8px); }
+
+  .case-card-body { padding: 32px 32px 36px; }
+  .case-card-meta { font-size: 10px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .case-card-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 30px; letter-spacing: 2px; color: var(--white); line-height: 1.15; margin-bottom: 14px; }
+  .case-card-desc { font-size: 13px; font-weight: 300; line-height: 1.65; color: rgba(232,228,220,0.65); letter-spacing: 0.2px; margin-bottom: 22px; }
+  .case-card-tools { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+  .tool-chip { font-size: 9px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(232,228,220,0.55); border: 1px solid var(--border); padding: 5px 11px; }
+  .case-card-cta { display: inline-flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: var(--white); transition: gap 0.3s ease, color 0.3s ease; }
+  .case-card-cta .arrow { font-size: 14px; color: var(--accent); transition: transform 0.3s ease; }
+  .case-card:hover .case-card-cta { color: var(--accent); }
+  .case-card:hover .case-card-cta .arrow { transform: translateX(6px); }
+
+  /* Coming soon card */
+  .case-card.coming-soon:hover { border-color: var(--border); transform: none; }
+  .case-card.coming-soon .case-card-media { background: linear-gradient(135deg, #0e0e0e 0%, #161616 100%); display: flex; align-items: center; justify-content: center; }
+  .case-card.coming-soon .placeholder-text { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: 22px; letter-spacing: 3px; color: rgba(232,228,220,0.2); text-transform: uppercase; }
+  .case-card.coming-soon .case-card-title { color: rgba(232,228,220,0.4); }
+  .case-card.coming-soon .case-card-desc { color: rgba(232,228,220,0.35); }
+  .case-card.coming-soon .case-card-cta { color: rgba(232,228,220,0.35); }
+  .case-card.coming-soon .case-card-cta .arrow { color: rgba(201,169,110,0.35); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  @media (max-width: 900px) {
+    .page { padding: 110px 28px 60px; }
+    nav { padding: 24px 28px; }
+    .case-grid { grid-template-columns: 1fr; gap: 24px; }
+    .page-title { font-size: 36px; letter-spacing: 4px; }
+    .case-card-body { padding: 24px 22px 28px; }
+    .case-card-title { font-size: 24px; }
+  }
 </style>
 </head>
 <body>
@@ -70,17 +130,57 @@
 </nav>
 
 <div class="page">
-  <div class="coming-soon-eyebrow">Zelva — Learn</div>
-  <div class="coming-soon-title">Coming Soon</div>
-  <div class="coming-soon-line"></div>
-  <div class="coming-soon-sub">Courses & Tutorials — In Development</div>
+  <div class="page-header">
+    <h1 class="page-title">Learn</h1>
+    <p class="page-intro">Deep-dive case studies on how our AI films are actually made — the prompts, the tools, the mistakes, the breakthroughs. Everything we wish someone had written down for us.</p>
+  </div>
+
+  <div class="section-label">
+    <span class="section-label-text">Featured Breakdowns</span>
+    <span class="section-label-line"></span>
+  </div>
+
+  <div class="case-grid">
+
+    <a href="dustborn.html" class="case-card">
+      <div class="case-card-media">
+        <img class="case-card-img" src="https://img.youtube.com/vi/7k_atIW3YLQ/maxresdefault.jpg" alt="Dust Born case study">
+        <div class="case-card-overlay"></div>
+        <div class="case-card-badge">Case Study 001</div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-card-meta">Seedance 2 · Nano Banana Pro · Midjourney</div>
+        <h2 class="case-card-title">How I Made Dust Born</h2>
+        <p class="case-card-desc">A deep dive into testing Seedance 2 to its limits — continuous long shots, speed ramping, orbiting cameras, transformations, and everything that broke along the way.</p>
+        <div class="case-card-tools">
+          <span class="tool-chip">Midjourney</span>
+          <span class="tool-chip">Nano Banana Pro</span>
+          <span class="tool-chip">Seedance 2</span>
+        </div>
+        <span class="case-card-cta">Read Case Study <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+    <div class="case-card coming-soon">
+      <div class="case-card-media">
+        <span class="placeholder-text">Soon</span>
+      </div>
+      <div class="case-card-body">
+        <div class="case-card-meta">Coming Soon</div>
+        <h2 class="case-card-title">Next Breakdown In Progress</h2>
+        <p class="case-card-desc">New case studies drop as each film is finished. Each one dissects the real prompt work, the dead ends, and what finally clicked.</p>
+        <div class="case-card-tools">
+          <span class="tool-chip">TBA</span>
+        </div>
+        <span class="case-card-cta">In Development <span class="arrow">→</span></span>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <script>
-  function hideLoader() {
-    var l = document.getElementById('loader');
-    if (l) l.classList.add('hidden');
-  }
+  function hideLoader() { var l = document.getElementById('loader'); if (l) l.classList.add('hidden'); }
   setTimeout(hideLoader, 1000);
 
   const cursor = document.getElementById('cursor');
@@ -88,7 +188,7 @@
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
   (function animRing(){ rx+=(mx-rx)*0.22; ry+=(my-ry)*0.22; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
-  document.querySelectorAll('a').forEach(el => {
+  document.querySelectorAll('a, .case-card').forEach(el => {
     el.addEventListener('mouseenter',()=>{ cursor.classList.add('hovering'); ring.classList.add('hovering'); });
     el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hovering'); ring.classList.remove('hovering'); });
   });
