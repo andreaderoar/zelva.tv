@@ -6,7 +6,7 @@
 <title>Learn — Zelva</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&amp;family=Montserrat:wght@300;400;500&amp;display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root { --black: #0a0a0a; --dark: #111111; --light: #e8e4dc; --muted: rgba(232,228,220,0.45); --accent: #c9a96e; --white: #f5f2ec; --border: rgba(232,228,220,0.08); }
@@ -98,6 +98,7 @@
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
+  @media (hover: none), (pointer: coarse) { .cursor, .cursor-ring { display: none; } html, body, .case-card { cursor: auto; } }
   @media (max-width: 900px) {
     .page { padding: 110px 28px 60px; }
     nav { padding: 24px 28px; }
@@ -185,9 +186,15 @@
 
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
-  let mx=0,my=0,rx=0,ry=0;
+  let mx=-100,my=-100,rx=-100,ry=-100;
   document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
   (function animRing(){ rx+=(mx-rx)*0.22; ry+=(my-ry)*0.22; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+  document.querySelectorAll('img[src*="maxresdefault"]').forEach(img => {
+    function check(){ if (img.naturalWidth > 0 && img.naturalWidth <= 120) img.src = img.src.replace('maxresdefault','hqdefault'); }
+    if (img.complete) check(); else img.addEventListener('load', check);
+    img.addEventListener('error', () => { img.src = img.src.replace('maxresdefault','hqdefault'); }, { once: true });
+  });
+
   document.querySelectorAll('a, .case-card').forEach(el => {
     el.addEventListener('mouseenter',()=>{ cursor.classList.add('hovering'); ring.classList.add('hovering'); });
     el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hovering'); ring.classList.remove('hovering'); });
