@@ -6,7 +6,7 @@
 <title>Zelva — Creative Studio for the AI Era</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&amp;family=Montserrat:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
@@ -42,8 +42,8 @@
   nav.scrolled { background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%); }
   .nav-logo { display: inline-flex; align-items: center; text-decoration: none; }
   .nav-logo img { height: 30px; width: auto; display: block; }
-  .nav-links { display: flex; gap: 44px; list-style: none; }
-  .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,228,220,0.6); text-decoration: none; transition: color 0.3s ease; position: relative; }
+  .nav-links { display: flex; gap: 44px; list-style: none; margin-right: 18px; }
+  .nav-links a { font-size: 13px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,228,220,0.6); text-decoration: none; transition: color 0.3s ease; position: relative; }
   .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.4s var(--ease); }
   .nav-links a:hover { color: var(--white); }
   .nav-links a:hover::after { width: 100%; }
@@ -56,13 +56,13 @@
   .hero-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.75) 100%); z-index: 2; pointer-events: none; }
 
   .hero-content { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
-  .hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; opacity: 0; animation: fadeUp 1s ease 0.5s forwards; }
+  .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; opacity: 0; animation: fadeUp 1s ease 0.5s forwards; }
   .hero-logo { opacity: 0; animation: fadeUp 1.2s ease 0.7s forwards; }
   .hero-logo img { height: clamp(55px, 8vw, 110px); width: auto; display: block; }
   .hero-tagline { font-size: 12px; font-weight: 400; letter-spacing: 6px; text-transform: uppercase; color: rgba(232,228,220,0.5); margin-top: 28px; opacity: 0; animation: fadeUp 1s ease 1s forwards; }
 
   /* Scroll hint — animated line */
-  .scroll-hint { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 20; display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: rgba(232,228,220,0.75); text-decoration: none; cursor: none; transition: color 0.3s ease; opacity: 0; animation: fadeUp 1s ease 1.3s forwards; white-space: nowrap; }
+  .scroll-hint { position: absolute; bottom: 40px; left: 0; right: 0; margin-inline: auto; width: max-content; z-index: 20; display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: rgba(232,228,220,0.75); text-decoration: none; cursor: none; transition: color 0.3s ease; opacity: 0; animation: fadeUp 1s ease 1.3s forwards; white-space: nowrap; }
   .scroll-hint:hover { color: var(--white); }
   .scroll-line { width: 52px; height: 1px; background: rgba(201,169,110,0.4); position: relative; overflow: hidden; }
   .scroll-line::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--accent); animation: scrollLine 2.2s ease infinite; }
