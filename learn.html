@@ -98,7 +98,6 @@
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
-  @media (hover: none), (pointer: coarse) { .cursor, .cursor-ring { display: none; } html, body, .case-card { cursor: auto; } }
   @media (max-width: 900px) {
     .page { padding: 110px 28px 60px; }
     nav { padding: 24px 28px; }
@@ -143,6 +142,27 @@
 
   <div class="case-grid">
 
+    <a href="icewitch.html" class="case-card">
+      <div class="case-card-media">
+        <img class="case-card-img" src="images/icewitch/still-s4-the-smile.jpg" alt="The Ice Witch case study">
+        <div class="case-card-overlay"></div>
+        <div class="case-card-badge">Case Study 002</div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-card-meta">Midjourney · ChatGPT · Seedance 2</div>
+        <h2 class="case-card-title">The Ice Witch — Creating the Hook</h2>
+        <p class="case-card-desc">Every prompt behind the cold open — Midjourney character sheets, why we skipped Nano Banana Pro, the Dreamina-to-Higgsfield pipeline, and all five Seedance 2.0 prompts shot by shot.</p>
+        <div class="case-card-tools">
+          <span class="tool-chip">Midjourney</span>
+          <span class="tool-chip">ChatGPT</span>
+          <span class="tool-chip">Photoshop</span>
+          <span class="tool-chip">Seedance 2</span>
+          <span class="tool-chip">Higgsfield</span>
+        </div>
+        <span class="case-card-cta">Read Case Study <span class="arrow">→</span></span>
+      </div>
+    </a>
+
     <a href="dustborn.html" class="case-card">
       <div class="case-card-media">
         <img class="case-card-img" src="https://img.youtube.com/vi/7k_atIW3YLQ/maxresdefault.jpg" alt="Dust Born case study">
@@ -186,15 +206,9 @@
 
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
-  let mx=-100,my=-100,rx=-100,ry=-100;
+  let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
   (function animRing(){ rx+=(mx-rx)*0.22; ry+=(my-ry)*0.22; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
-  document.querySelectorAll('img[src*="maxresdefault"]').forEach(img => {
-    function check(){ if (img.naturalWidth > 0 && img.naturalWidth <= 120) img.src = img.src.replace('maxresdefault','hqdefault'); }
-    if (img.complete) check(); else img.addEventListener('load', check);
-    img.addEventListener('error', () => { img.src = img.src.replace('maxresdefault','hqdefault'); }, { once: true });
-  });
-
   document.querySelectorAll('a, .case-card').forEach(el => {
     el.addEventListener('mouseenter',()=>{ cursor.classList.add('hovering'); ring.classList.add('hovering'); });
     el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hovering'); ring.classList.remove('hovering'); });
