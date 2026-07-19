@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ice Witch — Creating the Hook | Zelva Learn</title>
+<meta name="description" content="Full breakdown of how Zelva built the Ice Witch opening hook: Midjourney character design, Photoshop reference sheets, and Seedance 2.0 prompts — every prompt included.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Montserrat:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0a0a0a;
+  --ink:#111111;
+  --panel:#141414;
+  --line:rgba(212,175,110,.18);
+  --gold:#d4af6e;
+  --gold-dim:#a8854e;
+  --text:#e8e4dc;
+  --muted:#9a958c;
+  --teal:#7fb3bd;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--text);
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection{background:var(--gold);color:var(--black)}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:26px 48px;
+  background:linear-gradient(to bottom,rgba(10,10,10,.92),transparent);
+}
+.logo{font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;letter-spacing:.35em;color:var(--text);text-decoration:none}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:34px}
+.nav-links a{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--gold)}
+a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-1;overflow:hidden}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.55;animation:heroDrift 24s ease-in-out infinite alternate}
+@keyframes heroDrift{from{transform:scale(1)}to{transform:scale(1.06)}}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--black) 4%,rgba(10,10,10,.35) 45%,rgba(10,10,10,.55) 100%)}
+.hero-inner{max-width:1060px;margin:0 auto;padding:0 32px 96px;width:100%}
+.eyebrow{
+  font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;
+  letter-spacing:.32em;text-transform:uppercase;color:var(--gold);
+  display:inline-flex;align-items:center;gap:14px;margin-bottom:22px;
+}
+.eyebrow::before{content:'';width:44px;height:1px;background:var(--gold)}
+h1{
+  font-size:clamp(52px,8.5vw,110px);font-weight:500;line-height:.98;
+  letter-spacing:.01em;margin-bottom:20px;
+}
+h1 em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:clamp(20px,2.4vw,26px);font-style:italic;color:var(--muted);max-width:640px}
+.hero-meta{
+  display:flex;gap:38px;flex-wrap:wrap;margin-top:38px;
+  font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted);
+}
+.hero-meta b{display:block;color:var(--text);font-weight:600;margin-top:5px;letter-spacing:.14em}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1060px;margin:0 auto;padding:0 32px}
+.prose{max-width:720px}
+.prose p{margin-bottom:1.35em}
+.prose p:last-child{margin-bottom:0}
+.prose strong{font-weight:600;color:#fff}
+.prose .drop::first-letter{
+  font-size:3.4em;float:left;line-height:.82;padding-right:.12em;color:var(--gold);font-weight:500;
+}
+section{padding:96px 0}
+section+section{border-top:1px solid rgba(255,255,255,.05)}
+
+.ch-head{display:flex;align-items:baseline;gap:26px;margin-bottom:46px}
+.ch-num{
+  font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:.25em;color:var(--gold);white-space:nowrap;
+}
+h2{font-size:clamp(34px,4.6vw,54px);font-weight:500;line-height:1.05}
+h3{font-size:clamp(24px,3vw,32px);font-weight:600;margin:60px 0 18px}
+h3:first-of-type{margin-top:0}
+.kicker{font-style:italic;color:var(--muted);font-size:.95em;margin-top:6px}
+
+/* ---------- figures ---------- */
+figure{margin:44px 0}
+figure img{
+  width:100%;display:block;border:1px solid var(--line);cursor:zoom-in;
+  transition:opacity .3s;
+}
+figure img:hover{opacity:.92}
+figcaption{
+  font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:.08em;
+  color:var(--muted);margin-top:12px;line-height:1.6;
+}
+figcaption b{color:var(--gold);font-weight:600;letter-spacing:.14em}
+.fig-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0}
+.fig-grid figure{margin:0}
+.compare{position:relative}
+.tag{
+  position:absolute;top:14px;left:14px;z-index:2;
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;padding:7px 12px;
+}
+.tag.used{background:var(--gold);color:var(--black)}
+.tag.unused{background:rgba(10,10,10,.85);color:#e07b6a;border:1px solid rgba(224,123,106,.5)}
+
+/* ---------- prompt blocks ---------- */
+.prompt{
+  margin:34px 0;border:1px solid var(--line);background:var(--panel);
+}
+.prompt summary{
+  list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;
+  padding:18px 22px;font-family:'Montserrat',sans-serif;font-size:12px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+  transition:background .3s;user-select:none;
+}
+.prompt summary::-webkit-details-marker{display:none}
+.prompt summary:hover{background:rgba(212,175,110,.06)}
+.prompt summary::before{content:'+';font-size:18px;font-weight:400;color:var(--gold);width:16px}
+.prompt[open] summary::before{content:'–'}
+.prompt-body{position:relative;border-top:1px solid var(--line)}
+.prompt pre{
+  padding:26px 24px;overflow-x:auto;white-space:pre-wrap;word-break:break-word;
+  font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.75;color:#c9c4ba;
+}
+.copy-btn{
+  position:absolute;top:14px;right:14px;
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
+  background:var(--black);border:1px solid var(--line);padding:8px 14px;
+  cursor:pointer;transition:all .25s;
+}
+.copy-btn:hover{background:var(--gold);color:var(--black)}
+
+/* ---------- lesson / pull ---------- */
+.lesson{
+  border-left:2px solid var(--gold);padding:8px 0 8px 28px;margin:44px 0;
+  font-size:1.12em;font-style:italic;color:#f0ece3;max-width:720px;
+}
+.lesson b{font-style:normal;font-family:'Montserrat',sans-serif;font-size:11px;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px}
+
+/* ---------- video ---------- */
+.video-shell{position:relative;padding-top:56.25%;border:1px solid var(--line);margin:44px 0;background:#000}
+.video-shell iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* ---------- pipeline ---------- */
+.pipeline{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);margin:44px 0;
+}
+.step{background:var(--panel);padding:26px 22px}
+.step .n{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.25em;color:var(--gold);display:block;margin-bottom:12px}
+.step h4{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:600;letter-spacing:.06em;margin-bottom:8px;color:#fff}
+.step p{font-size:16px;line-height:1.55;color:var(--muted)}
+
+/* ---------- section slates ---------- */
+.slate{
+  display:flex;flex-wrap:wrap;gap:8px 26px;align-items:baseline;
+  font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted);margin:64px 0 8px;
+  padding-top:26px;border-top:1px solid rgba(255,255,255,.07);
+}
+.slate .s-num{color:var(--gold);font-weight:700}
+.slate .s-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;
+  color:var(--text);text-transform:none;letter-spacing:0}
+
+/* ---------- takeaways ---------- */
+.takeaways{counter-reset:tk;max-width:720px}
+.takeaways li{
+  list-style:none;counter-increment:tk;padding:22px 0 22px 64px;position:relative;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.takeaways li::before{
+  content:counter(tk,decimal-leading-zero);position:absolute;left:0;top:24px;
+  font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.1em;color:var(--gold);
+}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid rgba(255,255,255,.07);padding:70px 0 60px;margin-top:40px}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.back-link{
+  font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold);text-decoration:none;
+  display:inline-flex;align-items:center;gap:12px;
+}
+.back-link::before{content:'←';transition:transform .3s}
+.back-link:hover::before{transform:translateX(-5px)}
+.foot-note{font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+
+/* ---------- lightbox ---------- */
+.lightbox{
+  position:fixed;inset:0;z-index:1000;background:rgba(5,5,5,.96);
+  display:none;align-items:center;justify-content:center;padding:32px;cursor:zoom-out;
+}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:100%;object-fit:contain}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .hero-bg img{animation:none}
+  html{scroll-behavior:auto}
+}
+@media (max-width:760px){
+  nav{padding:20px 22px}
+  .nav-links{gap:20px}
+  body{font-size:18px}
+  .fig-grid{grid-template-columns:1fr}
+  .ch-head{flex-direction:column;gap:10px}
+  section{padding:70px 0}
+  .hero-inner{padding-bottom:70px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">ZELVA<span>.</span></a>
+  <div class="nav-links">
+    <a href="work.html">Work</a>
+    <a href="learn.html">Learn</a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="hero-bg"><img src="images/icewitch/location-execution-ground.jpg" alt="The execution ground at blue hour — snowy medieval village, scaffold and pyre beneath a mountain"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">Zelva Learn — Case Study</span>
+    <h1>The Ice Witch<br><em>Creating the Hook</em></h1>
+    <p class="hero-sub">How we designed the characters, built the world, and directed Seedance 2.0 shot by shot — every prompt included.</p>
+    <div class="hero-meta">
+      <div>Tools<b>Midjourney · ChatGPT · Photoshop · Seedance 2.0 · Premiere</b></div>
+      <div>Platforms<b>Dreamina · Higgsfield</b></div>
+      <div>Runtime<b>~60 second cold open</b></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= INTRO ================= -->
+<section id="intro">
+  <div class="prose reveal">
+    <p class="drop">The Ice Witch is an origin story. But origin stories have a problem on social media: they start slow, and viewers don't wait. So before a single frame of Aelira's childhood, we open twenty-five winters later — a hooded prisoner dragged through a screaming mob, tied to the stake, and set on fire. The town celebrates. Then the fire dies, the temperature drops, and the woman they tried to burn shows them what a monster really looks like.</p>
+    <p>Hooks that go straight into action hold viewer retention far better than a linear opening. When the carnage ends and the title card reads <strong>"25 Winters Earlier,"</strong> the audience isn't watching a backstory anymore — they're watching an answer to a question: <em>how did she become this?</em></p>
+    <p>This is the complete breakdown of how the hook was made: the exact Midjourney prompts behind every character and the location, why we deliberately avoided Nano Banana Pro, the Dreamina-to-Higgsfield pipeline, and the full Seedance 2.0 prompt for every section of the sequence.</p>
+  </div>
+
+  <figure class="video-shell reveal">
+    <iframe src="https://www.youtube.com/embed/Wg7REldAzMY" title="The Ice Witch — Zelva" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </figure>
+</section>
+
+<!-- ================= 01 CHARACTERS ================= -->
+<section id="characters">
+  <div class="ch-head reveal">
+    <span class="ch-num">Chapter 01</span>
+    <div><h2>Character Design in Midjourney</h2>
+    <p class="kicker">Studio-lit reference sheets, built like a real casting and wardrobe session.</p></div>
+  </div>
+
+  <div class="prose reveal">
+    <p>Every character starts as a <strong>reference sheet</strong>: one frontal close-up for identity, one full-body for wardrobe, generated in a single 16:9 frame against a clean studio backdrop. Bright, even lighting — not because the film looks like that, but because the video model needs clean information. Mood comes later; references are for <em>facts</em>.</p>
+  </div>
+
+  <h3 class="reveal">Aelira, the Ice Witch</h3>
+  <div class="prose reveal">
+    <p>The hook needs her twice: hooded and unknowable during the march, revealed when the fire dies. We generated the base prisoner look in Midjourney, then took her into <strong>ChatGPT to swap in our actual main character's face</strong> — once with the hood up, once with the hood down — so the woman burned at the stake is unmistakably the same woman from the origin story.</p>
+  </div>
+
+  <details class="prompt reveal">
+    <summary>Midjourney prompt — Aelira</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>Live action photorealistic film still, reference sheet split into two side by side portraits of the same woman: left a frontal close up, right a full body shot head to toe, both sharp in focus. A strikingly beautiful young woman with pale white skin, subtle pointed ear tips, ice blue eyes, wrists bound in front with coarse rope, a prisoner with a dirt smudged face. Deep midnight blue wool coat with fur lined collar and hood, the hood up and pulled low shadowing the upper half of her face, loose strands of platinum white hair escaping the hood, the coat torn, frayed, and mud stained, fur matted and dirty. Seamless dark charcoal background, soft studio lighting, subtle cool rim light, faint light catching her lips and jaw. --ar 16:9 --hd --preview --profile r15ir1i</pre>
+    </div>
+  </details>
+
+  <figure class="reveal">
+    <img src="images/icewitch/aelira-raw-base.jpg" alt="Aelira base generation — hooded prisoner close-up and full body, wrists bound">
+    <figcaption><b>THE BASE</b> — the raw Midjourney prisoner: bound wrists, dirt-smudged face, torn midnight blue coat.</figcaption>
+  </figure>
+  <div class="fig-grid reveal">
+    <figure>
+      <img src="images/icewitch/aelira-hooded.jpg" alt="Aelira with hood up, face hidden in shadow">
+      <figcaption><b>HOOD UP</b> — the mystery. Face swapped in ChatGPT to match our main character, kept in shadow for the march.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/icewitch/aelira-revealed.jpg" alt="Aelira revealed — platinum hair, ice blue eyes, pale skin">
+      <figcaption><b>HOOD DOWN</b> — the reveal. Same face, same wardrobe: the reference Seedance uses when she shows herself.</figcaption>
+    </figure>
+  </div>
+
+  <h3 class="reveal">The Executioner</h3>
+  <div class="prose reveal">
+    <p>Aelira gets "strikingly beautiful." The executioner gets the opposite dials: <strong>"normal human face, plain rough features, mean hostile expression."</strong> The ugliness lives in the grime and the expression, not in creature makeup — which keeps Seedance from drifting him into a monster.</p>
+  </div>
+
+  <details class="prompt reveal">
+    <summary>Midjourney prompt — The Executioner</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>Live action photorealistic film still, reference sheet split in two: left frontal close up, right full body head to toe, same man, both sharp. A big middle aged male actor with a normal human face, pale white skin and pointed ear tips, somewhat overweight but not too much, plain rough features, mean hostile expression, executioner type, ash grey hair tied back. Dirty and unkempt: grimy skin, soot stained hands, stained dark leather apron over a worn wool tunic, matted fur collar, thick gloves in his belt, coiled rope over one shoulder, muddy boots. Bright soft studio lighting, even exposure, white studio backdrop. --ar 16:9 --hd --preview --profile r15ir1i</pre>
+    </div>
+  </details>
+
+  <div class="fig-grid reveal">
+    <figure>
+      <img src="images/icewitch/executioner-midjourney-raw.jpg" alt="Executioner — raw Midjourney reference sheet, close-up and full body">
+      <figcaption><b>RAW RESULT</b> — straight out of Midjourney: identity on the left, wardrobe on the right.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/icewitch/executioner-cleaned-headless.jpg" alt="Executioner cleaned in Photoshop — full body with head removed">
+      <figcaption><b>PHOTOSHOP PASS</b> — cleaned up, and the head removed from the full-body. Seedance locks identity from the close-up; a second face on the sheet only competes with it.</figcaption>
+    </figure>
+  </div>
+
+  <div class="lesson reveal"><b>Trick nobody tells you</b>Delete the head from your full-body wardrobe reference. One face per character sheet means the video model has exactly one source of identity — and far less face drift.</div>
+
+  <h3 class="reveal">The Villagers</h3>
+  <div class="prose reveal">
+    <p>The mob needed to feel like a town, not four extras copy-pasted fifty times. We generated batches of villagers — refined, cold, hostile faces in medieval winter wool — then <strong>cherry-picked the strongest in Photoshop</strong> and composited them into clean crowd reference sheets: one for faces, one for wardrobe.</p>
+  </div>
+
+  <details class="prompt reveal">
+    <summary>Midjourney prompt — The Villagers</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>Live action photorealistic film still, character reference sheet: two side by side full body portraits, clean division. Left: strikingly handsome older male actor, long white hair. Right: strikingly handsome middle aged male actor, short ash grey hair. Full body head to toe, standing upright facing camera, each centered in his half, both equally sharp. Beautiful refined faces, elegant bone structure, pale skin, subtle small pointed ear tips, cold hostile expressions: hard eyes, tight jaws, quiet contempt. Two completely different faces and builds, no resemblance. No prosthetics, no creature makeup, natural human anatomy. Medieval winter clothing: wool tunics, hooded cloaks, fur lined collars, knitted layers, leather belts, worn boots, muted browns and greys. Ultra realistic wool texture, individual hair strands, natural skin pores. Bright professional studio lighting, large soft key light, fill light, bright even exposure, clean white cyclorama backdrop, cinema camera, raw photographic style. --ar 16:9 --hd --preview --profile r15ir1i</pre>
+    </div>
+  </details>
+
+  <figure class="reveal">
+    <img src="images/icewitch/villagers-fullbody-raw.jpg" alt="Three villager wardrobe variants, full body, white backdrop">
+    <figcaption><b>WARDROBE BATCH</b> — full-body variants for the crowd's clothing language: wool, fur, muted browns and greys.</figcaption>
+  </figure>
+  <div class="fig-grid reveal">
+    <figure>
+      <img src="images/icewitch/villagers-faces.jpg" alt="Three villager face close-ups — cold hostile expressions">
+      <figcaption><b>FACES SHEET</b> — quiet contempt, hard eyes. This sheet drives every close-up in the mob.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/icewitch/villager-cleaned-sheet.jpg" alt="Final villager reference sheet cleaned in Photoshop">
+      <figcaption><b>FINAL SHEET</b> — favorites picked and composited in Photoshop into a clean identity + wardrobe pairing.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= 02 WHY MIDJOURNEY ================= -->
+<section id="why-midjourney">
+  <div class="ch-head reveal">
+    <span class="ch-num">Chapter 02</span>
+    <div><h2>Why Midjourney — and not Nano Banana&nbsp;Pro</h2>
+    <p class="kicker">Your references set the ceiling for your film.</p></div>
+  </div>
+
+  <div class="prose reveal">
+    <p>Here's the lesson that cost us the most credits to learn: <strong>the video model inherits the cinematography of your reference images.</strong> Feed Seedance flat, evenly lit references and you get flat, evenly lit video — no prompt can fully rescue it.</p>
+    <p>Nano Banana Pro is a capable model, but its default look is bright and clean — closer to a 2010 TV series or a commercial. Midjourney, with dialed-in style references, produces genuine film-still cinematography: deep shadows, cool rim light, texture, atmosphere. We spent real time refining our SREF codes to lock that look, and it pays off in every frame of video. Same character, both models, judge for yourself:</p>
+  </div>
+
+  <div class="fig-grid reveal">
+    <figure class="compare">
+      <span class="tag used">Used in film — Midjourney</span>
+      <img src="images/icewitch/aelira-revealed.jpg" alt="Midjourney version of Aelira — cinematic low-key lighting">
+      <figcaption>Low-key light, shadow shaping the face, film texture. This is a frame you could cut into a feature.</figcaption>
+    </figure>
+    <figure class="compare">
+      <span class="tag unused">Not used — Nano Banana Pro</span>
+      <img src="images/icewitch/aelira-nanobanana-1.jpg" alt="Nano Banana Pro version of Aelira — flat even lighting">
+      <figcaption>Technically clean, but evenly lit and flat — and that flatness follows you into Seedance.</figcaption>
+    </figure>
+  </div>
+  <figure class="compare reveal">
+    <span class="tag unused">Not used — Nano Banana Pro</span>
+    <img src="images/icewitch/aelira-nanobanana-2.jpg" alt="Second Nano Banana Pro test — clean coat, commercial lighting">
+    <figcaption>A second Nano Banana test. Pretty — but it reads like a catalogue, not a cold open. The difference is huge.</figcaption>
+  </figure>
+
+  <div class="lesson reveal"><b>The rule</b>Never write just "cinematic." The look comes from the reference images and from naming the actual craft: the camera, the lens, the depth of field, the movement, the composition. The same applies to locations — a flat location plate will drop your Seedance quality and shift your lighting.</div>
+</section>
+
+<!-- ================= 03 LOCATION ================= -->
+<section id="location">
+  <div class="ch-head reveal">
+    <span class="ch-num">Chapter 03</span>
+    <div><h2>The Execution Ground</h2>
+    <p class="kicker">One location plate carries the entire hook.</p></div>
+  </div>
+
+  <div class="prose reveal">
+    <p>Every Seedance clip in the hook references the same location image, so it had to contain the whole scene: the scaffold and pyre, the blackened T-shaped post, the torch ring, the village at its back and the mountain over everything — at blue hour, in the exact teal-and-torchlight palette the film lives in. Generated in Midjourney, with small details fixed in ChatGPT.</p>
+  </div>
+
+  <details class="prompt reveal">
+    <summary>Midjourney prompt — The Execution Ground</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>Cinematic ground level shot, empty medieval execution ground, snowy edge of a Tudor half timbered village at blue hour. Wide trampled clearing between last village houses and a dark frozen pine forest. Center: raised wooden scaffold of weathered dark timber with rough steps, holding a pyre of stacked logs and kindling. Rising from the pyre: a thick rough hewn blackened execution post, broad as a tree trunk, with a shorter crossbeam lashed near the top with iron bands and coarse rope - crude T shape, not a cross - sturdy enough to bind a person against, scorched from past burnings. Charred remnants beneath snow. A massive snow covered mountain dominates the sky behind, peak catching last cold light. Iron torch brackets on timber posts ring the clearing, torches burning with wind torn flames. Snow heavy pines looming dark one side, village rooftops with faint amber windows the other. Twilight sky fading deep blue to faint orange. Cold cinematic teal blue palette, warm torchlight accents, volumetric fog and haze. Photoreal live action film style, wide lens, low angle framing post against mountain, extreme detail, no people. --ar 16:9 --hd --preview --profile r15ir1i</pre>
+    </div>
+  </details>
+
+  <figure class="reveal">
+    <img src="images/icewitch/location-execution-ground.jpg" alt="The execution ground — scaffold and blackened post at blue hour beneath a snowy mountain">
+    <figcaption><b>THE PLATE</b> — every camera setup in the hook lives inside this one frame.</figcaption>
+  </figure>
+</section>
+
+<!-- ================= 04 PIPELINE ================= -->
+<section id="pipeline">
+  <div class="ch-head reveal">
+    <span class="ch-num">Chapter 04</span>
+    <div><h2>The Seedance 2.0 Pipeline</h2>
+    <p class="kicker">Test cheap, render expensive, edit like a film.</p></div>
+  </div>
+
+  <div class="prose reveal">
+    <p>With the assets locked, generation follows a strict routine — built to protect both the credits and the look:</p>
+  </div>
+
+  <div class="pipeline reveal">
+    <div class="step"><span class="n">Step 1</span><h4>Test at 720p — Dreamina</h4><p>Why pay for 1080 when you aren't sure about the results? Every prompt gets dialed in against cheap 720p tests first.</p></div>
+    <div class="step"><span class="n">Step 2</span><h4>Iterate the prompt</h4><p>Each test run adjusts blocking, physics constraints and timing until the shot behaves. Multiple runs per section.</p></div>
+    <div class="step"><span class="n">Step 3</span><h4>Final — Higgsfield 1080p</h4><p>Higgsfield's 1080p with non-compression mode is a world of difference above Dreamina's 1080 — that's where finals render.</p></div>
+    <div class="step"><span class="n">Step 4</span><h4>Edit — Premiere</h4><p>Best takes cut together, sound design fixed, a little music. The finale alone is several generations edited into one.</p></div>
+  </div>
+
+  <figure class="reveal">
+    <img src="images/icewitch/higgsfield-settings.jpg" alt="Seedance 2 settings on Higgsfield — 1080p, high bitrate, reference images loaded">
+    <figcaption><b>ON HIGGSFIELD</b> — Seedance 2, 1080p, high bitrate, reference images loaded, the prompt riding along with the generation.</figcaption>
+  </figure>
+
+  <div class="prose reveal">
+    <p>Every prompt is built with a custom Claude Skill we wrote for live-action work. As a cinematographer, I want that smooth handheld feeling where the camera is alive — moving with the action, usually shooting from the darker side. I don't own a set of anamorphic Cooke lenses in real life, but Seedance understands the language beautifully. Each scene is timed and composed to fit inside Seedance's <strong>15-second clip limit</strong>, and every prompt names the <strong>emotion, blocking and choreography</strong> of the characters — that's what makes them feel alive instead of posed.</p>
+  </div>
+</section>
+
+<!-- ================= 05 THE PROMPTS ================= -->
+<section id="prompts">
+  <div class="ch-head reveal">
+    <span class="ch-num">Chapter 05</span>
+    <div><h2>The Hook, Prompt by Prompt</h2>
+    <p class="kicker">Five Seedance 2.0 sections, in story order — with the frames they produced.</p></div>
+  </div>
+
+  <div class="prose reveal">
+    <p>Each prompt follows the same architecture: numbered reference images, art style, environment, context, <strong>blocking</strong>, a shot list with purpose / movement / frame / duration, then lighting, physics and audio. Read the blocking sections closely — every "never" and "only" in there is a scar from a failed generation.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="slate reveal"><span class="s-num">Section 01</span><span class="s-title">The March</span><span>6 shots · 15s</span></div>
+  <div class="prose reveal"><p>The executioner drags Aelira by a rope through the mob, ties her to the post, delivers the sentence, and lights the pyre. The blocking spells out the single-file geometry — who leads, where the rope runs, what she never does — because a video model will happily invent its own.</p></div>
+  <div class="fig-grid reveal">
+    <figure><img src="images/icewitch/still-s1-the-march.jpg" alt="Seedance still — the executioner drags the hooded Aelira on a rope through the crowd"><figcaption><b>SHOT 1</b> — the single-file march, rope taut from his fist to her bound wrists.</figcaption></figure>
+    <figure><img src="images/icewitch/still-s1-the-sentence.jpg" alt="Seedance still — the executioner leans into Aelira tied to the post"><figcaption><b>SHOT 5</b> — the sentence at the post: "You will burn in hell, dirty witch."</figcaption></figure>
+  </div>
+  <details class="prompt reveal">
+    <summary>Full Seedance 2.0 prompt — The March</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>&lt;&lt;&lt;image_1&gt;&gt;&gt;: Aelira, the hooded woman, main character, reference for character consistency only, a mysterious woman in a torn frayed mud stained midnight blue wool coat with fur lined hood, hood up and pulled low, face completely hidden in shadow, loose platinum white hair strands escaping, her wrists tied together in front of her with thick rope, the same rope continues from her tied wrists forward to the executioner's hand, she never holds the rope, she is the prisoner. Calm and untouchable, never afraid, never falling.
+&lt;&lt;&lt;image_2&gt;&gt;&gt;: The executioner, reference for character consistency only, a big heavy man with a rough mean face, pale skin, subtle pointed ear tips, ash grey hair tied back, stained leather apron, matted fur collar. He grips the free end of her rope in his fist and pulls her along behind him. Brutish contempt, enjoying his work.
+&lt;&lt;&lt;image_3&gt;&gt;&gt;: The townsfolk mob, close up face reference for crowd consistency, strikingly beautiful pale skinned men with subtle pointed ear tips and mean hostile faces. Furious, jeering, hungry to see her burn.
+&lt;&lt;&lt;image_4&gt;&gt;&gt;: The townsfolk mob, full body wardrobe reference for crowd consistency, wool tunics, hooded cloaks, fur collars, muted browns and greys.
+&lt;&lt;&lt;image_5&gt;&gt;&gt;: The location, execution ground at the snowy edge of a medieval half timbered village at dusk, raised wooden scaffold with steps holding a pyre of stacked logs, thick blackened execution post with a short crossbeam, ring of torches, massive snow covered mountain behind.
+
+ART STYLE
+Cinematic live action, photorealistic feature film quality, ARRI Alexa aesthetic with anamorphic Cooke lens character, natural film grain, subtle atmospheric haze, visible breath in the cold air. A deliberately edited sequence with hard cuts between shots, smooth handheld energy inside each shot.
+Color temperature: cool teal blue dusk pierced by warm orange torchlight.
+
+ENVIRONMENT
+Environment as seen in &lt;&lt;&lt;image_5&gt;&gt;&gt;. Blue hour dusk, trampled snow and scorched ground, torch flames flickering, faint falling snow. A huge crowd of at least fifty villagers packs the execution ground, filling the background and edges of every shot even though the framing stays close.
+
+CONTEXT
+A prisoner is marched to the stake. The executioner leads, she follows on his rope.
+
+BLOCKING
+This is a single file prisoner march. Both characters walk in the SAME direction the entire time, from frame left toward frame right, toward the pyre which is always off frame right. The executioner walks in front. Aelira walks two meters behind him, following in his footsteps, facing the same way he faces. They are connected by one rope: the executioner grips one end in his right fist, the rope runs backward through the air behind him and its other end is knotted around Aelira's wrists, which are tied together in front of her body. She walks only because the rope pulls her forward, her arms drawn slightly ahead of her by the tension. He never faces her while marching, his back is to her. She never overtakes him, never walks beside him, never walks the opposite way, never holds the rope. When he yanks the rope she lurches a quick step forward but never falls. The crowd of at least fifty men lines both sides of their path, faces turned toward her. Only at the scaffold does he turn around to face her and tie her to the blackened post, where she stands facing camera with the crowd massed below.
+
+SHOT
+50mm anamorphic, very shallow depth of field, mostly close ups, smooth handheld inside every shot.
+Shot 1
+Purpose: establish the march in one image, him in front, her behind on his rope
+Type: side profile shot of the single file march moving from frame left to frame right, the executioner in front gripping the rope in his fist, the rope stretching backward behind him to Aelira's tied wrists, she walks behind him in the same direction, both moving right toward the off screen pyre, he gives the rope a hard yank and her body lurches a quick step forward without falling
+Movement: handheld lateral track moving with them, keeping both in frame
+Frame: he leads at frame right of the pair, she trails at frame left of the pair, the taut rope connecting his fist to her wrists always visible, crowd blurred behind
+Duration: 3 seconds
+Shot 2
+Purpose: his cruelty up close while marching
+Type: tight close up on the executioner from the front as he marches toward camera, the rope over his shoulder and gripped in his fist, jaw clenched, behind him in the blurred depth Aelira follows at the end of the rope, pulled along in his wake, both moving the same direction
+Movement: handheld backward track staying ahead of him
+Frame: his mean face fills frame, her hooded figure soft behind him at the rope's end
+Duration: 2 seconds
+Shot 3
+Purpose: her mystery, pulled but unbroken
+Type: close up on Aelira from the front as she is pulled toward camera, her tied wrists leading in the bottom of frame, the taut rope running from her wrists forward and out of frame ahead of her toward the unseen executioner pulling her, her hooded head held high, face in shadow, dozens of screaming men lunging into the shallow focus from both edges yelling: Monster! and another: Burn the witch! thrown dirt glancing off her shoulders, she never reacts
+Movement: handheld backward track staying ahead of her, low angle
+Frame: she stays frame center moving forward, rope exiting frame bottom front, packed crowd on both edges
+Duration: 3.5 seconds
+Shot 4
+Purpose: the hate up close
+Type: rapid close up of screaming mob faces along the path, spit flying, fists shaking, more furious faces packed behind them
+Movement: handheld whip from one face to another
+Frame: faces filling frame
+Duration: 1.5 seconds
+Shot 5
+Purpose: the sentence
+Type: tight two shot at the post, the march is over, he has turned to face her and lashes the rope around her against the blackened post, he leans into her shadowed face and snarls: You will burn in hell, dirty witch, then spits on her hood, she stays perfectly still
+Movement: slow handheld push in
+Frame: he at frame left facing her, she at frame right facing camera, the roaring crowd blurred below the scaffold
+Duration: 3 seconds
+Shot 6
+Purpose: ignition
+Type: low angle from the base of the pyre, he hurls a burning torch onto the stacked logs, flames catch and climb toward her silhouette as the huge crowd roars in celebration
+Movement: handheld, torch flies toward camera then flames rise
+Frame: torch lands frame center, her hooded silhouette above, sea of villagers behind
+Duration: 2 seconds
+
+LIGHTING
+Warm flickering torchlight as key against cold teal dusk ambience. Firelight licks the edge of her hood but never reveals the face. No glam beauty lighting.
+
+PHYSICS
+One continuous rope from his fist to her tied wrists, always taut, every yank travels down the rope and lurches her forward one quick step, her feet always catch her, coat hangs heavy, breath fogs, thrown debris bounces off her.
+
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+
+  <!-- SECTION 2 -->
+  <div class="slate reveal"><span class="s-num">Section 02</span><span class="s-title">The Fire Dies</span><span>3 shots · 15s</span></div>
+  <div class="prose reveal"><p>The inferno rages with no one visible inside it. Then the cheering falters, one voice at a time, as the firelight drains off the faces and frost creeps over knuckles — and she reveals herself, pulling the hood back with her own hand. Note the blocking: she is invisible in every shot except the last one.</p></div>
+  <div class="fig-grid reveal">
+    <figure><img src="images/icewitch/still-s2-the-inferno.jpg" alt="Seedance still — silhouetted crowd with raised fists before a giant pyre fire"><figcaption><b>SHOT 1</b> — the locked wide: fifty silhouettes, one giant fire, nothing inside it.</figcaption></figure>
+    <figure><img src="images/icewitch/still-s2-monster.jpg" alt="Seedance still — villager screaming Monster in warm firelight"><figcaption><b>SHOT 2</b> — "Monster!" — the last seconds of warm light before the cold takes it.</figcaption></figure>
+  </div>
+  <details class="prompt reveal">
+    <summary>Full Seedance 2.0 prompt — The Fire Dies</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@[Image 1]: Aelira hooded, main character, reference for character consistency only, torn mud stained midnight blue wool coat, fur lined hood up pulled low, face hidden in shadow. Serene, free, no ropes.
+@[Image 2]: Aelira revealed, same woman, face reference for when the hood comes down, platinum white hair, ice blue eyes, pale marble skin, subtle pointed ears. Calm face of a killer.
+@[Image 3]: The townsfolk mob, face reference, pale skinned men, subtle pointed ear tips, hostile faces. Celebration turning to dread.
+@[Image 4]: The townsfolk mob, wardrobe reference, wool tunics, hooded cloaks, fur collars.
+@[Image 5]: The location, execution ground at the edge of a snowy medieval village at dusk, scaffold, pyre of stacked logs around a blackened post, torches, snow mountain behind.
+ART STYLE
+Cinematic live action, photorealistic feature film, ARRI Alexa aesthetic, anamorphic lens, film grain, subtle haze, visible breath. Hard cuts between shots, handheld inside each.
+Color temperature: warm orange firelight draining to cold teal blue as the fire dies.
+ENVIRONMENT
+Environment as seen in @[Image 5]. Blue hour dusk, trampled snow. Fifty villagers around the burning pyre. An unnatural cold sets in.
+CONTEXT
+The town celebrates burning the witch. Her cold is killing the fire.
+BLOCKING
+Scaffold and pyre at frame center in the wide, crowd backs to camera facing the fire. In close ups villagers face the pyre off frame. Aelira stands on the scaffold platform at the base of the blackened post, back against the post, feet among the stacked logs, never on top of the wood. She appears ONLY in the final shot, everywhere else she is invisible, hidden inside the fire. She reveals her face herself, her own hand pulling the hood back, then looks down at the crowd below her.
+SHOT
+50mm anamorphic, shallow depth of field, handheld in every shot except the locked opening wide.
+Shot 1
+Purpose: the inferno, nobody visible inside
+Type: static wide from behind the crowd, camera locked, fifty silhouetted villagers roaring, fists pumping, shaking torches, a giant fire raging beyond them and growing, a solid wall of flame and smoke, no person visible inside the fire, no silhouette, no shape, only fire
+Movement: none, locked static, only the fire grows
+Frame: crowd silhouettes foreground, one giant fire center, nothing inside it
+Duration: 4 seconds
+Shot 2
+Purpose: the slow turn, confusion creeping in
+Type: close up on one man screaming with hungry fury: Monster! full cheering around him, bright orange firelight blazing on the faces, then very slowly the fire reflection on their skin dims, gradually fading, cheers trailing off unevenly, one voice at a time, the camera drifting to the man beside him as his cheer falters into slow creeping confusion, puzzled looks, not fear yet, brows knitting, breath fogging thick, he raises his hands puzzled, sees frost on his knuckles, breathes into them, rubbing them, the first hint of dread crossing his face
+Movement: one continuous drift from the first face to the second, tilt down to his hands then up to his face
+Frame: faces packed close, warm light slowly draining to cold blue across the whole shot
+Duration: 7.5 seconds
+Shot 3
+Purpose: hero reveal
+Type: low angle hero close up on hooded Aelira against the blackened post, real flames still burning around her, smaller and weakened, pushed back by the frost but visibly alive, ice glinting over the logs at the frame edge, then she raises one hand, grips the edge of the hood and pulls it back off her head in one deliberate motion, platinum hair spilling free, ice blue eyes, pale marble skin, calm face of a killer, then her eyes lower, looking down at the crowd below her
+Movement: handheld, slight push in as her hand pulls the hood back
+Frame: tight hero close up, she frame center, living flames flickering at the edges
+Duration: 3.5 seconds
+LIGHTING
+Raging inferno as the only key, dimming to cold teal dusk. Her reveal lit by low flames against cold blue.
+PHYSICS
+Flames swell then shrink as ice claims the wood but never fully die, frost spreads in crystalline veins, breath fogs, her hand pulls the hood back with real fabric weight.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+
+  <!-- SECTION 3-2 -->
+  <div class="slate reveal"><span class="s-num">Section 03</span><span class="s-title">The Silence</span><span>true oner · 8s</span></div>
+  <div class="prose reveal"><p>Added after the first cut, purely to tell the story better: the town has gone quiet and the executioner doesn't understand. One continuous unbroken take — confusion, the look back over his shoulder, and then rage boiling over as he rips the machete free and screams up at her. Every other section cuts hard between shots; this one never cuts at all, and the prompt says so explicitly.</p></div>
+  <figure class="reveal">
+    <img src="images/icewitch/still-s3b-the-silence.jpg" alt="Seedance still — the executioner staring up in confusion, hushed torch-lit crowd behind him">
+    <figcaption><b>THE ONER</b> — the confusion phase, seconds before it hardens into blinding rage.</figcaption>
+  </figure>
+  <details class="prompt reveal">
+    <summary>Full Seedance 2.0 prompt — The Silence (oner)</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>&lt;&lt;&lt;image_1&gt;&gt;&gt;: The executioner, reference for consistency only, big heavy man, mean face, pale skin, subtle pointed ear tips, grey hair, leather apron, fur collar. Silent confusion building into explosive rage.
+&lt;&lt;&lt;image_2&gt;&gt;&gt;: The townsfolk mob, pale skinned men, subtle pointed ear tips, wool tunics, hooded cloaks. Quiet, uneasy, confused, all looking up.
+&lt;&lt;&lt;image_3&gt;&gt;&gt;: The snowy medieval execution ground at dusk, scaffold, burned pyre, torches, mountain behind.
+ART STYLE
+Cinematic live action, photorealistic feature film, ARRI Alexa aesthetic, anamorphic lens, film grain, haze, visible breath. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps.
+Color temperature: deep cold teal, dusk almost night, faint torch warmth at the edges.
+ENVIRONMENT
+Environment as seen in &lt;&lt;&lt;image_3&gt;&gt;&gt;. Deep blue hour, almost night, the fire has died, frost creeping across the ground, unnatural silence.
+CONTEXT
+The fire failed and the town has gone quiet. The executioner does not understand, then he burns with rage.
+BLOCKING
+The executioner stands at frame center, facing camera. The pyre is in front of him, off frame behind the camera, NEVER behind him. Behind him stand only the villagers, at least fifty of them filling the depth, nothing else behind him, no pyre, no scaffold, no fire behind him. Several villagers hold burning torches. Every villager looks up past him and past the camera toward the unseen woman above, none of them look at him, all eyelines raised, confused. The woman is above and in front of him but she is never visible in this shot, only him and the villagers appear in frame. His boots stay planted the entire shot, only his head and upper body move.
+SHOT
+50mm anamorphic, shallow depth of field, smooth handheld, tight close up on the executioner throughout.
+The camera holds close on his face in the sudden silence, his heavy breath fogging the cold air, confusion in his eyes as frost creeps and the hushed crowd behind him stares up past him with raised confused eyelines, torch flames wavering among them. Then in the same unbroken move he turns his head back over his shoulder toward the villagers, the camera drifting slightly with the turn, and none of them meet his eyes, they all keep staring up past him toward the unseen woman, silent and uneasy. Then still without cutting he turns his head forward again and tilts it up, his eyeline rising toward the unseen woman above him, and his confusion hardens and boils into complete blinding rage, his face flushing deep red, eyes bulging, veins swelling at his temples and neck, teeth bared, his whole body trembling with fury, and in one violent motion he rips a machete from his belt and raises it high beside his face, the wide blade fully visible in frame catching the torchlight, and he yells AAAHH! up at her, spit flying, the camera holding tight on his enraged upturned face and the raised blade as the yell tears out of him. One continuous flowing take throughout, no cuts.
+Duration: 8 seconds.
+LIGHTING
+Deep cold teal dusk key, almost night, torch flames flickering warm among the crowd, pale rim light on frost.
+PHYSICS
+Boots planted, real weight in his turn, breath mist thick in the cold, the machete has real heft as it clears the belt and rises.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+
+  <!-- SECTION 3 -->
+  <div class="slate reveal"><span class="s-num">Section 04</span><span class="s-title">The Executioner Falls</span><span>4 shots · 11s</span></div>
+  <div class="prose reveal"><p>The first kill. This blocking is the most defensive writing in the whole hook — the ice travels up the <em>inside</em> of his body, points emerging only at the mouth, shoulder and arm; boots never leave the ground; body stays whole. Every one of those constraints exists because a test generation broke it.</p></div>
+  <figure class="reveal">
+    <img src="images/icewitch/still-s3-the-kill.jpg" alt="Seedance still — top-down on the executioner, ice point through his open mouth, blood along the ice">
+    <figcaption><b>SHOT 3</b> — top-down on the final stillness: the main point at his mouth, blood streaking the column red.</figcaption>
+  </figure>
+  <details class="prompt reveal">
+    <summary>Full Seedance 2.0 prompt — The Executioner Falls</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@[Image 1]: The executioner, reference for character consistency only, big heavy man, mean face, pale skin, subtle pointed ear tips, grey hair, leather apron, fur collar. Confusion, then rigid stillness.
+@[Image 2]: The townsfolk mob, crowd reference, pale skinned men, subtle pointed ear tips, wool tunics, hooded cloaks. Angry turning to terrified.
+@[Image 3]: Snowy medieval village at dusk, half timbered houses, torches, snow covered mountain behind.
+ART STYLE
+Cinematic live action, photorealistic feature film, ARRI Alexa aesthetic, anamorphic lens, film grain, haze, visible breath. Hard cuts between shots, handheld inside each. Ice as violent geometry.
+Color temperature: cold teal dusk, faint torch warmth at edges.
+ENVIRONMENT
+Environment as seen in @[Image 3]. Blue hour dusk, frost creeping, half timbered houses behind the crowd. No pyre, no scaffold, no fire visible in any shot.
+CONTEXT
+The fire failed. The executioner falls first.
+BLOCKING
+The executioner stands at frame center, machete in hand, facing camera. The pyre and scaffold are in front of him, off frame behind the camera, NEVER behind him, they never appear in any shot. Behind him stand only a packed crowd of villagers and the village houses, nothing else. Only him and the villagers appear in frame, the witch is never visible. He takes one small step back early, then his boots stay planted, never lifted, his body stays at standing height, whole and intact, nothing detaches, no separated limbs, no extra feet or legs anywhere. The thick ice shard travels up through the INSIDE of his body, its bulk hidden within him, points emerge ONLY at: the main point from his open mouth, two or three smaller points from his shoulder and upper arm, nowhere else, never in front of him.
+SHOT
+50mm anamorphic, shallow depth, handheld.
+Shot 1
+Purpose: the ice comes closer
+Type: starts somewhat wide, following thick ice veins and crystalline frost racing across the frozen ground, closing on his planted boots. He stares down at it, confused, and takes one small step back, the villagers behind him shuffling back too, angry turning to scared
+Movement: handheld, traveling with the ice toward him, tightening
+Frame: opens wide on the frosting ground, ends on him and his boots, crowd and houses behind
+Duration: 3 seconds
+Shot 2
+Purpose: the strike through him
+Type: a thick jagged ice shard erupts from the ground beneath him and drives up through the INSIDE of his body, faceted and translucent, its bulk hidden inside him, its crown of points breaking out: the main pointed tip pushes out of his open mouth while two or three smaller points emerge from his shoulder and upper arm, one subtle jolt with a burst of frost mist, boots never leaving the ground, body whole and intact, and the machete drops to the ground, the crowd recoiling screaming
+Movement: handheld fast whip ground to face, then still
+Frame: tight on torso and head, the main point at his mouth, smaller points at his shoulder
+Duration: 3 seconds
+Shot 3
+Purpose: top down, final stillness
+Type: high angle close up from directly above his upturned face, mouth open, the main ice point aimed at the camera, smaller points at his shoulder and arm, blood flowing steadily from his mouth down along the ice, streaking the column red, a last shudder, fingers twitch once, a final wet exhale pushing more blood past his lips, eyes glazing, then total stillness
+Movement: handheld, slow drift in
+Frame: his face and the points fill frame from above
+Duration: 2.5 seconds
+Shot 4
+Purpose: the town breaks
+Type: frontal medium shot of the motionless standing man at frame center, and behind and around him the villagers erupt in total chaos, screaming, running, scattering in every direction, terrified faces streaking past
+Movement: handheld, holding frontal on him as the chaos tears past
+Frame: him still and rigid at center, panicked crowd and houses filling the frame behind him
+Duration: 2.5 seconds
+LIGHTING
+Cold teal dusk key, torch flicker at edges, rim light on the ice.
+PHYSICS
+Frost crawls in crystalline flakes, the eruption is fast, body never lifts and stays whole, ice translucent and faceted.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+
+  <!-- SECTION 4 -->
+  <div class="slate reveal"><span class="s-num">Section 05</span><span class="s-title">The Freeze &amp; The Smile</span><span>two prompts · edited together</span></div>
+  <div class="prose reveal"><p>The finale. Honest production note: <strong>this one took multiple runs of two prompt variants, and the final sequence is the best pieces edited together in Premiere.</strong> The physics writing does the heavy lifting — the freeze must be gradual, spreading back-to-front over the running bodies, never instant and never from the ground up, because "instant" is exactly what the model defaults to. It ends on the shot the entire hook was built for: the smile.</p></div>
+  <div class="fig-grid reveal">
+    <figure><img src="images/icewitch/still-s4-the-storm.jpg" alt="Seedance still — Aelira arms open, eyes glowing blue, frost storm rising around her"><figcaption><b>THE STORM</b> — arms open, eyes igniting, expression serene, almost pleasure.</figcaption></figure>
+    <figure><img src="images/icewitch/still-s4-the-smile.jpg" alt="Seedance still — Aelira's close-up cold satisfied smile"><figcaption><b>THE SMILE</b> — small, cold, satisfied. Hard cut to: "25 Winters Earlier."</figcaption></figure>
+  </div>
+  <details class="prompt reveal">
+    <summary>Full Seedance 2.0 prompt — The Freeze Wave (variant A)</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@[Image 1]: Aelira, main character, reference for character consistency only, hood down, platinum hair, ice blue eyes, pale skin, subtle pointed ears, torn midnight blue coat. Serene, calm, untouchable.
+@[Image 2]: The townsfolk mob, close up face reference, pale skinned men, subtle pointed ear tips. Terror, panic, desperation, then frozen solid.
+@[Image 3]: The townsfolk mob, wardrobe reference, wool tunics, hooded cloaks, fur collars.
+@[Image 4]: The location, execution ground of a snowy medieval village at dusk, scaffold, burned pyre, torches, mountain behind.
+ART STYLE
+Cinematic live action, photorealistic feature film, ARRI Alexa aesthetic, anamorphic lens, film grain, haze, visible breath. Hard cuts between shots, dynamic energetic handheld inside each, close ups and medium shots only, no wide shots.
+Color temperature: deep cold teal, dusk almost night.
+ENVIRONMENT
+Environment as seen in @[Image 4]. Deep blue hour, almost night, frost everywhere.
+CONTEXT
+The town that tried to burn her dies together.
+BLOCKING
+Aelira stands planted at frame center, already inside the swirling storm. She never runs, never retreats, never moves from her spot. Dozens of villagers sprint outward in every direction away from her. The storm builds around her stationary figure, the blast travels from her outward and chases the runners from behind, striking them from the back, then rushing past the camera as wind only, the camera never freezes, the lens stays clear.
+SHOT
+50mm anamorphic, shallow depth, dynamic handheld.
+Shot 1
+Purpose: the frost tornado, already raging
+Type: low angle medium shot opening with frost and snow already spiraling violently around Aelira, her arms opening wide, face lifted, calm, eyes igniting glowing blue, the ice tornado tightening and swelling stronger, winds howling, coat and hair thrashing while her expression stays serene, almost pleasure
+Movement: dynamic handheld, circling in closer as the storm swells
+Frame: she at frame center inside the spiraling frost tornado
+Duration: 3 seconds
+Shot 2
+Purpose: the blast
+Type: close on Aelira as the storm DETONATES, a massive shockwave erupting outward from her body, a visible expanding blast ring of frost and white pressure, the concussive wave slamming past the lens, frame shaking, racing faster than the runners
+Movement: hard concussive shake on detonation
+Frame: she at the epicenter, the blast ring erupting past the lens
+Duration: 2.5 seconds
+Shot 3
+Purpose: the freeze
+Type: fast tracking shot alongside sprinting villagers in full panic, arms pumping, mouths open screaming, boots hammering the snow, and behind them a visible compact spinning blizzard of frost and snow roars up and SLAMS into them from behind with brutal force, their cloaks and hair whipped violently forward, and the gust keeps traveling and tears past the camera in one quick violent pass, the frame shuddering hard, snow and mist whipping across the lens, the lens staying clear, no frost on the camera, then it is gone. The freeze is GRADUAL, never instant, and it spreads from BACK to FRONT, never from the ground up: ice crusts over their backs, shoulders and cloaks first, then wraps forward down their arms, across their chests and finally over their still screaming faces, strides shortening and stiffening, and across roughly one full second each man goes from sprinting to slowing to completely still, locked mid stride, mid scream, one shielding his face, one reaching for a friend, icicles on arms, faces and garments, then a held beat of total stillness in the settling mist
+Movement: fast handheld tracking with the runners, jolting hard as the gust tears past, easing down as they slow, settling to stillness with them, holding
+Frame: running bodies and terrified faces, the blizzard crashing in behind them
+Duration: 5.5 seconds
+LIGHTING
+Deep cold teal dusk almost night, torches die in the blast, rim light on ice.
+PHYSICS
+The blizzard hits from behind, the gust passes the camera as wind and shake only, never as ice, frost spreads from their backs forward, never from the ground up, bodies decelerate before locking rigid, they never freeze instantly.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+  <details class="prompt reveal">
+    <summary>Full Seedance 2.0 prompt — The Freeze Wave &amp; The Smile (variant B)</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>&lt;&lt;&lt;image_1&gt;&gt;&gt;: Aelira, main character, reference for character consistency only, hood down, platinum hair, ice blue eyes, pale skin, subtle pointed ears, torn midnight blue coat. Serene, triumphant, ending in a cold smile.
+&lt;&lt;&lt;image_2&gt;&gt;&gt;: The townsfolk mob, close up face reference, pale skinned men, subtle pointed ear tips. Terror, panic, desperation.
+&lt;&lt;&lt;image_3&gt;&gt;&gt;: The townsfolk mob, wardrobe reference, wool tunics, hooded cloaks, fur collars.
+&lt;&lt;&lt;image_4&gt;&gt;&gt;: The location, execution ground of a snowy medieval village at dusk, scaffold, burned pyre, torches, mountain behind.
+ART STYLE
+Cinematic live action, photorealistic feature film, ARRI Alexa aesthetic, anamorphic lens, film grain, haze, visible breath. Hard cuts between shots, dynamic energetic handheld inside each, close ups and medium shots only, no wide shots.
+Color temperature: deep cold teal, dusk almost night.
+ENVIRONMENT
+Environment as seen in &lt;&lt;&lt;image_4&gt;&gt;&gt;. Deep blue hour, almost night, frost everywhere.
+CONTEXT
+The town that tried to burn her dies together.
+BLOCKING
+Aelira walks slowly forward through the fleeing crowd, calm and unhurried, then stops and plants at frame center. She never runs, never retreats, stays planted through everything that follows. Dozens of villagers sprint outward in every direction away from her. The storm builds around her stationary figure, the blast travels from her outward in a perfect expanding ring.
+SHOT
+50mm anamorphic, shallow depth, dynamic handheld.
+Shot 1
+Purpose: open on her
+Type: close up on Aelira walking slowly forward, calm, serene, unhurried, panicked villagers blurring past on both sides, screaming, faces twisted in terror
+Movement: energetic handheld, tracking backward with her walk
+Frame: her calm face center, blurred chaos streaming past
+Duration: 2 seconds
+Shot 2
+Purpose: the frost tornado
+Type: low angle medium shot, Aelira stops and slowly opens her arms wide, face lifting, calm, eyes igniting glowing blue, then frost and snow spiral upward around her, a violent tightening tornado of ice swelling stronger and stronger, winds howling, air at minus 100 Celsius, everything the blizzard touches flash freezes, coat and hair thrashing while her expression stays serene, almost pleasure
+Movement: dynamic handheld, circling in closer as the storm swells
+Frame: she at frame center inside the spiraling frost tornado
+Duration: 3.5 seconds
+Shot 3
+Purpose: the blast
+Type: close on Aelira as the storm DETONATES, a massive explosive shockwave erupting outward from her body in all directions, a visible expanding blast ring of frost and white pressure bursting from her, snow blasted flat off the ground, the concussive wave slamming past the lens, frame shaking, racing faster than the runners
+Movement: hard concussive shake on detonation
+Frame: she at the epicenter, the blast ring erupting past the lens
+Duration: 2.5 seconds
+Shot 4
+Purpose: follow the runners, the freeze
+Type: close tracking shot alongside sprinting villagers in full panic, arms pumping, screaming, the white storm wave roaring up behind them, gaining, overtaking them, they freeze solid mid stride in their running poses, mid scream, faces locked in terror, ice crusting over skin and clothes, icicles forming on arms, faces and garments, then a held beat of total stillness and silence, the frozen statues motionless in the settling mist
+Movement: fast handheld tracking with the runners, slamming to stillness as they freeze, holding
+Frame: running bodies and terrified faces, the wave filling frame behind
+Duration: 4 seconds
+Shot 5
+Purpose: the smile
+Type: close up on Aelira standing tall, completely alone in frame, no one else visible, nothing around her, serene and triumphant, the glow draining from her eyes back to ice blue, then she smiles, small, cold, satisfied
+Movement: handheld slow push in
+Frame: only her, face frame center, empty cold dusk behind
+Duration: 3 seconds
+LIGHTING
+Deep cold teal dusk almost night, torches die in the blast, rim light on ice.
+PHYSICS
+Snow and frost obey gravity, then spiral with the rising storm, the blizzard flash freezes what it touches, bodies freeze rigid mid run, icicles form on the frozen bodies.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+</section>
+
+<!-- ================= 06 TAKEAWAYS ================= -->
+<section id="takeaways">
+  <div class="ch-head reveal">
+    <span class="ch-num">Chapter 06</span>
+    <div><h2>What We'd Tell You</h2></div>
+  </div>
+  <ol class="takeaways reveal">
+    <li>Your references set the ceiling. Midjourney's cinematography survives into the video — a flat reference never recovers, no matter the prompt.</li>
+    <li>One face per reference sheet. Remove the head from the full-body wardrobe shot so the model has a single source of identity.</li>
+    <li>Never write "cinematic." Name the camera, the lens, the depth of field, the movement, the composition — the actual craft.</li>
+    <li>Write emotion, blocking and choreography for every character in every shot. That's the difference between performers and mannequins.</li>
+    <li>Every "never" in a blocking section is a scar. Write defensive constraints for whatever the model keeps breaking — planted feet, whole bodies, clear lenses.</li>
+    <li>Test at 720p, render at the best 1080 you can get, and edit like a film: multiple takes, best pieces, real sound design.</li>
+  </ol>
+  <div class="prose reveal" style="margin-top:46px">
+    <p><em>The prompt is everything — and we keep learning with every film. If you build something with these, we'd genuinely love to see it.</em></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <a class="back-link" href="learn.html">Back to Learn</a>
+    <span class="foot-note">Zelva — AI Films · Animation · Direction</span>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Enlarged image"><img src="" alt=""></div>
+
+<script>
+// reveal on scroll
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+}), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// lightbox
+const lb = document.getElementById('lightbox');
+const lbImg = lb.querySelector('img');
+document.querySelectorAll('figure img').forEach(img => {
+  img.addEventListener('click', () => {
+    lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.add('open');
+  });
+});
+lb.addEventListener('click', () => lb.classList.remove('open'));
+document.addEventListener('keydown', e => { if(e.key === 'Escape') lb.classList.remove('open'); });
+
+// copy buttons
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const pre = btn.parentElement.querySelector('pre');
+    try{
+      await navigator.clipboard.writeText(pre.textContent);
+      btn.textContent = 'Copied';
+      setTimeout(() => btn.textContent = 'Copy', 1800);
+    }catch(err){ btn.textContent = 'Select & copy'; }
+  });
+});
+</script>
+</body>
+</html>
