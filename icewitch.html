@@ -113,14 +113,8 @@ figcaption{
 figcaption b{color:var(--gold);font-weight:600;letter-spacing:.14em}
 .fig-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0}
 .fig-grid figure{margin:0}
-.compare{position:relative}
-.tag{
-  position:absolute;top:14px;left:14px;z-index:2;
-  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
-  letter-spacing:.2em;text-transform:uppercase;padding:7px 12px;
-}
-.tag.used{background:var(--gold);color:var(--black)}
-.tag.unused{background:rgba(10,10,10,.85);color:#e07b6a;border:1px solid rgba(224,123,106,.5)}
+#intro{padding-top:64px}
+figcaption b.unused{color:#e07b6a}
 
 /* ---------- prompt blocks ---------- */
 .prompt{
@@ -263,15 +257,16 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:70px 0 60px;margin-top
 
 <!-- ================= INTRO ================= -->
 <section id="intro">
+  <figure class="video-shell reveal" style="margin-top:0">
+    <iframe src="https://www.youtube.com/embed/Wg7REldAzMY" title="The Ice Witch — Zelva" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </figure>
+
   <div class="prose reveal">
     <p class="drop">The Ice Witch is an origin story. But origin stories have a problem on social media: they start slow, and viewers don't wait. So before a single frame of Aelira's childhood, we open twenty-five winters later — a hooded prisoner dragged through a screaming mob, tied to the stake, and set on fire. The town celebrates. Then the fire dies, the temperature drops, and the woman they tried to burn shows them what a monster really looks like.</p>
     <p>Hooks that go straight into action hold viewer retention far better than a linear opening. When the carnage ends and the title card reads <strong>"25 Winters Earlier,"</strong> the audience isn't watching a backstory anymore — they're watching an answer to a question: <em>how did she become this?</em></p>
     <p>This is the complete breakdown of how the hook was made: the exact Midjourney prompts behind every character and the location, why we deliberately avoided Nano Banana Pro, the Dreamina-to-Higgsfield pipeline, and the full Seedance 2.0 prompt for every section of the sequence.</p>
   </div>
 
-  <figure class="video-shell reveal">
-    <iframe src="https://www.youtube.com/embed/Wg7REldAzMY" title="The Ice Witch — Zelva" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </figure>
 </section>
 
 <!-- ================= 01 CHARACTERS ================= -->
@@ -383,21 +378,18 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:70px 0 60px;margin-top
   </div>
 
   <div class="fig-grid reveal">
-    <figure class="compare">
-      <span class="tag used">Used in film — Midjourney</span>
+    <figure>
       <img src="images/icewitch/aelira-revealed.jpg" alt="Midjourney version of Aelira — cinematic low-key lighting">
-      <figcaption>Low-key light, shadow shaping the face, film texture. This is a frame you could cut into a feature.</figcaption>
+      <figcaption><b>USED IN FILM — MIDJOURNEY</b> — low-key light, shadow shaping the face, film texture. This is a frame you could cut into a feature.</figcaption>
     </figure>
-    <figure class="compare">
-      <span class="tag unused">Not used — Nano Banana Pro</span>
+    <figure>
       <img src="images/icewitch/aelira-nanobanana-1.jpg" alt="Nano Banana Pro version of Aelira — flat even lighting">
-      <figcaption>Technically clean, but evenly lit and flat — and that flatness follows you into Seedance.</figcaption>
+      <figcaption><b class="unused">NOT USED — NANO BANANA PRO</b> — technically clean, but evenly lit and flat — and that flatness follows you into Seedance.</figcaption>
     </figure>
   </div>
-  <figure class="compare reveal">
-    <span class="tag unused">Not used — Nano Banana Pro</span>
+  <figure class="reveal">
     <img src="images/icewitch/aelira-nanobanana-2.jpg" alt="Second Nano Banana Pro test — clean coat, commercial lighting">
-    <figcaption>A second Nano Banana test. Pretty — but it reads like a catalogue, not a cold open. The difference is huge.</figcaption>
+    <figcaption><b class="unused">NOT USED — NANO BANANA PRO</b> — a second test. Pretty — but it reads like a catalogue, not a cold open. The difference is huge.</figcaption>
   </figure>
 
   <div class="lesson reveal"><b>The rule</b>Never write just "cinematic." The look comes from the reference images and from naming the actual craft: the camera, the lens, the depth of field, the movement, the composition. The same applies to locations — a flat location plate will drop your Seedance quality and shift your lighting.</div>
@@ -427,6 +419,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:70px 0 60px;margin-top
     <img src="images/icewitch/location-execution-ground.jpg" alt="The execution ground — scaffold and blackened post at blue hour beneath a snowy mountain">
     <figcaption><b>THE PLATE</b> — every camera setup in the hook lives inside this one frame.</figcaption>
   </figure>
+
+  <div class="lesson reveal"><b>The location matters more than you think</b>Go with Midjourney for your location plates. Nano Banana can do a decent job here — but Midjourney will exceed it, and this is where your video's lighting and that subtle film grain take form.</div>
 </section>
 
 <!-- ================= 04 PIPELINE ================= -->
@@ -454,7 +448,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:70px 0 60px;margin-top
   </figure>
 
   <div class="prose reveal">
-    <p>Every prompt is built with a custom Claude Skill we wrote for live-action work. As a cinematographer, I want that smooth handheld feeling where the camera is alive — moving with the action, usually shooting from the darker side. I don't own a set of anamorphic Cooke lenses in real life, but Seedance understands the language beautifully. Each scene is timed and composed to fit inside Seedance's <strong>15-second clip limit</strong>, and every prompt names the <strong>emotion, blocking and choreography</strong> of the characters — that's what makes them feel alive instead of posed.</p>
+    <p>Every prompt is built with a custom Claude Skill we wrote for live-action work. As a cinematographer, I want that smooth handheld feeling where the camera is alive — moving with the action, usually shooting from the darker side. I wish I owned a set of anamorphic Cooke lenses in real life — they're one of my favorite lenses — but in the digital world, it seems like I do: Seedance understands the language beautifully. Each scene is timed and composed to fit inside Seedance's <strong>15-second clip limit</strong>, and every prompt names the <strong>emotion, blocking and choreography</strong> of the characters — that's what makes them feel alive instead of posed.</p>
   </div>
 </section>
 
