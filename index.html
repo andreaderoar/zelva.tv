@@ -64,7 +64,7 @@
   /* Rotating scroll badge */
   .scroll-badge { position: absolute; bottom: 40px; left: 52px; z-index: 20; width: 92px; height: 92px; display: block; opacity: 0; animation: fadeUp 1s ease 1.3s forwards; }
   .scroll-badge svg { width: 100%; height: 100%; animation: spin 14s linear infinite; overflow: visible; }
-  .scroll-badge text { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 400; letter-spacing: 3.2px; text-transform: uppercase; fill: rgba(232,228,220,0.65); }
+  .scroll-badge text { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; fill: rgba(245,242,236,0.9); }
   .scroll-badge .badge-arrow { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 15px; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -201,12 +201,12 @@
     <div class="hero-tagline">For the AI Era</div>
   </div>
 
-  <a href="#featured" class="scroll-badge" aria-label="Scroll to featured work">
+  <a href="#featured" class="scroll-badge" aria-label="Scroll to latest work">
     <svg viewBox="0 0 100 100">
       <defs>
         <path id="circlePath" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/>
       </defs>
-      <text><textPath href="#circlePath">Scroll · Featured Work · Scroll · Featured Work ·</textPath></text>
+      <text><textPath href="#circlePath" textLength="238" lengthAdjust="spacing">Latest Work · Scroll · Latest Work · Scroll ·&#160;</textPath></text>
     </svg>
     <span class="badge-arrow">↓</span>
   </a>
