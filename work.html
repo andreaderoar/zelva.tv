@@ -6,7 +6,7 @@
 <title>Work — Zelva</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
@@ -63,6 +63,7 @@
   .project-tile:nth-child(1){animation-delay:0.05s} .project-tile:nth-child(2){animation-delay:0.1s} .project-tile:nth-child(3){animation-delay:0.15s}
   .project-tile:nth-child(4){animation-delay:0.2s} .project-tile:nth-child(5){animation-delay:0.25s} .project-tile:nth-child(6){animation-delay:0.3s}
   .project-tile:nth-child(7){animation-delay:0.35s} .project-tile:nth-child(8){animation-delay:0.4s} .project-tile:nth-child(9){animation-delay:0.45s}
+  .project-tile:nth-child(10){animation-delay:0.5s} .project-tile:nth-child(11){animation-delay:0.55s} .project-tile:nth-child(12){animation-delay:0.6s}
 
   .tile-thumb { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); filter: brightness(0.95); }
   .tile-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.15); transition: background 0.4s ease; }
@@ -111,6 +112,7 @@
   .lightbox-case-study:hover .arrow { transform: translateX(4px); }
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  @media (hover: none), (pointer: coarse) { .cursor, .cursor-ring { display: none; } html, body, .tab, .project-tile, .lightbox-close, .lightbox-case-study { cursor: auto; } }
   @media (max-width: 900px) { .page{padding:110px 28px 60px} nav{padding:24px 28px} .grid{grid-template-columns:repeat(2,1fr)} .tab{font-size:11px;letter-spacing:3px;padding:14px 24px 14px 0;} }
   @media (max-width: 600px) { .grid{grid-template-columns:1fr} }
 </style>
@@ -150,6 +152,24 @@
   <!-- AI -->
   <div class="grid-container active" id="tab-ai">
     <div class="grid">
+      <div class="project-tile" onclick="openLightbox('OOGyfgjcsj8','The Ice Witch','AI Film')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/OOGyfgjcsj8/maxresdefault.jpg" alt="The Ice Witch" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">AI Film</div><div class="tile-title">The Ice Witch</div></div>
+      </div>
+      <div class="project-tile" onclick="openLightbox('0vFvjzu5zM8','Super Monster Fight Club','AI Film')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/0vFvjzu5zM8/maxresdefault.jpg" alt="Super Monster Fight Club" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">AI Film</div><div class="tile-title">Super Monster Fight Club</div></div>
+      </div>
+      <div class="project-tile" onclick="openLightbox('oZJ-6PQOHfo','Don\'t Wake Her Up','AI Film')">
+        <img class="tile-thumb" src="https://img.youtube.com/vi/oZJ-6PQOHfo/maxresdefault.jpg" alt="Don't Wake Her Up" loading="lazy">
+        <div class="tile-overlay"></div><div class="tile-outline"></div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info"><div class="tile-category">AI Film</div><div class="tile-title">Don't Wake Her Up</div></div>
+      </div>
       <div class="project-tile" onclick="openLightbox('7k_atIW3YLQ','Dust Born','AI Film','dustborn.html')">
         <img class="tile-thumb" src="https://img.youtube.com/vi/7k_atIW3YLQ/maxresdefault.jpg" alt="Dust Born" loading="lazy">
         <div class="tile-overlay"></div><div class="tile-outline"></div>
@@ -179,12 +199,6 @@
         <div class="tile-overlay"></div><div class="tile-outline"></div>
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="tile-info"><div class="tile-category">AI Film</div><div class="tile-title">Letters to Your Future Self</div></div>
-      </div>
-      <div class="project-tile" onclick="openLightbox('ztB-YpwE6SU','StratuSoft Tee - Meta Ad','AI Film')">
-        <img class="tile-thumb" src="https://img.youtube.com/vi/ztB-YpwE6SU/maxresdefault.jpg" alt="StratuSoft Tee - Meta Ad" loading="lazy">
-        <div class="tile-overlay"></div><div class="tile-outline"></div>
-        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="tile-info"><div class="tile-category">AI Film</div><div class="tile-title">StratuSoft Tee - Meta Ad</div></div>
       </div>
       <div class="project-tile" onclick="window.open('https://www.tiktok.com/@tinycactuss','_blank')">
         <img class="tile-thumb" src="TinyCactus.png" alt="Tiny Cactuss TikTok" loading="lazy" style="object-position: center top;">
@@ -366,9 +380,17 @@
 
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
-  let mx=0,my=0,rx=0,ry=0;
+  let mx=-100,my=-100,rx=-100,ry=-100;
   document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
   (function animRing(){ rx+=(mx-rx)*0.22; ry+=(my-ry)*0.22; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+
+  // Fallback: if YouTube hasn't generated a maxres thumbnail, it returns a 120px grey placeholder — swap to hqdefault
+  document.querySelectorAll('.tile-thumb[src*="maxresdefault"]').forEach(img => {
+    function check(){ if (img.naturalWidth > 0 && img.naturalWidth <= 120) img.src = img.src.replace('maxresdefault','hqdefault'); }
+    if (img.complete) check(); else img.addEventListener('load', check);
+    img.addEventListener('error', () => { img.src = img.src.replace('maxresdefault','hqdefault'); }, { once: true });
+  });
+
   document.querySelectorAll('a, button, .project-tile').forEach(el => {
     el.addEventListener('mouseenter',()=>{ cursor.classList.add('hovering'); ring.classList.add('hovering'); });
     el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hovering'); ring.classList.remove('hovering'); });
