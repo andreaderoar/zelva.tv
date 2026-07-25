@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Different Kind of Hero — Zelva Learn</title>
+<meta name="description" content="Full breakdown of how Zelva built A Different Kind of Hero: Midjourney character design, a story written backwards from the characters, and every Seedance 2.0 prompt — including the iterations that never made the cut.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Montserrat:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0a0a0a;
+  --ink:#111111;
+  --panel:#141414;
+  --line:rgba(212,175,110,.18);
+  --gold:#d4af6e;
+  --gold-dim:#a8854e;
+  --text:#e8e4dc;
+  --muted:#9a958c;
+  --teal:#7fb3bd;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--text);
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection{background:var(--gold);color:var(--black)}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:26px 48px;
+  background:linear-gradient(to bottom,rgba(10,10,10,.92),transparent);
+}
+.logo{font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;letter-spacing:.35em;color:var(--text);text-decoration:none}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:34px}
+.nav-links a{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--gold)}
+a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-1;overflow:hidden}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.55;animation:heroDrift 24s ease-in-out infinite alternate}
+@keyframes heroDrift{from{transform:scale(1)}to{transform:scale(1.06)}}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--black) 4%,rgba(10,10,10,.35) 45%,rgba(10,10,10,.55) 100%)}
+.hero-inner{max-width:1060px;margin:0 auto;padding:0 32px 96px;width:100%}
+.eyebrow{
+  font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;
+  letter-spacing:.32em;text-transform:uppercase;color:var(--gold);
+  display:inline-flex;align-items:center;gap:14px;margin-bottom:22px;
+}
+.eyebrow::before{content:'';width:44px;height:1px;background:var(--gold)}
+h1{
+  font-size:clamp(52px,8.5vw,110px);font-weight:500;line-height:.98;
+  letter-spacing:.01em;margin-bottom:20px;
+}
+h1 em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:clamp(20px,2.4vw,26px);font-style:italic;color:var(--muted);max-width:640px}
+.hero-meta{
+  display:flex;gap:38px;flex-wrap:wrap;margin-top:38px;
+  font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted);
+}
+.hero-meta b{display:block;color:var(--text);font-weight:600;margin-top:5px;letter-spacing:.14em}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1060px;margin:0 auto;padding:0 32px}
+.prose{max-width:720px}
+.prose p{margin-bottom:1.35em}
+.prose p:last-child{margin-bottom:0}
+.prose strong{font-weight:600;color:#fff}
+.prose .drop::first-letter{
+  font-size:3.4em;float:left;line-height:.82;padding-right:.12em;color:var(--gold);font-weight:500;
+}
+section{padding:96px 0}
+section+section{border-top:1px solid rgba(255,255,255,.05)}
+
+.ch-head{display:flex;align-items:baseline;gap:26px;margin-bottom:46px}
+.ch-num{
+  font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:.25em;color:var(--gold);white-space:nowrap;
+}
+h2{font-size:clamp(34px,4.6vw,54px);font-weight:500;line-height:1.05}
+h3{font-size:clamp(24px,3vw,32px);font-weight:600;margin:60px 0 18px}
+h3:first-of-type{margin-top:0}
+.kicker{font-style:italic;color:var(--muted);font-size:.95em;margin-top:6px}
+
+/* ---------- figures ---------- */
+figure{margin:44px 0}
+figure img{
+  width:100%;display:block;border:1px solid var(--line);cursor:zoom-in;
+  transition:opacity .3s;
+}
+figure img:hover{opacity:.92}
+figcaption{
+  font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:.08em;
+  color:var(--muted);margin-top:12px;line-height:1.6;
+}
+figcaption b{color:var(--gold);font-weight:600;letter-spacing:.14em}
+.fig-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0}
+.fig-grid figure{margin:0}
+#intro{padding-top:64px}
+figcaption b.unused{color:#e07b6a}
+
+/* ---------- prompt blocks ---------- */
+.prompt{
+  margin:34px 0;border:1px solid var(--line);background:var(--panel);
+}
+.prompt summary{
+  list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;
+  padding:18px 22px;font-family:'Montserrat',sans-serif;font-size:12px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+  transition:background .3s;user-select:none;
+}
+.prompt summary::-webkit-details-marker{display:none}
+.prompt summary:hover{background:rgba(212,175,110,.06)}
+.prompt summary::before{content:'+';font-size:18px;font-weight:400;color:var(--gold);width:16px}
+.prompt[open] summary::before{content:'–'}
+.prompt-body{position:relative;border-top:1px solid var(--line)}
+.prompt pre{
+  padding:26px 24px;overflow-x:auto;white-space:pre-wrap;word-break:break-word;
+  font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.75;color:#c9c4ba;
+}
+.copy-btn{
+  position:absolute;top:14px;right:14px;
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
+  background:var(--black);border:1px solid var(--line);padding:8px 14px;
+  cursor:pointer;transition:all .25s;
+}
+.copy-btn:hover{background:var(--gold);color:var(--black)}
+
+/* ---------- lesson / pull ---------- */
+.lesson{
+  border-left:2px solid var(--gold);padding:8px 0 8px 28px;margin:44px 0;
+  font-size:1.12em;font-style:italic;color:#f0ece3;max-width:720px;
+}
+.lesson b{font-style:normal;font-family:'Montserrat',sans-serif;font-size:11px;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px}
+
+/* ---------- video ---------- */
+.video-shell{position:relative;padding-top:56.25%;border:1px solid var(--line);margin:44px 0;background:#000}
+.video-shell iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* ---------- pipeline ---------- */
+.pipeline{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);margin:44px 0;
+}
+.step{background:var(--panel);padding:26px 22px}
+.step .n{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.25em;color:var(--gold);display:block;margin-bottom:12px}
+.step h4{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:600;letter-spacing:.06em;margin-bottom:8px;color:#fff}
+.step p{font-size:16px;line-height:1.55;color:var(--muted)}
+
+/* ---------- section slates ---------- */
+.slate{
+  display:flex;flex-wrap:wrap;gap:8px 26px;align-items:baseline;
+  font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted);margin:64px 0 8px;
+  padding-top:26px;border-top:1px solid rgba(255,255,255,.07);
+}
+.slate .s-num{color:var(--gold);font-weight:700}
+.slate .s-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;
+  color:var(--text);text-transform:none;letter-spacing:0}
+
+/* ---------- takeaways ---------- */
+.takeaways{counter-reset:tk;max-width:720px}
+.takeaways li{
+  list-style:none;counter-increment:tk;padding:22px 0 22px 64px;position:relative;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.takeaways li::before{
+  content:counter(tk,decimal-leading-zero);position:absolute;left:0;top:24px;
+  font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.1em;color:var(--gold);
+}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid rgba(255,255,255,.07);padding:70px 0 60px;margin-top:40px}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.back-link{
+  font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold);text-decoration:none;
+  display:inline-flex;align-items:center;gap:12px;
+}
+.back-link::before{content:'←';transition:transform .3s}
+.back-link:hover::before{transform:translateX(-5px)}
+.foot-note{font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+
+/* ---------- lightbox ---------- */
+.lightbox{
+  position:fixed;inset:0;z-index:1000;background:rgba(5,5,5,.96);
+  display:none;align-items:center;justify-content:center;padding:32px;cursor:zoom-out;
+}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:100%;object-fit:contain}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .hero-bg img{animation:none}
+  html{scroll-behavior:auto}
+}
+@media (max-width:760px){
+  nav{padding:20px 22px}
+  .nav-links{gap:20px}
+  body{font-size:18px}
+  .fig-grid{grid-template-columns:1fr}
+  .ch-head{flex-direction:column;gap:10px}
+  section{padding:70px 0}
+  .hero-inner{padding-bottom:70px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">ZELVA<span>.</span></a>
+  <div class="nav-links">
+    <a href="work.html">Work</a>
+    <a href="learn.html">Learn</a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="hero-bg"><img src="images/adifferentkindofhero/location-giant-tree.jpg" alt="The neon forest at night — a giant pink rooted tree, moss and glowing red mushrooms under a cobalt sky"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">Zelva Learn — Case Study</span>
+    <h1>A Different Kind<br><em>of Hero</em></h1>
+    <p class="hero-sub">Four characters, one neon forest, and a rescue that nobody asked for — every prompt included, iterations and all.</p>
+    <div class="hero-meta">
+      <div>Tools<b>Midjourney · Claude · Seedance 2.0 · Adobe Premiere</b></div>
+      <div>Platform<b>Higgsfield · 720p · high bitrate</b></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= INTRO ================= -->
+<section id="intro">
+  <figure class="video-shell reveal" style="margin-top:0">
+    <iframe src="https://www.youtube.com/embed/X2TS9unfS1o" title="A Different Kind of Hero — Zelva" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </figure>
+
+  <div class="prose reveal">
+    <p class="drop">A woman is dragged screaming through a neon forest by something enormous and profoundly bored. A barbarian arrives to rescue her, announces himself, and performs a small dance. She watches all of it, and politely declines. Then the monster turns out to be someone else entirely, the woman leaves with her, and the hero falls face first into the moss.</p>
+    <p>The rescue story is one of the oldest shapes there is, which makes it one of the easiest to break. Everyone watching already knows the ending, so the only real job is to <em>not</em> deliver it. Here the girl doesn't need saving, the monster isn't a monster, and the hero's biggest obstacle turns out to be himself.</p>
+    <p>This is the complete breakdown: the five short Midjourney prompts behind the cast and the forest, the eight second ceiling that shaped every single shot, and every Seedance 2.0 prompt in story order — including the iterations that never became the film.</p>
+  </div>
+</section>
+
+<!-- ================= 01 WORKING BACKWARDS ================= -->
+<section id="backwards">
+  <div class="ch-head reveal">
+    <span class="ch-num">Chapter 01</span>
+    <div><h2>Working Backwards</h2>
+    <p class="kicker">The characters existed first. The story was reverse engineered out of them.</p></div>
+  </div>
+
+  <div class="prose reveal">
+    <p>This film began as a style test. The brief was to itself: try a new animation look, keep it punchy and funny, and don't let any beat outstay two seconds. Nothing about plot, nothing about theme.</p>
+    <p>So the characters came first. Four of them, generated in Midjourney before a single line of story existed — and then the question that actually writes the script: <strong>what is this person like?</strong> A barbarian with a living head strapped to the front of his kilt is already telling you he needs an audience. A bored monster dragging someone by the wrist like luggage is telling you this is Tuesday. Put those two in a clearing and the scene writes itself.</p>
+    <p>That's the whole method, and it's a legitimate one. Design a face you believe in, ask how it would react to a situation, and let the answer be the story. This one was a happy accident.</p>
+  </div>
+
+  <div class="lesson reveal"><b>The method</b>Character first, story second. A design you already believe in will tell you what it wants to do — and the story you get from asking is usually stranger and better than the one you would have planned.</div>
+</section>
+
+<!-- ================= 02 CHARACTER DESIGN ================= -->
+<section id="characters">
+  <div class="ch-head reveal">
+    <span class="ch-num">Chapter 02</span>
+    <div><h2>Character Design in Midjourney</h2>
+    <p class="kicker">Five short prompts, one shared parameter spine, three style codes.</p></div>
+  </div>
+
+  <div class="prose reveal">
+    <p>Every prompt below is deliberately <strong>short</strong>. Format, identity, wardrobe, backdrop — and then stop. No texture callouts, no adjective piles, no negatives. Long prompts don't produce better characters; they produce averaged ones, because every extra clause competes with the ones that matter.</p>
+    <p>What holds the whole cast together is not the wording, it's the parameter spine. Every character and the location share the same tail: <strong>--raw --v 8.1 --stylize 200 --hd --profile 1tc4lxf</strong>, plus style references drawn from a library of three codes — <strong>4224851805</strong>, <strong>1844671166</strong> and <strong>3858982196</strong>. The two women pull the first two. The monster, the hero and the forest pull all three. That's the glue: the palette, the linework and the flat cel shading survive from character to character because the codes do.</p>
+  </div>
+
+  <div class="fig-grid reveal">
+    <figure>
+      <img src="images/adifferentkindofhero/char-robe-woman.jpg" alt="The woman — long black hair, oversized yellow robe over a lilac polka dot slip dress, lilac platform sandals">
+      <figcaption><b>THE WOMAN</b> — the one being rescued. Cute, vulnerable, ordinary clothes.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/adifferentkindofhero/char-warrior-woman.jpg" alt="The warrior — pink skin, black bob with bangs, two pink horns, spiked armour, greatsword, leopard print platform boots">
+      <figcaption><b>THE WARRIOR</b> — small horns, greatsword, leopard boots. Her true form.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/adifferentkindofhero/char-creature.jpg" alt="The monster — blue and pink mottled hide, tall bat ears, red slit eyes, green fangs, chunky striped platform sneakers">
+      <figcaption><b>THE MONSTER</b> — the same character as the warrior, in her other body.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/adifferentkindofhero/char-hero-belthead.jpg" alt="Bragnar — massive barbarian, blue hair, gold chain, green fur coat, plaid kilt with a yellow horned head mounted on the front">
+      <figcaption><b>BRAGNAR &amp; THE BELT HEAD</b> — the hero, and the small yellow head living on his kilt.</figcaption>
+    </figure>
+  </div>
+
+  <h3 class="reveal">The Woman</h3>
+  <div class="prose reveal">
+    <p>The one everybody assumes is the damsel. The prompt asks for nothing heroic at all — ordinary clothes, a dress, cute but vulnerable — because the whole joke depends on her looking exactly like the person this genre would rescue.</p>
+  </div>
+  <details class="prompt reveal">
+    <summary>Midjourney prompt — the woman</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>prompt for the woman that needs to be rescue a beautiful lady from the elites, cute but vulnerable, dressed in regular clothes, a dress, full body shot, white backdrop --ar 9:16 --sref 4224851805 1844671166 --raw --v 8.1 --stylize 200 --hd --profile 1tc4lxf</pre>
+    </div>
+  </details>
+
+  <h3 class="reveal">The Warrior</h3>
+  <div class="prose reveal">
+    <p>The monster's true form, generated as her own character rather than as a variation. Same two style codes as the woman, which keeps the two of them looking like they belong in the same frame — useful, given where the story ends up.</p>
+  </div>
+  <details class="prompt reveal">
+    <summary>Midjourney prompt — the warrior</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>the main woman not ransform as a monster unique character design, main character vibes, strong, cool warrior, holding a sword, white backdrop, a beautiful woman with small horns, full body shot, relax position, holding a sword --ar 9:16 --sref 4224851805 1844671166 --raw --v 8.1 --stylize 200 --hd --profile 1tc4lxf</pre>
+    </div>
+  </details>
+
+  <h3 class="reveal">The Monster</h3>
+  <div class="prose reveal">
+    <p>Eleven words of description and a third style code. The platform sneakers were not asked for — they arrived on their own, and they are the single best thing about the design.</p>
+  </div>
+  <details class="prompt reveal">
+    <summary>Midjourney prompt — the monster</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>the monster unique character, monster with horns, reptile like, full body pose --ar 9:16 --sref 4224851805 1844671166 3858982196 --raw --v 8.1 --stylize 200 --hd --profile 1tc4lxf</pre>
+    </div>
+  </details>
+
+  <h3 class="reveal">Bragnar and the Belt Head</h3>
+  <div class="prose reveal">
+    <p>Note what the prompt asks for: <em>the "hero" — main character vibes, strong, cool warrior, holding a sword.</em> Straight, sincere, no irony. The quotation marks around "hero" are doing all the work. The belt head was never requested; it turned up mounted on the kilt and became the film's best supporting character.</p>
+  </div>
+  <details class="prompt reveal">
+    <summary>Midjourney prompt — the hero</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>the "hero" unique character design, main character vibes, strong, cool warrior, holding a sword, white backdrop --ar 9:16 --sref 3858982196 4224851805 1844671166 --raw --v 8.1 --stylize 200 --hd --profile 1tc4lxf</pre>
+    </div>
+  </details>
+
+  <h3 class="reveal">The Neon Forest</h3>
+  <div class="prose reveal">
+    <p>One location plate carries the entire film. Twelve words, 16:9, and the instruction that matters most: <strong>location only</strong>. No figures, no scale reference, nothing for the video model to mistake for a character later.</p>
+  </div>
+  <details class="prompt reveal">
+    <summary>Midjourney prompt — the location</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>location forest at down large fantasy tree, location only --ar 16:9 --sref 3858982196 4224851805 1844671166 --raw --v 8.1 --stylize 200 --hd --profile 1tc4lxf</pre>
+    </div>
+  </details>
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/location-giant-tree.jpg" alt="The neon forest — giant pink rooted tree, mossy green banks, red capped mushrooms, cobalt night sky">
+    <figcaption><b>THE LOCATION</b> — every shot in the film is lit and coloured by this one plate.</figcaption>
+  </figure>
+
+  <div class="lesson reveal"><b>The rule</b>Keep Midjourney prompts short. Format, identity, wardrobe, backdrop — then stop. Consistency comes from the parameter spine and the style codes, not from writing more words.</div>
+</section>
+
+<!-- ================= 03 EIGHT SECONDS ================= -->
+<section id="constraint">
+  <div class="ch-head reveal">
+    <span class="ch-num">Chapter 03</span>
+    <div><h2>Eight Seconds, Free</h2>
+    <p class="kicker">The whole film was shaped by a one day promotion.</p></div>
+  </div>
+
+  <div class="prose reveal">
+    <p>Higgsfield ran a free day. The catch: Seedance 2.0 at <strong>720p, eight seconds</strong>, and nothing else. Normal practice here is fifteen seconds at a time — but you don't always get the chance of free credits, so you take the eight and work around it.</p>
+    <p>That ceiling is the reason this film looks the way it does. Eight seconds is not enough room for a beat to breathe, so every prompt had to carry more than one. Some hold two or three shots inside a single generation. Others take one event and split it across two prompts that were written to be cut together. The constraint stopped being a limit somewhere around the third shot and started being the grammar.</p>
+  </div>
+
+  <div class="pipeline reveal">
+    <div class="step"><span class="n">Step 1</span><h4>Write the shots</h4><p>Story order, camera angles and timing planned per beat before any prompt existed.</p></div>
+    <div class="step"><span class="n">Step 2</span><h4>Build the prompt</h4><p>A purpose built Seedance skill turns each beat into a structured prompt: art style, environment, context, blocking, shot, lighting, physics, audio.</p></div>
+    <div class="step"><span class="n">Step 3</span><h4>Generate — Higgsfield</h4><p>Seedance 2.0, 720p, high bitrate, eight seconds. Multiple runs per beat, references attached every time.</p></div>
+    <div class="step"><span class="n">Step 4</span><h4>Edit — Premiere</h4><p>Best takes cut together, sound design, timing tightened. Everything shot and cut in a single day.</p></div>
+  </div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-witnesses-full-ui.jpg" alt="Seedance 2 settings on Higgsfield — 720p, high bitrate, 1280x720, three reference images attached">
+    <figcaption><b>THE SETUP</b> — Seedance 2, 720p, high bitrate, 1280&#215;720. The reference thumbnails at the top of the panel are the character sheets from Chapter 02, attached to every single generation.</figcaption>
+  </figure>
+
+  <div class="lesson reveal"><b>Constraints are direction</b>A short ceiling forces you to write denser shots: one camera move that visits two characters, one take that carries three punchlines. Half the craft on this page only exists because eight seconds was all there was.</div>
+</section>
+
+<!-- ================= 04 THE FILM ================= -->
+<section id="prompts">
+  <div class="ch-head reveal">
+    <span class="ch-num">Chapter 04</span>
+    <div><h2>The Film, Prompt by Prompt</h2>
+    <p class="kicker">Twelve beats in story order — with every iteration, not just the keepers.</p></div>
+  </div>
+
+  <div class="prose reveal">
+    <p>What follows is the whole film in sequence. Where a beat was attempted more than once, every attempt is here, because the differences between two runs of the same idea are where the actual craft lives.</p>
+    <p>Reference tags have been normalised to <strong>@IMAGE1</strong>, <strong>@IMAGE2</strong> and so on for readability — they must always run sequentially with no gaps. Attach your own references in that order and these prompts will work as written.</p>
+  </div>
+
+  <!-- 01 -->
+  <div class="slate reveal"><span class="s-num">Section 01</span><span class="s-title">The Drag</span><span>two iterations · 8s each</span></div>
+  <div class="prose reveal"><p>A woman is hauled across the forest floor on her back, screaming for anyone. The thing dragging her is not remotely bothered. The comedy is entirely in the mismatch, and the blocking protects it: for the first half of the shot the dragger is nothing but a clawed hand at the edge of frame with the arm cropped and its owner off screen.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-dragged-full-ui.jpg" alt="Seedance still — the monster drags the screaming woman through the forest by her wrist, bored" >
+    <figcaption><b>ITERATION A</b> — two shots in one generation, four seconds each. The hand only, then the reveal: bored, half lidded, dragging her like luggage, never once looking back.</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the drag, iteration A</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: The monster, reference for character consistency only. Hulking beast, blue and pink mottled hide with red bumps, two tall pointed bat ears, huge red almond eyes with slit pupils, wide underbite jaw with green fangs, massive clawed hands, chunky blue platform sneakers with black stripes. Silent, casual, bored, like this is routine.
+@IMAGE2: The woman, reference for character consistency only. Long straight black center parted hair, oversized yellow draped robe with wide sleeves over a lilac polka dot slip dress, platform sandals. Pure terror and panic. Voice: young adult female, bright and expressive, screaming.
+@IMAGE3: The neon forest, environment reference.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field, backgrounds streak soft while the subjects stay razor sharp. Dynamic anime camera, fast tracking.
+Color temperature: neutral on the characters, cool blue only in the background night.
+ENVIRONMENT
+Environment as seen in @IMAGE3. Deep blue night, moss, roots and mushrooms streaking past as soft blur.
+CONTEXT
+A monster drags a screaming woman through the forest by her wrist. It is completely casual about it. She is not.
+BLOCKING
+Shot 1: the woman on her back on the forest floor, dragged arm first from frame right toward frame left. One arm is stretched taut above her head toward frame left, a massive pink clawed hand clamped around her wrist at the far left frame edge, arm cropped, owner off screen. Her head and body trail behind the pulled arm, she faces up and toward camera, her free hand grabbing at roots as they slip past. Shot 2: the monster in close up walking toward frame left, her wrist gripped in its trailing hand, facing frame left, unbothered.
+SHOT
+35mm, close ups only.
+Shot 1
+Purpose: her panic, the unseen dragger.
+Type: tight close up on her face and upper body, camera low at ground level.
+Movement: fast sideways tracking right to left, locked to her speed. She is hauled along the ground by her outstretched arm toward frame left, her body sliding on her back behind the pulled wrist, moss and roots streaking as soft blur, her long black hair dragging and whipping under her, the yellow robe bunching as the ground rakes it, her free hand snatching at passing roots that tear out of her grip one after another, screaming: HELP! SOMEBODY! ANYBODY! HEEELP! She never stands, never crawls, only slides, towed by the wrist. Only the clawed hand on her wrist is visible at the left frame edge.
+Duration: 4 seconds.
+Shot 2
+Purpose: reveal the dragger, casual as anything.
+Type: tight close up on the monster, chest and head filling the frame, camera low tracking alongside it.
+Movement: cut to the monster in close up mid stride, walking steadily toward frame left, tracking with it at its pace, one massive arm trailing behind it holding her wrist, her flailing free arm and streaming black hair entering the bottom right corner of frame while she keeps screaming off frame, and the monster is completely unbothered, huge red eyes half lidded and forward, bat ears relaxed, breathing slow, one lazy blink, dragging her like luggage, jaw slack in mild boredom as it walks. It never looks back at her.
+Duration: 4 seconds.
+LIGHTING
+Neutral key on both characters so their colors match the references exactly, never tinted blue. Cool blue night in the background only, soft neon pink bounce from the roots.
+PHYSICS
+Her body is dead weight towed over roots on her back, the pulled arm taut, hair and robe dragging against the motion. The monster's stride is heavy and unhurried, her body jolts with each of its steps.
+AUDIO
+NO MUSIC. Sound effects and her voice only.</pre>
+    </div>
+  </details>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-dragged-solo-full-ui.jpg" alt="Seedance still — the woman on her back being dragged, only a clawed hand visible at the frame edge">
+    <figcaption><b>ITERATION B</b> — one unbroken take, and the monster is never revealed at all. Dragged feet first instead of arm first, cool moonlight key instead of neutral, and an explicit "no glam beauty lighting."</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the drag, iteration B</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: The monster, reference for character consistency only. In this shot ONLY its huge pink clawed hand with green claws appears gripping her wrist at the edge of frame. Its body, face, and ears are NEVER visible in this shot.
+@IMAGE2: The woman, main character, reference for character consistency only. Very long straight black center parted hair, oversized yellow draped robe with wide sleeves over a lilac polka dot slip dress, chunky platform sandals. Pure terror and panic throughout.
+@IMAGE3: The neon forest, environment reference. Giant pink rooted tree, stone steps, moss, red capped mushrooms, blue night backdrop.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field, background layers fall soft and blurry while she stays razor sharp. Dynamic anime camera energy, fast tracking, quick speed shifts. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps, it flows through the whole scene in one move.
+Color temperature: cool.
+ENVIRONMENT
+Environment as seen in @IMAGE3. Deep blue night forest, faint drifting spores in the air, mushrooms and pink roots streaking past as soft foreground and background blur.
+CONTEXT
+A woman is being dragged through a strange neon forest by something unseen. We stay on her. Whatever has her is never shown.
+BLOCKING
+The woman is on her back on the forest floor, being dragged from frame right toward frame left, feet first toward the unseen dragger off frame left. Her head and shoulders fill the frame, she faces up and toward camera. One massive pink clawed hand grips her right wrist at the far left edge of frame, arm cropped, its owner completely off screen. Her free left arm reaches back toward camera, toward frame right.
+SHOT
+35mm, tight close up on her face and upper body, camera low at ground level. The camera opens tight on her terrified face as she is dragged fast from frame right to frame left across the mossy ground, tracking with her in the same low sideways move, matching her speed so she stays locked in frame while moss, mushrooms and pink roots streak past as soft blur, her long black hair whipping around her face, the yellow robe dragging and snagging on roots, she screams: HELP! SOMEBODY! ANYBODY! then in the same unbroken move the camera surges slightly ahead and reveals only the huge pink clawed hand clamped on her wrist at the left edge of frame, never more than the hand, then drops back level with her face as she twists, kicks and claws at the dirt with her free hand, dirt and leaves kicking up around her, then the drag suddenly speeds up, the camera whips faster to keep pace, her hair flares across the lens for a beat, and the shot ends still tracking, still screaming, the dragger never shown. One continuous flowing take throughout.
+Duration: 8 seconds.
+LIGHTING
+Cool blue moonlight from above as the key, soft neon pink bounce from the giant roots filling her face, mushroom caps glowing faintly in the blur. No warm light, no glam beauty lighting.
+PHYSICS
+Her body has real weight, shoulders and hips bumping over roots as she slides. Hair and robe fabric trail and whip with the drag, dirt and leaves scatter behind her.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+
+  <div class="lesson reveal"><b>Where to put a constraint</b>Iteration A hides the monster in the blocking. Iteration B moves the same instruction up into the reference line itself: <em>in this shot ONLY its hand appears, its body, face and ears are NEVER visible.</em> Put a hard limit where the model reads identity, not where it reads staging, and it holds far better.</div>
+
+  <!-- 02 -->
+  <div class="slate reveal"><span class="s-num">Section 02</span><span class="s-title">Bragnar's Entrance</span><span>true oner · 8s</span></div>
+  <div class="prose reveal"><p>Hero entrance grammar played completely straight so the joke can undercut it: boots slam into frame at ground level, a whip tilt travels up the body, the camera lands on his face from below, the greatsword goes into the earth. Then the camera drops to kilt level and the belt head corrects the record. His face is withheld for the punchline — you get only a clenching fist at the top of frame, and he never looks down.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-bragnar-entrance-full-ui.jpg" alt="Seedance still — Bragnar in heroic low angle, greatsword planted, blue hair and green fur coat, moonlit forest behind">
+    <figcaption><b>SECTION 02</b> — "It is I, BRAGNAR THE MAGNIFICENT, hero of a thousand rescues!" &nbsp;·&nbsp; "Nine. It is nine rescues. I was there."</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — Bragnar's entrance</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: Bragnar and the belt head, reference for character consistency only. Bragnar: massive barbarian, long blunt blue hair, gold chain necklace, huge shaggy green fur coat, plaid kilt, greatsword. Pompous, theatrical, self mythologizing. Voice: deep booming manly voice, theatrical and self important, middle aged, slight gravelly rasp. The belt head: small yellow horned head mounted on the front of his kilt, alive, unimpressed. Voice: flat deadpan male voice, dry and tired, slightly nasal, mid tone.
+@IMAGE2: The neon forest, environment reference. Giant pink rooted tree, moss, glowing mushrooms, blue night backdrop.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field, background falls soft while he stays razor sharp. Dynamic anime camera, whip tilts, quick speed shifts. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps, it flows through the whole scene in one move.
+Color temperature: cool.
+ENVIRONMENT
+Environment as seen in @IMAGE2. Deep blue night, drifting spores, faint mushroom glow.
+CONTEXT
+A pompous barbarian hero makes his grand entrance into the forest to rescue a screaming woman heard in the distance. He is alone with the living head on his belt.
+BLOCKING
+Bragnar alone in a mossy clearing, frame center, body angled left to right, facing frame right toward distant screams off frame right. The belt head hangs at the front of his kilt, facing camera. They hold these positions the whole shot.
+SHOT
+35mm, heroic low angle throughout. The camera opens low in the moss as Bragnar's giant boots slam into frame kicking up leaves and dirt, then in the same unbroken move a fast whip tilt travels up his body, kilt, gold chain, fur coat flaring, and lands on his face from below in full heroic low angle as he plants the greatsword into the earth and bellows: Fear not, lady!! It is I, BRAGNAR THE MAGNIFICENT, hero of a thousand rescues! Wind blows his blue hair and coat fur while he holds the pose, chest out, chin high, still facing frame right, then the camera keeps flowing without cutting and drops straight back down to kilt level, settling tight on the belt head as it deadpans to camera: Nine. It is nine rescues. I was there. Then the camera tilts up just enough to catch Bragnar's fist clenching at the top of frame as he growls without looking down: A thousand. One continuous flowing take throughout.
+Duration: 8 seconds.
+LIGHTING
+Cool blue moonlight key from above, neon pink bounce from the giant roots on one side of his face, mushroom glow in the soft background. No warm light.
+PHYSICS
+His landing is heavy, ground impact scatters leaves. Fur coat and hair ripple in the wind, the planted sword stays rigid in the earth.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+
+  <!-- 03 -->
+  <div class="slate reveal"><span class="s-num">Section 03</span><span class="s-title">The Performance</span><span>two iterations · 8s each</span></div>
+  <div class="prose reveal"><p>Instead of rescuing anyone, he does a routine. Flex, kiss the bicep, pec pops, a strutting dance stomp, and a shampoo commercial hair flip in fake slow motion. Two versions exist: one played directly into the lens with no audience at all, one played to an audience of three who all hate it.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-hero-performance-solo-full-ui.jpg" alt="Seedance still — Bragnar flexing both arms directly to camera, chest out, gold chain, green fur coat spread wide">
+    <figcaption><b>ITERATION A</b> — no audience, no dialogue, sound effects only. The camera is his mirror: CRASH IN, WHIP, SNAP ZOOM, SPEED RAMP, and a crash to extreme close up on one eye for the wink.</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the performance, iteration A</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: Bragnar and the belt head, reference for character consistency only. Bragnar: massive barbarian, long blunt blue hair, gold chain necklace, huge shaggy green fur coat, plaid kilt. Ego fully inflated, performing to camera, in love with himself. No dialogue. The belt head: small yellow horned head mounted on the front of his kilt, alive, dead eyed.
+@IMAGE2: The neon forest, environment reference.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field. Maximum comedic anime energy: snap zooms, crash push ins, whip moves, speed ramps, sparkle glints. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps, every move is a fast camera motion within one flowing take.
+Color temperature: cool.
+ENVIRONMENT
+Environment as seen in @IMAGE2. Deep blue night, drifting spores, faint mushroom glow.
+CONTEXT
+The hero performs his muscle routine for the camera like the world's most confident shampoo commercial. Only him and the belt head exist. No other characters, no reactions.
+BLOCKING
+Bragnar alone, frame center, facing camera the entire shot, performing directly into the lens. The belt head hangs at the front of his kilt.
+SHOT
+35mm, tight and punchy, the camera constantly moving. The camera CRASHES IN on Bragnar's flexed bicep filling the frame as he kisses it with a loud smack, sparkle glint popping, then WHIPS across his chest to the other bicep for the second kiss, then SNAP ZOOMS back to his chest as he bounces his pecs one at a time, left, right, left, the gold chain jumping with each pec pop, then he tosses his head back and the shot SPEED RAMPS into dramatic slow motion as his long blue hair rises and fans out, one bright glint sliding along the floating strands, then ramps back to real time as the hair whips down and settles perfectly, and the camera CRASHES INTO AN EXTREME CLOSE UP of just his eye and eyebrow filling the entire frame as he WINKS, one huge punchy wink with an audible ting and a white sparkle flying off the eyelash, then the camera snaps back just enough for his smug grin as he blows a kiss at the lens, and drops for half a beat to the belt head staring dead eyed into camera before popping back up to his self satisfied smile. One continuous flowing take throughout.
+Duration: 8 seconds.
+LIGHTING
+Cool blue moonlight key, neon pink bounce from the roots, exaggerated white sparkle glints on biceps, pecs, teeth, chain, hair and the wink. No warm light.
+PHYSICS
+Pecs bounce with real mass, chain jumps with each pop, hair carries weight through the speed ramp, the coat sways with every camera whip.
+AUDIO
+NO MUSIC. Sound effects only.</pre>
+    </div>
+  </details>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-hero-performance-full-ui.jpg" alt="Seedance still — Bragnar hunched mid routine, blue hair over his face, gold chain, lime fur coat spread wide">
+    <figcaption><b>ITERATION B</b> — the same routine with witnesses. Four references in one generation, four punchlines in one take: him performing, the belt head at kilt level ("I cannot watch"), a whip pan to her recoiling, and the monster's slow unimpressed blink over her shoulder.</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the performance, iteration B</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: Bragnar and the belt head, reference for character consistency only. Bragnar: massive barbarian, long blunt blue hair, gold chain necklace, huge shaggy green fur coat, plaid kilt, greatsword. Ego fully inflated, showing off. Voice: deep booming manly voice, theatrical and self important, middle aged, slight gravelly rasp. The belt head: small yellow horned head mounted on the front of his kilt, alive, ashamed. Voice: flat deadpan male voice, dry and tired, slightly nasal, mid tone.
+@IMAGE2: The woman, reference for character consistency only. Long straight black center parted hair, oversized yellow draped robe with wide sleeves over a lilac polka dot slip dress. Disgusted, recoiling. Voice: young adult female, bright and expressive.
+@IMAGE3: The monster, reference for character consistency only. Hulking beast, blue and pink mottled hide, tall pointed bat ears, huge red almond eyes with slit pupils, wide underbite jaw with green fangs. Utterly unamused, silent, never speaks.
+@IMAGE4: The neon forest, environment reference. Giant pink rooted tree, moss, glowing mushrooms, blue night backdrop.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field, backgrounds fall soft while faces stay razor sharp. Dynamic anime camera, whip pans, fake slow motion beats. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps, it flows through the whole scene in one move.
+Color temperature: cool.
+ENVIRONMENT
+Environment as seen in @IMAGE4. Deep blue night, drifting spores, faint mushroom glow.
+CONTEXT
+The hero completely misreads the standoff and starts showing off his muscles and hair to his audience. Nobody is impressed.
+BLOCKING
+Bragnar at frame center facing camera, performing. The belt head hangs at the front of his kilt facing camera. The woman stands off to frame right several steps away, facing frame left toward Bragnar, with the monster looming close behind her shoulder, also facing frame left toward Bragnar. They hold these positions the whole shot.
+SHOT
+35mm, tight close ups only. The camera opens close on Bragnar from the chest up as he flexes both biceps one after the other, kisses one bicep, then does a cocky little strutting dance stomp side to side, gold chain bouncing, then whips his head back so his long blue hair fans out and floats down in fake slow motion like a shampoo commercial, chest out, eyebrows waggling at his audience, and in the same unbroken move the camera dips down past his kilt to catch the belt head with its eyes squeezed shut in deep shame muttering: I cannot watch. Then the camera keeps flowing without cutting and whip pans to frame right, landing in a tight close up on the woman's face as she recoils, nose scrunched, lip curled, leaning away, and says flatly: yuck. Behind her shoulder in soft focus the monster's huge red eyes sit at half lid, supremely unamused, and give one slow unimpressed blink. One continuous flowing take throughout.
+Duration: 8 seconds.
+LIGHTING
+Cool blue moonlight key, neon pink bounce from the roots, a faint vain sparkle glinting off his hair at the top of the hair flip. No warm light.
+PHYSICS
+His hair has real weight and floats down strand by strand after the flip, the fur coat sways with the dance stomps, the chain bounces on his chest.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+
+  <!-- 04 -->
+  <div class="slate reveal"><span class="s-num">Section 04</span><span class="s-title">The Decline</span><span>locked take · 8s</span></div>
+  <div class="prose reveal"><p>The premise flips here. She has watched the entire performance and made her decision. The direction asks for two contradictory things at once — shock <em>and</em> disgust — played against completely elegant movement, and the joke lands in the gap between her face and her hands.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-woman-declines-full-ui.jpg" alt="Seedance still — the woman in close up, hand raised to sweep her hair back, expression of shock and disgust">
+    <figcaption><b>SECTION 04</b> — "yuk." A beat. Then, brightly: "Actually, I am fine here. No need for a rescue... but thanks."</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the decline</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: The woman, reference for character consistency only. Long straight black center parted hair, oversized yellow draped robe with wide sleeves over a lilac polka dot slip dress. Emotions: shocked AND disgusted at once, then breezily polite, elegant and feminine in every movement. Voice: young adult female, bright and expressive.
+@IMAGE2: The neon forest, environment reference.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field. Deadpan comic timing, locked frame. The wind is drawn as classic 2D anime wind effects: thin curved hand drawn wind streak lines and long swoosh strokes drifting across the frame, cel animated. NO leaves, NO dust, NO debris, NO particles, only drawn wind lines, hair and fabric.
+Color temperature: neutral on her, cool blue only in the background night.
+ENVIRONMENT
+Environment as seen in @IMAGE2. Deep blue night, a steady wind rendered purely as stylized 2D wind streak lines flowing across frame. No glow, no sparkles, no leaves, no dust.
+CONTEXT
+Off frame, the hero has just performed a deeply weird dance move. She watched all of it. She has made her decision. He is never shown.
+BLOCKING
+The woman alone in frame the entire shot, tight close up, facing frame left toward the off screen hero. The hero is always off frame left and never shown. She never moves from her spot.
+SHOT
+35mm, one tight close up on her face, camera locked the whole shot. From the first frame her face holds shock and disgust at the same time: eyes wide in disbelief, mouth open, nose scrunched, staring toward frame left. Thin hand drawn 2D wind streak lines sweep continuously across the frame from frame left, streaming her long black hair sideways. Then, with graceful feminine composure completely at odds with her face, she slowly lifts one hand and sweeps her hair back from her face and over her shoulder in one smooth elegant motion, wrist soft, fingers delicate, her expression never softening, and she lets out one small flat: yuk. A beat. Then her whole face resets into a bright, breezy, almost apologetic politeness, chin lifting, a courteous little smile that does not reach her eyes, and she says lightly, with a small dismissive wave of her hand: Actually, I am fine here. No need for a rescue... but thanks. She holds the polite smile toward frame left, the wind lines still streaming her hair, one eyebrow arching just slightly as the shot ends. One locked take throughout.
+Duration: 8 seconds.
+LIGHTING
+Neutral soft key light on her face so her skin keeps its natural warm pink tone from the reference, never tinted blue. The cool blue night lives only in the background and as a thin blue rim on the edge of her hair. Soft neon pink bounce from the roots as fill. No glow effects, no aura, no sparkles. Flat quiet night light only.
+PHYSICS
+Wind exists only as stylized 2D streak lines, her hair streaming and responding with real weight, the hair sweep one smooth continuous feminine motion, the hand wave small and crisp. No leaves, no dust, no particles anywhere.
+AUDIO
+NO MUSIC. Sound effects and her voice only.</pre>
+    </div>
+  </details>
+
+  <div class="lesson reveal"><b>Protect your skin tones</b>A cool blue night will tint every face in the frame if you let it. The fix is a whole paragraph, not a word: neutral key on her face so her skin keeps the reference tone, blue confined to the background and a thin rim on the hair, pink bounce as fill. Say where the blue is <em>allowed</em> to be.</div>
+
+  <!-- 05 -->
+  <div class="slate reveal"><span class="s-num">Section 05</span><span class="s-title">The Roar</span><span>true oner · 8s</span></div>
+  <div class="prose reveal"><p>A tight profile two shot, both faces locked inches apart for the whole take. The monster roars point blank, the roar cuts off, and then the shot does something most prompts never bother to specify: it holds on silence. His hair flops down, the fear arrives in physical detail, and only after a long scared beat does he speak.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-roar-full-ui.jpg" alt="Seedance still — the monster roaring point blank into Bragnar's face in tight profile, his hair blown flat back">
+    <figcaption><b>SECTION 05</b> — "You know... violence is never the answer. Let us... talk. As scholars." &nbsp;·&nbsp; then, from kilt level: "Ugh. It is getting humid in here."</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the roar</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: The monster, reference for character consistency only. Hulking beast, blue and pink mottled hide with red bumps, two tall pointed bat ears, huge red almond eyes, wide underbite jaw with green fangs. Silent except for the roar, never speaks.
+@IMAGE2: Bragnar and the belt head, reference for character consistency only. Bragnar: massive barbarian, long blunt blue hair, gold chain necklace, huge shaggy green fur coat, plaid kilt, greatsword. Terrified behind a crumbling heroic mask, trembling. Voice: deep booming manly voice, theatrical and self important, middle aged, slight gravelly rasp, now wobbling with fear. The belt head: small yellow horned head mounted on the front of his kilt, alive, long suffering. Voice: flat deadpan male voice, dry and tired, slightly nasal, mid tone.
+@IMAGE3: The neon forest, environment reference. Giant pink rooted tree, moss, glowing mushrooms, blue night backdrop.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field, background falls soft while faces stay razor sharp. Comic timing built on beats and holds. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps, it flows through the whole scene in one move.
+Color temperature: cool.
+ENVIRONMENT
+Environment as seen in @IMAGE3. Deep blue night, drifting spores, faint mushroom glow.
+CONTEXT
+The monster roars point blank in the hero's face. His courage dies on the spot. He shakes, he talks, and his body quietly surrenders.
+BLOCKING
+Tight profile two shot. The monster's huge head at frame left in profile facing frame right. Bragnar at frame right in profile facing frame left. They face each other, inches apart, and hold this facing the whole shot. The belt head hangs at the front of his kilt below frame until the camera finds it at the end.
+SHOT
+35mm, tight close ups only. The camera opens in a tight profile two shot, the monster's huge face at frame left and Bragnar's face at frame right, eye to eye, then the monster ROARS point blank into his face, a deafening blast, jaw stretching wide, green fangs bared, the roar blasting his long blue hair and fur collar straight back horizontal, then the roar cuts off. A beat of dead silence. His hair flops down. Then the camera pushes in slightly on Bragnar's face and holds there as the fear takes him, eyes huge, pupils shrunk to dots, a cold sweat drop sliding down his temple, his whole body trembling in a small constant shiver, the gold chain faintly rattling against his chest, jaw quivering, and after the long scared hold he swallows and forces the words out, voice wobbling with fake wisdom: You know... violence is never the answer. Let us... talk. As scholars. Then the camera keeps flowing without cutting and slides straight down his still subtly trembling body to the belt head at the front of his kilt, where a dark wet stain is slowly blooming outward across the plaid fabric around the little head, one faint wisp of steam, the belt head grimacing as it says flatly: Ugh. It is getting humid in here. The trembling never fully stops. One continuous flowing take throughout.
+Duration: 8 seconds.
+LIGHTING
+Cool blue moonlight key, neon pink bounce from the roots splitting the two profiles, the monster's red eyes glowing, the sweat drop catching the light. No warm light.
+PHYSICS
+The roar has hurricane force, hair and fur blown flat back, spit flecks flying. His trembling is small, constant and full body, the chain rattles softly, the wet stain spreads slowly through the plaid weave.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+
+  <div class="lesson reveal"><b>Block for the punchline</b>The belt head is deliberately kept below frame until the camera goes looking for it. Same trick as the entrance. If a gag needs to arrive, give it somewhere to arrive <em>from</em> — write the second character out of frame and then send the camera to find them.</div>
+
+  <!-- 06 -->
+  <div class="slate reveal"><span class="s-num">Section 06</span><span class="s-title">Show Your True Form</span><span>true oner · 8s</span></div>
+  <div class="prose reveal"><p>Convinced the monster is an enchantment, he demands it drop the disguise. The camera then does the best move in the film: it rides along his outstretched pointing arm like a rail, past the fist and fingertip, across the gap, and lands on the monster's face. Two characters, two emotional beats, one lens move, no cut.</p><p>And because the monster never speaks, its entire performance is written as face and ear choreography.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-show-your-true-form-full-ui.jpg" alt="Seedance still — extreme close up on Bragnar's furious face, blue brows drawn down, teeth bared, gold chain">
+    <figcaption><b>SECTION 06</b> — "Enough tricks, beast! I know an enchantment when I smell one!" then "SHOW YOUR TRUE FORM!" The reply is one ear up, one ear down, and the slowest exhausted eye roll in the film.</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — show your true form</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: Bragnar, reference for character consistency only. Massive barbarian, long blunt blue hair, gold chain necklace, huge shaggy green fur coat, plaid kilt, greatsword. Righteous, theatrical, absolutely certain he is correct. Voice: deep booming manly voice, theatrical and self important, middle aged, slight gravelly rasp.
+@IMAGE2: The monster, reference for character consistency only. Hulking beast, blue and pink mottled hide with red bumps, two tall pointed bat ears, huge red almond eyes with slit pupils, wide underbite jaw with green fangs. Silent, never speaks, expresses everything with its face and ears.
+@IMAGE3: The neon forest, environment reference. Giant pink rooted tree, moss, glowing mushrooms, blue night backdrop.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field, background falls soft while faces stay razor sharp. Dynamic anime camera, fast racing moves. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps, it flows through the whole scene in one move.
+Color temperature: cool.
+ENVIRONMENT
+Environment as seen in @IMAGE3. Deep blue night, drifting spores, faint mushroom glow.
+CONTEXT
+The hero is convinced the monster is an enchanted illusion and demands it reveal its true form. The monster is genuinely confused, then deeply, visibly done with him.
+BLOCKING
+Bragnar at frame right facing frame left toward the monster, pointing arm extended toward frame left. The monster stands at frame left facing frame right toward Bragnar. They face each other the whole shot, several steps apart.
+SHOT
+35mm, tight close ups only. The camera opens tight on Bragnar's face as he bellows with full righteous theater, spit flying, veins standing out on his neck: Enough tricks, beast! I know an enchantment when I smell one! and his arm shoots out past the lens pointing toward frame left as he roars: SHOW YOUR TRUE FORM! then in the same unbroken move the camera races along his outstretched pointing arm like a rail, past his fist and fingertip, flying across the gap between them, and lands in a tight close up on the monster's huge face. A beat. The monster blinks once, then its head cants slowly far over to one side in genuine confusion, one tall bat ear standing straight up, the other folding down, red slit pupils shrinking slightly, holding the confused tilt for a long beat, then the camera keeps flowing without cutting and pushes in slightly as the confusion melts into the slowest most exhausted eye roll, lids sliding to half mast, pupils rolling up and away, ears settling flat back. Hold there. One continuous flowing take throughout.
+Duration: 8 seconds.
+LIGHTING
+Cool blue moonlight key, neon pink bounce from the roots on both faces, the monster's red eyes the brightest thing in frame. No warm light.
+PHYSICS
+Bragnar's hair and coat shake with the force of the bellow, spit flecks catch the light. The monster's ears move with real cartilage weight, slow and expressive.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+
+  <div class="lesson reveal"><b>Give silent characters choreography</b>The monster has no lines in the entire film, so every reaction is written as anatomy: head cants far over, one ear straight up and the other folded down, pupils shrinking, then a slow eye roll with the ears settling flat back. That's acting direction, not description — and it is the only way a mute character gets a performance.</div>
+
+  <!-- 07 -->
+  <div class="slate reveal"><span class="s-num">Section 07</span><span class="s-title">The Transformation</span><span>three runs · 8s each</span></div>
+  <div class="prose reveal"><p>The pivot, and the shot that earns the film its other title. Both references are declared as <strong>the same character</strong>, before and after — that single sentence is what stops the model from reading the change as a cut between two unrelated designs. She is alone in frame throughout, eyes closed for the first three seconds, and the take ends on a low hero angle looking up at her.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-transformation-full-ui.jpg" alt="Seedance still — the monster mid transformation, golden energy ribbons erupting around its body in the forest">
+    <figcaption><b>RUN 01</b> — still the monster, mid ignition. The morph hadn't resolved. Same prompt as Run 02, word for word.</figcaption>
+  </figure>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-transformation-hero-angle-full-ui.jpg" alt="Seedance still — the warrior fully formed in low hero angle, pink horns against the night sky, gold irises">
+    <figcaption><b>RUN 02</b> — identical prompt, second roll. The warrior fully formed, low hero angle, horns against the sky, spiked pauldrons framing the bottom edge. Exactly what the prompt describes.</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the transformation, runs 01 and 02</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: The monster, reference for character consistency only. This is the SAME character as @IMAGE2 before transformation. Hulking beast, blue and pink mottled hide, two tall pointed bat ears, huge red almond eyes, wide underbite jaw with green fangs. Appears only in the first instant.
+@IMAGE2: The warrior, reference for character consistency only. This is the monster's true form, the SAME character as @IMAGE1 after transformation. Beautiful woman warrior, black blunt chin length bob with straight bangs, two pink upright horns, spiked pink pauldrons and gauntlets, armored crop top, long yellow cape, greatsword, leopard print knee high platform boots. Silent, never speaks. She is the ONLY subject of this entire video.
+@IMAGE3: The neon forest, environment reference.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field. The transformation energy is drawn as bright golden hand drawn energy streaks, long cel animated ribbons of light streaming and whipping with the wind, radiating outward from her body. NO leaves, NO dust, NO petals, NO particles, only energy streaks, wind, hair and fabric. Dynamic anime camera. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps.
+Color temperature: cool, with bright golden energy streaks as the accent.
+ENVIRONMENT
+Environment as seen in @IMAGE3. Deep blue night, strong wind, golden 2D energy ribbons radiating outward from her.
+CONTEXT
+The monster transforms quickly into the warrior. This entire video is her and only her. No other characters, no reaction shots, no cutaways, no other faces ever.
+BLOCKING
+The warrior alone at frame center for the entire shot, standing. The camera moves around her body dynamically and ends low and CLOSE, looking up at her from chest height. Absolutely no other characters appear at any point.
+SHOT
+35mm, dynamic and close on HER throughout, her body always filling the frame. The camera is already sweeping around the monster as golden energy ignites and within the first instant the shape reforms into the warrior, fast and clean, and for the first three seconds she stands with her EYES CLOSED as the camera travels over her in motion, gliding along the spiked pauldrons, the gauntlets, the armored crop top, the yellow cape snapping in the wind, the greatsword in her grip, the leopard platform boots planted wide, golden energy ribbons streaming outward from her silhouette and whipping across frame with the wind, her black bob flowing, then the camera rises back to her face and her eyes SNAP OPEN, locked on, boss confidence, golden light glinting in her irises, gaze hard toward frame right, never blinking, and the camera reacts in the same unbroken move, sweeping around her shoulder and dropping low into a CLOSE UP HERO SHOT, a tight low angle from just below her chest looking up at her face and shoulders filling the frame, chin high, jawline sharp against the night sky, horns rising past the top of frame, the spiked pauldrons framing the bottom edge, cape snapping behind her head, energy streaks still radiating outward around her, and the shot ends holding that tight low hero close up, aura streaming, stare unbroken. Never a wide shot at any point. One continuous flowing take throughout.
+Duration: 8 seconds.
+LIGHTING
+Cool blue moonlight base, golden energy streaks flaring across her armor and rimming the horns, cape and sword, gold glints in her eyes. No flicker, no strobing.
+PHYSICS
+Energy ribbons radiate outward with momentum and flow with the wind, hair and cape whip with real weight, boots stay planted. No particles of any kind.
+AUDIO
+NO MUSIC. Sound effects only.</pre>
+    </div>
+  </details>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-transformation-variant-b-full-ui.jpg" alt="Seedance still — the warrior mid reveal, gold irises, pink horns, golden energy ribbons streaking horizontally">
+    <figcaption><b>RUN 03 — REVISED PROMPT</b> — this time the wording changed: the shape <em>dissolves</em> and reforms, and <em>bat ears become pink horns</em>. One named anatomical transition, and the morph reads as one body instead of two designs.</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the transformation, run 03 (revised)</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: The monster, reference for character consistency only. This is the SAME character as @IMAGE2 before transformation. Hulking beast, blue and pink mottled hide, two tall pointed bat ears, huge red almond eyes, wide underbite jaw with green fangs. Appears only in the first moments.
+@IMAGE2: The warrior, reference for character consistency only. This is the monster's true form, the SAME character as @IMAGE1 after transformation. Beautiful woman warrior, black blunt chin length bob with straight bangs, two pink upright horns, spiked pink pauldrons and gauntlets, armored crop top, long yellow cape, greatsword, leopard print knee high platform boots. Silent, never speaks. Emotions: serene, then locked on, boss confidence.
+@IMAGE3: The neon forest, environment reference.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field. The transformation energy is drawn as bright golden hand drawn energy streaks, long ribbons of light streaming and whipping horizontally with the wind, cel animated 2D effect strands radiating outward from her body across the whole frame. NO leaves, NO dust, NO petals, NO spores, NO particles, only drawn energy streaks, wind, hair and fabric. Dynamic anime camera. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps.
+Color temperature: cool, with bright golden energy streaks as the accent.
+ENVIRONMENT
+Environment as seen in @IMAGE3. Deep blue night, strong wind, golden 2D energy ribbons streaming outward from her and across the frame with the wind.
+CONTEXT
+The monster transforms quickly into its true form. The energy radiates outward with the wind. No other characters, no reactions.
+BLOCKING
+The figure alone at frame center the entire shot. The camera moves around her dynamically and ends low, looking up at her. No other characters appear.
+SHOT
+35mm, close and dynamic throughout. The camera is already sweeping around the monster as golden energy streaks ignite along its silhouette and within the first moments the shape dissolves and reforms into the warrior, fast and clean, bat ears becoming pink horns, and for the first three seconds she stands with her EYES CLOSED, serene, the camera circling her close as long golden energy ribbons stream outward from her body and whip horizontally across the frame with the wind, her black bob flowing, strands crossing her face, then her eyes SNAP OPEN, locked on, golden light glinting in her irises, boss confidence, gaze hard and level toward frame right, never blinking, and the camera reacts, swinging around her in the same unbroken move and diving down low, sweeping into a rising hero angle from below as she squares her shoulders, cape snapping behind her in the wind, energy streaks still radiating outward around her silhouette, chin level, eyes still locked, and the shot ends holding on that low hero angle, aura ribbons streaming, her stare unbroken. One continuous flowing take throughout.
+Duration: 8 seconds.
+LIGHTING
+Cool blue moonlight base, the golden energy streaks acting as bright moving accents that flare across her face and rim her horns and cape, gold glints in her eyes. No flicker, no strobing, no lens flares.
+PHYSICS
+Energy ribbons flow with the wind direction and radiate outward with real momentum, hair and cape whip and stream with weight. No particles of any kind in the air.
+AUDIO
+NO MUSIC. Sound effects only.</pre>
+    </div>
+  </details>
+
+  <div class="lesson reveal"><b>Reroll before you rewrite</b>Runs 01 and 02 are the same prompt, character for character. One came back still showing the monster; the other landed the hero angle exactly as written. The prompt was never the problem — the roll was. Run the same words again before you start changing them, and when you do change them, change one specific thing: <em>bat ears becoming pink horns</em> did more than another paragraph of adjectives ever would.</div>
+
+  <!-- 08 -->
+  <div class="slate reveal"><span class="s-num">Section 08</span><span class="s-title">The Witnesses</span><span>3 shots · 8s</span></div>
+  <div class="prose reveal"><p>The reverse angle on the transformation — and the reason the two prompts were written as a matched pair. This one never shows the transformation at all. Three faces, one at a time, hit by golden light and hurricane wind from off frame left, while the thing causing it stays permanently out of shot.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-witnesses-full-ui.jpg" alt="Seedance still — the woman in close up, golden light on her face, hair blasting back, eyes wide with starry awe">
+    <figcaption><b>SECTION 08</b> — four seconds on her ("wow..."), two on the belt head falling in love without a word, two on Bragnar's righteous scowl collapsing into a barely audible "quite."</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the witnesses</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: The woman, reference for character consistency only. Long straight black center parted hair, oversized yellow draped robe with wide sleeves over a lilac polka dot slip dress. Going from squinting against the wind to starry eyed awe. Voice: young adult female, bright and expressive.
+@IMAGE2: Bragnar and the belt head, reference for character consistency only. Bragnar: massive barbarian, long blunt blue hair, gold chain necklace, huge shaggy green fur coat, plaid kilt. Stunned, slack. Voice: deep booming manly voice, theatrical and self important, middle aged, slight gravelly rasp. The belt head: small yellow horned head mounted on the front of his kilt, alive. Smitten. Silent in this video.
+@IMAGE3: The neon forest, environment reference. Giant pink rooted tree, moss, glowing mushrooms, blue night backdrop.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field, backgrounds fall soft while faces stay razor sharp. Three locked close ups, faces lit by an off screen transformation.
+Color temperature: cool, with warm golden light striking every face from off screen.
+ENVIRONMENT
+Environment as seen in @IMAGE3. Deep blue night, a hurricane of wind, leaves and glowing spores blasting through every frame from off screen.
+CONTEXT
+Off screen, the monster is transforming in a blaze of golden light and wind. We never see it. We only see the three witnesses being hit by the wind and the light, one by one.
+BLOCKING
+All three witnesses face frame left toward the off screen transformation. The woman alone in her frame, facing frame left. Bragnar alone in his frame, facing frame left. The belt head on his kilt, tilted toward frame left. The transformation is always off frame left and is never shown.
+SHOT
+35mm, tight close ups only, camera locked with a slight buffeted tremble in the wind.
+Shot 1
+Purpose: the first witness, terror melting into awe.
+Type: tight close up on the woman's face.
+Movement: locked frame, slight wind tremble. Golden light flares across her face from frame left, her long black hair and yellow robe blasting back in the strong wind, she squints against it, one sleeve raised to shield her eyes, then slowly lowers the sleeve as her eyes go wide and starry, pupils sparkling with reflected gold, lips parting as she breathes: wow...
+Duration: 4 seconds.
+Shot 2
+Purpose: second witness, the belt head falls in love.
+Type: tight close up on the belt head at kilt level.
+Movement: locked frame, slight wind tremble. Wind whips the plaid kilt fabric around it, the little horned head tilted far toward frame left into the golden light, eyes enormous, jaw slowly dropping open, utterly silent, smitten.
+Duration: 2 seconds.
+Shot 3
+Purpose: third witness, the hero deflates.
+Type: tight close up on Bragnar's face.
+Movement: locked frame, slight wind tremble. His blue hair blown straight back, fur coat collar rippling, righteous scowl collapsing into slack stunned awe, golden light washing his face, and he murmurs barely audible: quite.
+Duration: 2 seconds.
+LIGHTING
+Warm golden transformation light as the key on every face, always from frame left, flickering and intensifying, cool blue night rim behind them. The light source is never shown.
+PHYSICS
+Strong continuous wind from frame left, hair, fur, robe and kilt fabric streaming, leaves and glowing spores whipping past every lens.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+
+  <div class="lesson reveal"><b>Split one event across two prompts</b>Section 07 forbids reaction shots, cutaways and other faces. Section 08 never shows the transformation at all. Each prompt's exclusion list is the other prompt's content — they were written to be cut together. When one event won't fit in eight seconds, don't compress it. Shoot the cause and the effect as two generations that fit each other exactly.</div>
+
+  <!-- 09 -->
+  <div class="slate reveal"><span class="s-num">Section 09</span><span class="s-title">The Refusal</span><span>true oner · 8s</span></div>
+  <div class="prose reveal"><p>Four references, three characters staged across one frame, and an entire emotional arc run on a single face in a single take: awe, then a slow look down at the hand on her arm, then up to his face, awe curdling into disgust, then melting into longing as she walks away from him. The camera tracks backward in front of her the whole way, so the move does the editing.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-come-along-refusal-full-ui.jpg" alt="Seedance still — the woman flat faced beside Bragnar's shouting profile, the warrior standing calmly in the background at frame left">
+    <figcaption><b>SECTION 09</b> — "Come along, lady! You are rescued! No need to thank me." Both women are silent for the entire shot; the only voice in the audio spec is his.</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the refusal</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: The woman, reference for character consistency only. Long straight black center parted hair, oversized yellow draped robe with wide sleeves over a lilac polka dot slip dress. Emotions: open mouthed awe at the warrior, disgust at the hero, then seductive longing. No dialogue, her face does everything.
+@IMAGE2: Bragnar, reference for character consistency only. Massive barbarian, long blunt blue hair, gold chain necklace, huge shaggy green fur coat, plaid kilt. Also amazed, then oblivious and pushy. Voice: deep booming manly voice, theatrical and self important, middle aged, slight gravelly rasp.
+@IMAGE3: The warrior, reference for character consistency only. Beautiful woman warrior, black blunt chin length bob with straight bangs, two pink upright horns, spiked pink pauldrons and gauntlets, armored crop top, long yellow cape, leopard print platform boots. Silent, never speaks, calm seductive confidence, answers only with her eyes.
+@IMAGE4: The neon forest, environment reference.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field. Dynamic anime camera following every movement. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps, it flows through the whole scene in one move.
+Color temperature: cool.
+ENVIRONMENT
+Environment as seen in @IMAGE4. Deep blue night, a gentle settling wind after the transformation, calm air.
+CONTEXT
+The transformation just ended. Everyone is stunned by the warrior's beauty. The hero tries to leave with the woman. She has other plans.
+BLOCKING
+The warrior stands at frame left, facing frame right, calm and still. The woman stands at frame center, facing frame left toward the warrior. Bragnar stands at frame right behind the woman, facing frame left. The woman pulls free of his grip, walks toward frame left, and stops face to face with the warrior, inches apart. They face each other and look only into each other's eyes from then on. Bragnar stays behind at frame right.
+SHOT
+35mm, tight close ups throughout, the camera following every movement. The camera opens close on the woman's face, mouth open in pure awe, eyes shining as she stares toward frame left at the warrior, then drifts to Bragnar beside her, equally slack jawed and amazed, until he shakes it off, clears his throat, grabs the woman's arm and says: Come along, lady! You are rescued! No need to thank me. The camera snaps to her face as she turns her head slowly toward his hand on her arm, then up to his face, her awe curdling into a flat disgusted yuck stare, and she yanks her arm free with one clean pull, turns toward frame left, and walks toward the warrior, the camera tracking backward smoothly in front of her with every step, her expression melting from disgust into seductive longing as she approaches, and she stops face to face with the warrior, inches apart, and the camera slides into a tight profile two shot as they stare into each other's eyes, her lips parted, gaze heavy and seductive, the warrior looking back down at her with calm seductive fire, the faintest smile, one eyebrow lifting, held together in the frame, the air electric between them as the shot ends on the two faces. One continuous flowing take throughout.
+Duration: 8 seconds.
+LIGHTING
+Cool blue moonlight key, neon pink bounce from the roots, a soft golden afterglow still clinging to the warrior's silhouette. No flashing, no sparkles.
+PHYSICS
+The arm yank is one clean decisive pull, her robe sways with the walk, hair drifts in the settling wind, both stand grounded and still in the final two shot.
+AUDIO
+NO MUSIC. Sound effects and his voice only.</pre>
+    </div>
+  </details>
+
+  <!-- 10 -->
+  <div class="slate reveal"><span class="s-num">Section 10</span><span class="s-title">The Leap</span><span>true oner · 8s</span></div>
+  <div class="prose reveal"><p>Lip bite, two steps, leap, catch, swing into a bridal carry, the line, the wink, one held look — and then the motion hands off from the actors to the camera, which starts spinning as the kiss lands. Eleven beats in eight seconds, and the line itself is a callback: the thing she was screaming for help about in the first shot has become the flirt.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-the-leap-full-ui.jpg" alt="Seedance still — the warrior holding the woman in a bridal carry, faces close, glowing spores in the night forest">
+    <figcaption><b>SECTION 10</b> — "You can keep dragging me around... if you want to." The only prompt in the film that <em>invites</em> particles instead of banning them.</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the leap</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: The warrior, reference for character consistency only. Beautiful woman warrior, black blunt chin length bob with straight bangs, two pink upright horns, spiked pink pauldrons and gauntlets, armored crop top, long yellow cape, leopard print knee high platform boots. Confident, romantic, intense, silent, never speaks, answers only with her eyes and a knowing smile.
+@IMAGE2: The woman, reference for character consistency only. Long straight black center parted hair, oversized yellow draped robe with wide sleeves over a lilac polka dot slip dress. Emotions: infatuated, playful, seductive, completely fearless now. Voice: young adult female, low, breathy and seductive, teasing.
+@IMAGE3: The neon forest, environment reference.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field, the world melts into glowing bokeh. Pure sincere romance, swelling and magical. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps, it spins around them in one continuous move.
+Color temperature: cool, with warm golden magical glow wrapping the couple.
+ENVIRONMENT
+Environment as seen in @IMAGE3. Deep blue night dissolving into soft bokeh, magical wind, glowing spores and golden petals swirling.
+CONTEXT
+The rescued woman throws herself at her rescuer. A leap, a catch, a seductive line, a look, and a magical kiss.
+BLOCKING
+Only two characters in the entire shot. The woman starts a few steps from the warrior at frame right, facing frame left toward her. The warrior stands at frame left facing frame right, arms opening. The woman leaps toward frame left into the warrior's arms and lands carried bridal style, lying across her arms, faces close. From the catch onward they face each other and look only at each other. The camera circles them continuously. No other characters appear, no reactions.
+SHOT
+35mm, tight on them throughout. The camera opens close on the woman as she bites her lip, eyes locked on the warrior, then runs two quick steps and LEAPS toward frame left, robe and hair flying, and the camera whips with her as the warrior catches her effortlessly mid air and swings her around once into a bridal carry, the momentum melting into stillness, the woman already draped luxuriously across the armored arms like she has always belonged there, and she looks up at the warrior through her lashes, twirls a strand of her own hair, and purrs in a low seductive voice: You can keep dragging me around... if you want to. And she winks, slow and deliberate. The warrior's eyes soften, one eyebrow lifts, a knowing smile, and for one suspended second they only look into each other's eyes, spores glowing between them, then the camera begins to spin around them as a warm golden aura blooms up and wraps the couple, wind rising, petals spiraling with the rotation, and they crash into a passionate kiss, deep and hungry, her fingers tangling in the black bob, the warrior pulling her closer, cape and robe billowing together, the camera keeps flowing without cutting, circling as the aura brightens, hair and fabric floating weightless, the kiss never breaking, still spinning as the shot ends. One continuous spinning take throughout.
+Duration: 8 seconds.
+LIGHTING
+Warm golden magical aura as the key around the couple, cool blue night bokeh behind them, rim light tracing both profiles and the horns.
+PHYSICS
+The leap has real spring and the catch is effortless, her momentum swings into the carry naturally. The magical wind lifts cape, robe and hair half weightless, petals spiral with the spin, her sandals dangle.
+AUDIO
+NO MUSIC. Sound effects and her voice only.</pre>
+    </div>
+  </details>
+
+  <!-- 11 -->
+  <div class="slate reveal"><span class="s-num">Section 11</span><span class="s-title">The Kiss</span><span>true oner · 8s</span></div>
+  <div class="prose reveal"><p>Eight seconds of one continuous clockwise orbit, held tight on two faces and never going wider. The camera language here is unusually aggressive, and for good reason: a single direction, a single speed, a single distance, and five separate refusals — the camera never stops, never slows, never reverses, never pulls back, never goes wide.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-kiss-closeup-full-ui.jpg" alt="Seedance still — the warrior kissing the woman in close up, golden energy streaks radiating around them">
+    <figcaption><b>SECTION 11</b> — no dialogue, no particles, no leaves, no petals. Only drawn golden ribbons of light radiating outward and the orbit that never breaks.</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — the kiss</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: The warrior, reference for character consistency only. Beautiful woman warrior, black blunt chin length bob with straight bangs, two pink upright horns, spiked pink pauldrons and gauntlets, armored crop top, long yellow cape, leopard print knee high platform boots. Deeply in love, passionate, silent, never speaks.
+@IMAGE2: The woman, reference for character consistency only. Long straight black center parted hair, oversized yellow draped robe with wide sleeves over a lilac polka dot slip dress. Deeply in love, passionate. No dialogue.
+@IMAGE3: The neon forest, environment reference.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field, the world falls into soft bokeh around them. The love radiates as bright golden hand drawn energy streaks, long cel animated ribbons of light streaming outward from the couple and whipping across the frame with the wind. NO leaves, NO dust, NO petals, NO particles. Pure sincere romance. One single continuous unbroken shot, a true oner. The camera orbits the couple in ONE direction, clockwise, at ONE constant speed and ONE constant close distance for the entire shot. The camera NEVER stops, NEVER slows, NEVER reverses direction, NEVER pulls back, NEVER goes wide, NEVER changes its distance from them. Constant clockwise close orbit from first frame to last frame.
+Color temperature: cool, with bright golden energy streaks wrapping the couple.
+ENVIRONMENT
+Environment as seen in @IMAGE3. Deep blue night in soft bokeh, strong wind.
+CONTEXT
+The warrior holds the woman in her arms and they kiss like the world is ending. Their love radiates outward. Only the two of them exist.
+BLOCKING
+Only two characters in the entire shot. The couple stands fixed at the exact center of the frame and does not move from their spot. The warrior holds the woman in a bridal carry, the woman lying across her arms, faces close. They face each other and look only at each other, then kiss and never break it. The camera travels around them on a fixed circular path, clockwise, at constant speed and constant close radius, faces always filling the frame. No other characters appear.
+SHOT
+35mm, tight close up on their two faces for the entire shot, never wider. The camera is already orbiting clockwise as the shot opens, the warrior holding her close in the carry, their eyes locked, noses almost touching, golden energy streaks igniting around their silhouettes and streaming outward with the wind, and they melt into a deep passionate kiss, full of love, her fingers sliding into the black bob, the warrior pulling her tighter, and as the kiss deepens the energy ribbons flare brighter and radiate further, whipping across the frame with the wind, the camera continuing its steady clockwise orbit at the same speed and same close distance the whole time, her long hair and the yellow cape streaming and tangling in the wind, strands crossing the lens as the orbit carries the camera past them, golden streaks flaring across both faces and glinting on the horns, the kiss never breaking, and the shot ends mid orbit, same speed, same distance, still kissing, energy still radiating. The orbit never pauses and never changes. One continuous clockwise orbiting take throughout.
+Duration: 8 seconds.
+LIGHTING
+Cool blue night bokeh behind them, golden energy streaks flaring across both faces and rimming their profiles. No flicker, no strobing.
+PHYSICS
+Energy ribbons radiate outward with momentum and flow with the wind, hair and cape whip and tangle with weight, her sandals dangle from the carry. No particles of any kind in the air.
+AUDIO
+NO MUSIC. Sound effects only.</pre>
+    </div>
+  </details>
+
+  <div class="lesson reveal"><b>Every "never" is a scar</b>Nobody writes five consecutive NEVER clauses about a camera orbit for fun. Each one is a render that came back wrong — a camera that slowed, reversed, pulled back, went wide. Write defensive constraints for whatever the model keeps breaking, and only for that.</div>
+
+  <!-- 12 -->
+  <div class="slate reveal"><span class="s-num">Section 12</span><span class="s-title">Bragnar Falls</span><span>true oner · 8s</span></div>
+  <div class="prose reveal"><p>The last shot, and the hardest one to get: two characters live inside a single reference image, and Seedance kept losing track of which one was speaking. This prompt took several attempts before the fix landed — and the fix wasn't emphasis, it was structure.</p></div>
+
+  <figure class="reveal">
+    <img src="images/adifferentkindofhero/shot-bragnar-falls-full-ui.jpg" alt="Seedance still — extreme close up on Bragnar's face, eyes wide, mouth open in shock, golden light streaking across frame">
+    <figcaption><b>SECTION 12</b> — "Let's be honest." He never finishes the thought. He timbers forward like a felled tree, and from underneath: "I hate it here... Can I change teams?"</figcaption>
+  </figure>
+
+  <details class="prompt reveal">
+    <summary>Seedance 2.0 prompt — Bragnar falls</summary>
+    <div class="prompt-body">
+      <button class="copy-btn" type="button">Copy</button>
+      <pre>@IMAGE1: Bragnar and the belt head, reference for character consistency only. Bragnar: massive barbarian, long blunt blue hair, gold chain necklace, huge shaggy green fur coat, plaid kilt, greatsword. Shocked, then utterly defeated. Voice: deep booming manly voice, theatrical and self important, middle aged, slight gravelly rasp, now hollow. The belt head: small yellow horned head mounted on the FRONT of his kilt, alive. NEVER visible in this shot, heard only as a muffled voice. Voice: flat deadpan male voice, dry and tired, slightly nasal, mid tone, muffled under his fallen body.
+@IMAGE2: The neon forest, environment reference.
+ART STYLE
+2D animation with strong multiplane depth, flat bold cel shaded characters over layered painterly backgrounds, thick clean linework, vivid neon palette matching the references. Shallow depth of field. Golden hand drawn 2D energy streaks from the off screen kiss stream into the frame from frame left, long cel animated ribbons of light whipping past with the wind. NO leaves, NO dust, NO petals, NO particles, only drawn energy streaks, wind, hair and fabric. Deadpan comic timing, long holds. One single continuous unbroken shot, a true oner, the camera never cuts and never jumps.
+Color temperature: cool, with golden energy streaks entering from frame left.
+ENVIRONMENT
+Environment as seen in @IMAGE2. Deep blue night, wind, golden 2D energy ribbons streaming in from off frame left where the kiss is happening.
+CONTEXT
+Off frame, the warrior and the woman are kissing so hard their love radiates energy. The hero watches everything he believed collapse. The kiss itself is never shown.
+BLOCKING
+Bragnar alone in frame, standing at frame center, facing frame left toward the off screen kiss. The belt head is on the FRONT of his kilt, so when he falls face down it is pinned underneath his body, completely hidden. He falls forward toward frame left. The camera stays on him the whole shot. The kiss is always off frame left and never shown.
+SHOT
+35mm, tight close ups only. The camera opens tight on Bragnar's face lit by warm golden light from frame left, golden energy ribbons whipping past him with the wind, his hair streaming, eyes wide, jaw slack, pupils shrunk to dots, a long stunned beat as the streaks flare across his stunned face, then, shocked, barely above a whisper, he says: Let's be honest. He does not finish the thought. A beat. Then all the strength leaves his body at once, his eyes close, and he timbers forward like a felled tree, face first toward frame left, crashing flat into the moss with a heavy thud, dust NOT rising, only the fur coat settling over him like a burial mound, the belt head pinned beneath his massive body, and the camera keeps flowing without cutting and drifts down slowly to hold low on the motionless fallen giant, golden energy ribbons still streaming through the air above him, wind moving the fur, a long deadpan hold, and then from underneath him comes the muffled flat voice of the belt head: I hate it here... Can I change teams? The mound does not move. One continuous flowing take throughout.
+Duration: 8 seconds.
+LIGHTING
+Warm golden light and energy streaks from off frame left as the key on his face, cool blue moonlight everywhere else. The light source is never shown. No flicker, no strobing.
+PHYSICS
+He falls rigid like a tree, full body weight, heavy ground impact, the coat settling with fabric weight. Energy ribbons keep streaming above the fallen body with the wind. No particles of any kind.
+AUDIO
+NO MUSIC. Sound effects and their voices only.</pre>
+    </div>
+  </details>
+
+  <div class="lesson reveal"><b>Two characters, one reference</b>When two characters share a single reference image, the model will guess who is talking — and guess wrong. Three things fix it, and none of them is emphasis. Give each character its own voice description inside the reference line. State plainly which one is visible and which is not. Then give the hidden one a physical reason to be hidden: the belt head is mounted on the <em>front</em> of the kilt, so falling face down pins it under his body. Blocking that explains itself is worth more than any instruction.</div>
+</section>
+
+<!-- ================= 05 TAKEAWAYS ================= -->
+<section id="takeaways">
+  <div class="ch-head reveal">
+    <span class="ch-num">Chapter 05</span>
+    <div><h2>What We'd Tell You</h2></div>
+  </div>
+  <ol class="takeaways reveal">
+    <li>Work backwards when it helps. A character you already believe in will tell you what the story is, and it'll be stranger than anything you'd have planned.</li>
+    <li>Keep Midjourney prompts short. Format, identity, wardrobe, backdrop. Consistency lives in the parameter spine and the style codes, not in more words.</li>
+    <li>Declare identity across references. "The SAME character as @IMAGE2, before transformation" plus one named anatomical change is what makes a morph read as one body instead of a cut between two designs.</li>
+    <li>Give silent characters choreography. Ear up, ear down, slow eye roll. A mute character only gets a performance if you write one.</li>
+    <li>Every "never" in a prompt is a scar. Write defensive constraints for what the model actually keeps breaking, and put the hard ones in the reference line where it reads identity.</li>
+    <li>Split one event across two prompts when it won't fit. Write the cause and the effect as a matched pair, each one excluding what the other contains.</li>
+    <li>Reroll before you rewrite. The same prompt twice can give you a miss and then exactly what you asked for.</li>
+  </ol>
+  <div class="prose reveal" style="margin-top:46px">
+    <p><em>Made in a day, on free credits, in eight second pieces. The constraint did more for the film than another week would have. If you build something with these, we'd love to see it.</em></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <a class="back-link" href="learn.html">Back to Learn</a>
+    <span class="foot-note">Zelva — AI Films · Animation · Direction</span>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Enlarged image"><img src="" alt=""></div>
+
+<script>
+// reveal on scroll
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+}), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// lightbox
+const lb = document.getElementById('lightbox');
+const lbImg = lb.querySelector('img');
+document.querySelectorAll('figure img').forEach(img => {
+  img.addEventListener('click', () => {
+    lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.add('open');
+  });
+});
+lb.addEventListener('click', () => lb.classList.remove('open'));
+document.addEventListener('keydown', e => { if(e.key === 'Escape') lb.classList.remove('open'); });
+
+// copy buttons
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const pre = btn.parentElement.querySelector('pre');
+    try{
+      await navigator.clipboard.writeText(pre.textContent);
+      btn.textContent = 'Copied';
+      setTimeout(() => btn.textContent = 'Copy', 1800);
+    }catch(err){ btn.textContent = 'Select & copy'; }
+  });
+});
+</script>
+</body>
+</html>
