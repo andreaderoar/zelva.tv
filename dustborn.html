@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&amp;family=Montserrat:wght@400&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #0a0a0a;
@@ -509,12 +509,38 @@ footer p {
   figure img { border-radius: 0; border-left: 0; border-right: 0; }
 }
 
+/* ---------- site nav (matches the rest of zelva.tv) ---------- */
+nav.site-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:36px 52px;background:linear-gradient(to bottom,rgba(10,10,10,.92),transparent)}
+.site-nav .nav-logo{display:inline-flex;align-items:center;text-decoration:none}
+.site-nav .nav-logo img{height:30px;width:auto;display:block}
+.site-nav .nav-links{display:flex;gap:44px;list-style:none;margin:0;padding:0}
+.site-nav .nav-links a{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,220,.5);text-decoration:none;transition:color .3s ease;position:relative}
+.site-nav .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#c9a96e;transition:width .3s ease}
+.site-nav .nav-links a:hover,.site-nav .nav-links a.active{color:#f5f2ec}
+.site-nav .nav-links a:hover::after,.site-nav .nav-links a.active::after{width:100%}
+@media (max-width:768px){
+  nav.site-nav{padding:20px 24px;flex-direction:column;align-items:flex-start;gap:12px}
+  .site-nav .nav-links{gap:20px}
+  .site-nav .nav-links a{font-size:11px;letter-spacing:2px}
+  .site-nav .nav-logo img{height:24px}
+}
+.masthead{padding-top:120px}
+@media (max-width:768px){.masthead{padding-top:110px}}
 </style>
 </head>
 <body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo"><img src="Zelva_SVG_White_01.svg" alt="Zelva"></a>
+  <ul class="nav-links">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="learn.html" class="active">Learn</a></li>
+  </ul>
+</nav>
 <header class="masthead">
   <div class="masthead-inner">
-    <div class="brand"><a href="learn.html" style="color:inherit; text-decoration:none;">zelva <em>learn</em></a></div>
+    <a href="learn.html" class="meta-top" style="text-decoration:none;">← Learn</a>
     <div class="meta-top">Case Study · 001</div>
   </div>
 </header>
@@ -1234,7 +1260,7 @@ No music. Sound effects only. Heavy Colossus grunts and earth-deep roars. Mech s
 </div>
 
 <footer>
-  <div class="brand">zelva <em>learn</em></div>
+  <a href="index.html" class="brand"><img src="Zelva_SVG_White_01.svg" alt="Zelva" style="height:22px;width:auto;display:inline-block;"></a>
   <p>Case Study 001 · Dust Born · April 2026</p>
   <p style="margin-top:1.5rem; font-size:0.85rem;">
     <a href="learn.html" style="color:var(--amber); text-decoration:none; margin-right:2rem;">← All Case Studies</a>

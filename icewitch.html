@@ -240,16 +240,33 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:70px 0 60px;margin-top
   section{padding:70px 0}
   .hero-inner{padding-bottom:70px}
 }
+/* ---------- site nav (matches the rest of zelva.tv) ---------- */
+nav.site-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:36px 52px;background:linear-gradient(to bottom,rgba(10,10,10,.92),transparent)}
+.site-nav .nav-logo{display:inline-flex;align-items:center;text-decoration:none}
+.site-nav .nav-logo img{height:30px;width:auto;display:block}
+.site-nav .nav-links{display:flex;gap:44px;list-style:none;margin:0;padding:0}
+.site-nav .nav-links a{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,220,.5);text-decoration:none;transition:color .3s ease;position:relative}
+.site-nav .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#c9a96e;transition:width .3s ease}
+.site-nav .nav-links a:hover,.site-nav .nav-links a.active{color:#f5f2ec}
+.site-nav .nav-links a:hover::after,.site-nav .nav-links a.active::after{width:100%}
+@media (max-width:768px){
+  nav.site-nav{padding:20px 24px;flex-direction:column;align-items:flex-start;gap:12px}
+  .site-nav .nav-links{gap:20px}
+  .site-nav .nav-links a{font-size:11px;letter-spacing:2px}
+  .site-nav .nav-logo img{height:24px}
+}
 </style>
 </head>
 <body>
 
-<nav>
-  <a class="logo" href="index.html">ZELVA<span>.</span></a>
-  <div class="nav-links">
-    <a href="work.html">Work</a>
-    <a href="learn.html">Learn</a>
-  </div>
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo"><img src="Zelva_SVG_White_01.svg" alt="Zelva"></a>
+  <ul class="nav-links">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="learn.html" class="active">Learn</a></li>
+  </ul>
 </nav>
 
 <!-- ================= HERO ================= -->
