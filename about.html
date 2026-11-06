@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root { --black: #0a0a0a; --light: #e8e4dc; --muted: rgba(232,228,220,0.45); --accent: #c9a96e; --white: #f5f2ec; --border: rgba(232,228,220,0.08); }
@@ -68,22 +68,22 @@
   .about-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top center; display: block; filter: brightness(0.9) contrast(1.05); }
 
   .about-text-col { opacity: 0; animation: fadeUp 1s ease 0.4s forwards; }
-  .about-eyebrow { font-size: 10px; font-weight: 400; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
-  .about-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(42px, 5vw, 68px); letter-spacing: 6px; text-transform: uppercase; color: var(--white); line-height: 1.05; margin-bottom: 8px; }
-  .about-role { font-size: 11px; font-weight: 400; letter-spacing: 5px; text-transform: uppercase; color: rgba(232,228,220,0.4); margin-bottom: 40px; }
+  .about-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .about-name { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(42px, 5vw, 68px); letter-spacing: 6px; text-transform: uppercase; color: var(--white); line-height: 1.05; margin-bottom: 8px; }
+  .about-role { font-size: 12.5px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: rgba(232,228,220,0.7); margin-bottom: 40px; }
   .about-divider { width: 48px; height: 1px; background: var(--accent); margin-bottom: 36px; }
 
-  .about-bio { font-size: 13.5px; font-weight: 300; line-height: 1.9; color: rgba(232,228,220,0.75); }
+  .about-bio { font-size: 15.5px; font-weight: 400; line-height: 1.85; color: rgba(232,228,220,0.88); }
   .about-bio p { margin-bottom: 20px; }
   .about-bio p:last-child { margin-bottom: 0; }
-  .about-bio em { font-style: italic; color: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 16px; }
+  .about-bio em { font-style: italic; color: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; }
 
-  .about-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: clamp(22px, 2.5vw, 30px); color: var(--white); line-height: 1.4; letter-spacing: 1px; border-left: 1px solid var(--accent); padding-left: 28px; margin-top: 40px; }
+  .about-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: clamp(22px, 2.5vw, 30px); color: var(--white); line-height: 1.4; letter-spacing: 1px; border-left: 1px solid var(--accent); padding-left: 28px; margin-top: 40px; }
 
   /* Skills Section */
   .skills-section { padding-top: 100px; border-top: 1px solid var(--border); margin-top: 80px; opacity: 0; animation: fadeUp 1s ease 0.6s forwards; }
   .skills-header { display: flex; align-items: baseline; gap: 24px; margin-bottom: 60px; }
-  .skills-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 42px; letter-spacing: 6px; text-transform: uppercase; color: var(--white); }
+  .skills-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 42px; letter-spacing: 6px; text-transform: uppercase; color: var(--white); }
   .skills-title-line { flex: 1; height: 1px; background: var(--border); }
 
   .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
@@ -92,9 +92,9 @@
   .skill-group:hover { border-color: rgba(232,228,220,0.15); }
   .skill-group:hover::before { height: 100%; }
 
-  .skill-group-label { font-size: 9px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .skill-group-label { font-size: 12px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
   .skill-items { display: flex; flex-direction: column; gap: 10px; }
-  .skill-item { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: rgba(232,228,220,0.6); transition: color 0.3s ease; }
+  .skill-item { display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: rgba(232,228,220,0.8); transition: color 0.3s ease; }
   .skill-group:hover .skill-item { color: rgba(232,228,220,0.85); }
   .skill-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 
@@ -102,16 +102,16 @@
   .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 2px; }
   .stat-box { padding: 32px; border: 1px solid var(--border); text-align: center; transition: border-color 0.4s ease; }
   .stat-box:hover { border-color: rgba(201,169,110,0.25); }
-  .stat-number { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 52px; color: var(--white); letter-spacing: 2px; line-height: 1; }
+  .stat-number { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 52px; color: var(--white); letter-spacing: 2px; line-height: 1; }
   .stat-number span { font-size: 28px; color: var(--accent); }
-  .stat-label { font-size: 9px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: rgba(232,228,220,0.35); margin-top: 8px; }
+  .stat-label { font-size: 12px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,228,220,0.65); margin-top: 8px; }
 
   /* Footer */
   .about-footer { margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; opacity: 0; animation: fadeUp 1s ease 0.8s forwards; }
-  .footer-cta { font-size: 11px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: rgba(232,228,220,0.5); text-decoration: none; transition: color 0.3s ease; display: flex; align-items: center; gap: 16px; }
+  .footer-cta { font-size: 12.5px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: rgba(232,228,220,0.75); text-decoration: none; transition: color 0.3s ease; display: flex; align-items: center; gap: 16px; }
   .footer-cta:hover { color: var(--white); }
   .cta-line { width: 40px; height: 1px; background: var(--accent); }
-  .copyright { font-size: 10px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,228,220,0.25); }
+  .copyright { font-size: 12px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,228,220,0.5); }
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
@@ -224,7 +224,7 @@
           <div class="skill-item"><span class="skill-dot"></span>MiniMax H3</div>
           <div class="skill-item"><span class="skill-dot"></span>Wan 3</div>
           <div class="skill-item"><span class="skill-dot"></span>Kling</div>
-          <div class="skill-item"><span class="skill-dot"></span>ComfyUI Workflows</div>
+          <div class="skill-item"><span class="skill-dot"></span>ComfyUI</div>
           <div class="skill-item"><span class="skill-dot"></span>Higgsfield</div>
           <div class="skill-item"><span class="skill-dot"></span>Dreamina</div>
           <div class="skill-item"><span class="skill-dot"></span>Grok</div>
