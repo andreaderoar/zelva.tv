@@ -166,116 +166,9 @@
 
 <div class="page">
 
-  <!-- Hero: Photo + Bio -->
-  <div class="about-hero">
-
-    <div class="about-photo-col">
-      <div class="about-photo-wrap">
-        <div class="about-logo-panel"><img src="Zelva_SVG_White_01.svg" alt="Zelva"></div>
-      </div>
-
-    </div>
-
-    <div class="about-text-col">
-      <div class="about-eyebrow">Director · Editor · Storyteller</div>
-      <div class="about-name">Andrea</div>
-      <div class="about-role">Founder, Zelva Creative Studio</div>
-      <div class="about-headline">Script, rough idea, or a napkin sketch?<br><em>Let's bring it to life together.</em></div>
-      <div class="about-divider"></div>
-
-      <div class="about-bio">
-        <p>
-          Tell me your idea, send me your script, then go grab a coffee. I've got it from here. I'll figure out the look, find the characters, cut it, score it, and hand you back a finished film you'll actually want to show people.
-        </p>
-        <p>
-          I've been doing this for 15+ years. I studied at Vancouver Film School, then spent years editing, shooting and animating, including full-time stints at <em>The Martin Agency</em> and <em>Hue & Cry</em>. Lots of early mornings, freezing sets and "okay, one more take."
-        </p>
-        <p>
-          When AI came along, I didn't start from scratch. I took everything I knew with me and kept learning. Now I shoot it, generate it, or mix the two, whatever the story needs. The story's still the boss. I just have more toys now.
-        </p>
-        <p>
-          Funny, real, weird, heartfelt. If it's on the page, or even just in your head, I'll make it land.
-        </p>
-      </div>
-
-      <div class="about-quote">
-        "Funny stories. Real stories. Inspired ones.<br>That's what I'm here for."
-      </div>
-    </div>
-  </div>
-
-  <!-- Skills -->
-  <div class="skills-section">
-    <div class="skills-header">
-      <div class="skills-title">Craft</div>
-      <div class="skills-title-line"></div>
-    </div>
-
-    <div class="skills-grid">
-      <div class="skill-group">
-        <div class="skill-group-label">Editing Suite</div>
-        <div class="skill-items">
-          <div class="skill-item"><span class="skill-dot"></span>Premiere Pro</div>
-          <div class="skill-item"><span class="skill-dot"></span>DaVinci Resolve</div>
-          <div class="skill-item"><span class="skill-dot"></span>After Effects</div>
-          <div class="skill-item"><span class="skill-dot"></span>Photoshop</div>
-          <div class="skill-item"><span class="skill-dot"></span>Illustrator</div>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-label">AI Video</div>
-        <div class="skill-items">
-          <div class="skill-item"><span class="skill-dot"></span>Seedance 2.5</div>
-          <div class="skill-item"><span class="skill-dot"></span>MiniMax H3</div>
-          <div class="skill-item"><span class="skill-dot"></span>Wan 3</div>
-          <div class="skill-item"><span class="skill-dot"></span>Kling</div>
-          <div class="skill-item"><span class="skill-dot"></span>ComfyUI</div>
-          <div class="skill-item"><span class="skill-dot"></span>Higgsfield</div>
-          <div class="skill-item"><span class="skill-dot"></span>Dreamina</div>
-          <div class="skill-item"><span class="skill-dot"></span>Grok</div>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-label">AI & Creative</div>
-        <div class="skill-items">
-          <div class="skill-item"><span class="skill-dot"></span>Claude</div>
-          <div class="skill-item"><span class="skill-dot"></span>ChatGPT</div>
-          <div class="skill-item"><span class="skill-dot"></span>Gemini</div>
-          <div class="skill-item"><span class="skill-dot"></span>Nano Banana Pro</div>
-          <div class="skill-item"><span class="skill-dot"></span>ElevenLabs</div>
-          <div class="skill-item"><span class="skill-dot"></span>Midjourney</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Stats -->
-    <div class="stats-row">
-      <div class="stat-box">
-        <div class="stat-number">15<span>+</span></div>
-        <div class="stat-label">Years in the Industry</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-number">∞</div>
-        <div class="stat-label">Stories Left to Tell</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-number">1</div>
-        <div class="stat-label">Real Why</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div class="about-footer">
-    <a href="work.html" class="footer-cta">
-      <span class="cta-line"></span>
-      View Work
-    </a>
-    <a href="contact.html" class="footer-cta">
-      Get in Touch
-      <span class="cta-line"></span>
-    </a>
-    <span class="copyright">© Zelva 2026</span>
+  <div class="about-coming-soon" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:24px;">
+    <div class="about-eyebrow">About</div>
+    <div class="about-headline" style="margin:0;font-size:clamp(40px,6vw,72px);"><em>Coming soon</em></div>
   </div>
 
 </div>
@@ -289,7 +182,7 @@
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
   (function animRing(){ rx+=(mx-rx)*0.22; ry+=(my-ry)*0.22; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
-  document.querySelectorAll('a, .skill-group').forEach(el => {
+  document.querySelectorAll('a').forEach(el => {
     el.addEventListener('mouseenter',()=>{ cursor.classList.add('hovering'); ring.classList.add('hovering'); });
     el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hovering'); ring.classList.remove('hovering'); });
   });
