@@ -141,6 +141,7 @@
     .nav-links a { font-size: 12.1px; letter-spacing: 2px; }
     .nav-logo img { height: 24px; }
   }
+  @media (max-width: 600px) { .skills-title { font-size: 28px; letter-spacing: 4px; } }
 </style>
 </head>
 <body>
@@ -166,9 +167,48 @@
 
 <div class="page">
 
-  <div class="about-coming-soon" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:24px;">
-    <div class="about-eyebrow">About</div>
-    <div class="about-headline" style="margin:0;font-size:clamp(40px,6vw,72px);"><em>Coming soon</em></div>
+  <div class="about-short" style="min-height:62vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:28px;padding:110px 24px 60px;">
+    <div class="about-eyebrow" style="margin:0;">About</div>
+    <div class="about-headline" style="margin:0;font-size:clamp(36px,5vw,64px);">15+ years in <em>film and animation.</em></div>
+    <p style="max-width:620px;font-size:16px;line-height:1.9;color:var(--muted);letter-spacing:0.3px;">I wasn't going to let AI take my job, so now we work together. I still create with and without it.<br>Give me a script and I'll bring it to life.</p>
+  </div>
+
+  <div class="skills-section" style="margin-top:0;padding-top:70px;">
+    <div class="skills-header">
+      <div class="skills-title">Tools I Use</div>
+      <div class="skills-title-line"></div>
+    </div>
+    <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-label">Film &amp; Animation</div>
+      <div class="skill-items">
+        <div class="skill-item"><span class="skill-dot"></span>Cinema 4D</div>
+        <div class="skill-item"><span class="skill-dot"></span>Blender</div>
+        <div class="skill-item"><span class="skill-dot"></span>Adobe Premiere</div>
+        <div class="skill-item"><span class="skill-dot"></span>After Effects</div>
+        <div class="skill-item"><span class="skill-dot"></span>Photoshop</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">AI Video</div>
+      <div class="skill-items">
+        <div class="skill-item"><span class="skill-dot"></span>ComfyUI</div>
+        <div class="skill-item"><span class="skill-dot"></span>Seedance 2.5</div>
+        <div class="skill-item"><span class="skill-dot"></span>MiniMax H3</div>
+        <div class="skill-item"><span class="skill-dot"></span>Kling 4</div>
+        <div class="skill-item"><span class="skill-dot"></span>+ New models as they land</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">AI Image</div>
+      <div class="skill-items">
+        <div class="skill-item"><span class="skill-dot"></span>Midjourney</div>
+        <div class="skill-item"><span class="skill-dot"></span>Seedream 5.5</div>
+        <div class="skill-item"><span class="skill-dot"></span>ChatGPT</div>
+        <div class="skill-item"><span class="skill-dot"></span>Nano Banana 2.1</div>
+      </div>
+    </div>
+    </div>
   </div>
 
 </div>
@@ -182,7 +222,7 @@
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
   (function animRing(){ rx+=(mx-rx)*0.22; ry+=(my-ry)*0.22; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
-  document.querySelectorAll('a').forEach(el => {
+  document.querySelectorAll('a, .skill-group').forEach(el => {
     el.addEventListener('mouseenter',()=>{ cursor.classList.add('hovering'); ring.classList.add('hovering'); });
     el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hovering'); ring.classList.remove('hovering'); });
   });
